@@ -1,0 +1,7 @@
+# playbook for Debian hosts
+---
+- hosts: debian
+  become: true
+  # check_mode: yes  # yes=dry-run
+  roles:
+    - common

@@ -1,0 +1,8 @@
+# vars for Debian
+---
+
+Debian_packages: 
+  - ntpdate 
+  - ntp-doc
+
+Debian_ntp_service: ntp

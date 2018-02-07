@@ -1,0 +1,7 @@
+# vars for RedHat
+---
+
+RedHat_ntp_service: ntpd
+
+RedHat_packages: []
+

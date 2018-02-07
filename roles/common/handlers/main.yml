@@ -1,0 +1,5 @@
+---
+# handlers file for common
+
+# - name: restart "{{ ansible_os_family }} + '_ntp_service'"
+#   service: name="{{ ansible_os_family }} + '_ntp_service'" state=restarted

@@ -1,0 +1,10 @@
+---
+# defaults file for common
+
+common_packages:
+  - git
+  - make
+  - ntp
+  - lsof
+
+timezone: America/Los_Angeles

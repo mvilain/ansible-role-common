@@ -1,0 +1,3 @@
+# group_vars for ubuntu group
+---
+group_vars: "ubuntu"

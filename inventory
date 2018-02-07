@@ -1,0 +1,30 @@
+# test inventory
+
+[centos]
+centos6 ansible_host=192.168.10.106
+centos7 ansible_host=192.168.10.107
+
+[fedora]
+fedora21 ansible_host=192.168.10.121
+fedora24 ansible_host=192.168.10.124
+fedora27 ansible_host=192.168.10.127
+
+[ubuntu]
+ubuntu12 ansible_host=192.168.10.112
+ubuntu14 ansible_host=192.168.10.114
+ubuntu16 ansible_host=192.168.10.116
+ubuntu17 ansible_host=192.168.10.117
+
+[debian]
+debian8 ansible_host=192.168.10.108
+debian9 ansible_host=192.168.10.109
+
+[all:children]
+centos
+debian
+fedora
+ubuntu
+
+[all:vars]
+ansible_ssh_user=vagrant
+ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key

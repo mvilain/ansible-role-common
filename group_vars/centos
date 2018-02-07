@@ -1,0 +1,3 @@
+# group_vars for centos group
+---
+group_vars: "centos"

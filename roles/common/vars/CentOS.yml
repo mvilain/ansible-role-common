@@ -1,0 +1,5 @@
+# vars for Centos
+---
+
+CentOS_packages:
+  - epel-release

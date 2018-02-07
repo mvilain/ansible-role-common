@@ -1,0 +1,10 @@
+# main playbook: site.yml
+---
+
+- import_playbook: play-centos.yml
+
+- import_playbook: play-debian.yml
+
+- import_playbook: play-fedora.yml
+
+- import_playbook: play-ubuntu.yml
