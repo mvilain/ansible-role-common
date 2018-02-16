@@ -7,4 +7,4 @@
 *.retry
 *.sublime-*
 *.bbprojectd
-
+packer_cache/
