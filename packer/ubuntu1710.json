@@ -3,10 +3,12 @@
 		"USERNAME": "vagrant",
 		"PASSWORD": "vagrant",
 		"HOSTNAME": "ubuntu1710",
-		"VM_VERSION": "201802.15",
+		"DOMAIN": "local",
+		"VM_VERSION": "201802.16",
 		"VM_DESCR": "Ubuntu 17.10 Vagrant Box with Virtual Box extensions",
 		"LOCAL_ISO": "http://localhost/iso/ubuntu-17.10.1-server-amd64.iso",
 		"ISO": "http://releases.ubuntu.com/17.10/ubuntu-17.10.1-server-amd64.iso",
+		"MD5": "7fe25fa47bebc40f4e5007aa182eb627",
 		"PRESEED": "ubuntu1710.preseed.cfg"
 	},
 
@@ -33,7 +35,7 @@
 		],
 
 		"iso_url": "{{ user `ISO` }}",
-		"iso_checksum": "7fe25fa47bebc40f4e5007aa182eb627",
+		"iso_checksum": "{{ user `MD5` }}",
 		"iso_checksum_type": "md5",
 
 		"boot_command": [
@@ -58,7 +60,7 @@
 			["modifyvm", "{{ user `HOSTNAME` }}", "--natpf1", "SSH,tcp,,2222,,22"]
 		],
 
-		"disk_size": "20000",
+		"disk_size": "32000",
 
         "http_directory" : "{{ pwd }}",
         "http_port_min" : 9001,
