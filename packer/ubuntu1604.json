@@ -1,0 +1,106 @@
+{
+	"variables": {
+		"USERNAME": "vagrant",
+		"PASSWORD": "vagrant",
+		"HOSTNAME": "ubuntu1604",
+		"DOMAIN": "local",
+		"VM_VERSION": "201802.16",
+		"VM_DESCR": "Ubuntu 16.04.3 Vagrant Box with Virtual Box extensions",
+		"LOCAL_ISO": "http://localhost/iso/ubuntu-16.04.3-server-amd64.iso",
+		"ISO": "http://releases.ubuntu.com/16.04/ubuntu-16.04.3-server-amd64.iso",
+		"MD5": "10fcd20619dce11fe094e960c85ba4a9",
+		"PRESEED": "ubuntu1604.preseed.cfg"
+	},
+
+	"description": "{{ user `VM_DESCR` }}",
+
+	"builders": [{
+		"type": "virtualbox-iso",
+		"guest_os_type": "Ubuntu_64",
+		"vm_name": "{{ user `HOSTNAME` }}",
+		"virtualbox_version_file": "{{ user `VM_VERSION` }}",
+		"export_opts": [
+			"--manifest",
+			"--vsys", "0",
+			"--description", "{{ user `VM_DESCR` }}",
+			"--version", "{{user `VM_VERSION`}}"
+		],
+		"format": "ova",
+
+
+		"vboxmanage": [
+			["modifyvm", "{{ user `HOSTNAME` }}", "--vram", "32"],
+			["modifyvm", "{{ user `HOSTNAME` }}", "--memory", "1024"],
+			["modifyvm", "{{ user `HOSTNAME` }}", "--cpus", "2"]
+		],
+
+		"iso_url": "{{ user `ISO` }}",
+		"iso_checksum": "{{ user `MD5` }}",
+		"iso_checksum_type": "md5",
+
+		"boot_command": [
+			"<esc><f6><esc>",
+			"<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+			"<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+			"<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+			"<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+			"<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+			"<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+			"<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+			"<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+			"<bs><bs><bs>",
+			"initrd=/install/initrd.gz ",
+			"auto=true ",
+			"url=http://{{.HTTPIP}}:{{.HTTPPort}}/{{user `PRESEED`}} ",
+			"language=en_US ",
+			"country={{user `country`}} ",
+			"locale=en_US ",
+			"hostname={{user `HOSTNAME`}} ",
+			"domain={{user `DOMAIN`}} ",
+			"interface=auto ",
+			"console-setup/ask_detect=false ",
+			"keyboard-configuration/layoutcode={{user `keyboard`}} ",
+			"vga=788 noprompt quiet --<enter>"
+		],
+		"ssh_wait_timeout": "20m",
+		"boot_wait": "5s",
+		"vboxmanage": [
+			["modifyvm", "{{ user `HOSTNAME` }}", "--memory", "1024"],
+			["modifyvm", "{{ user `HOSTNAME` }}", "--cpus", "2"],
+			["modifyvm", "{{ user `HOSTNAME` }}", "--audio", "none"],
+			["modifyvm", "{{ user `HOSTNAME` }}", "--usb", "off"],
+			["modifyvm", "{{ user `HOSTNAME` }}", "--nic1", "nat"],
+			["modifyvm", "{{ user `HOSTNAME` }}", "--natpf1", "SSH,tcp,,2222,,22"]
+		],
+
+		"disk_size": "32000",
+
+        "http_directory" : "{{ pwd }}",
+        "http_port_min" : 9001,
+        "http_port_max" : 9001,
+
+		"ssh_username": "{{user `USERNAME`}}",
+		"ssh_password": "{{user `PASSWORD`}}",
+		"shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+		"guest_additions_mode": "upload",
+
+		"headless": true,
+		"keep_registered": false
+	}],
+
+	"provisioners": [
+		{
+			"type": "file",
+			"source": "{{ user `HOSTNAME` }}.setup.sh",
+			"destination": "{{ user `HOSTNAME` }}.setup.sh"
+		},
+		{
+			"type": "shell",
+			"inline": [ 
+				"echo 'vagrant' | sudo -S bash {{ user `HOSTNAME` }}.setup.sh"
+			]
+		}
+	],
+	"post-processors": ["vagrant"]
+
+}
