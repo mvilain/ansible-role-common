@@ -15,7 +15,7 @@ wget --no-check-certificate -q \
 	https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub \
 	-O /home/vagrant/.ssh/authorized_keys
 chmod 0600 /home/vagrant/.ssh/authorized_keys
-chown -R vagrant:vagrant .ssh/
+chown -R vagrant:vagrant /home/vagrant/.ssh/
 
 echo "---------- `date` setting up vagrant public key"
 sed -i -e 's/^#Port 22/Port 22/' \
