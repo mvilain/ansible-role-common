@@ -14,6 +14,7 @@ ubuntu12 ansible_host=192.168.10.112
 ubuntu14 ansible_host=192.168.10.114
 ubuntu16 ansible_host=192.168.10.116
 ubuntu17 ansible_host=192.168.10.117
+ubuntu18 ansible_host=192.168.10.118
 
 [debian]
 debian8 ansible_host=192.168.10.108

@@ -212,22 +212,38 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	config.vm.define "ubuntu17" do |ubuntu17|
-		#ubuntu17.vm.box = "relativkreativ/ubuntu-17-minimal" # 17.04-needs python
-		ubuntu17.vm.box = "bento/ubuntu-17.04" # 17.04-needs python
-		ubuntu17.vm.network 'private_network', ip: '192.168.10.117'
-		ubuntu17.vm.hostname = 'ubuntu17'
+	# config.vm.define "ubuntu17" do |ubuntu17|
+	# 	ubuntu17.vm.box = "bento/ubuntu-17.04" # 17.04-needs python
+	# 	ubuntu17.vm.network 'private_network', ip: '192.168.10.117'
+	# 	ubuntu17.vm.hostname = 'ubuntu17'
 
-		# fix 17.04 apt database as it EOL as of Feb-2018
-		ubuntu17.vm.provision "shell", inline: <<-SHELL
-			echo "...fixing apt database..."
-			sed -i -e "s/us.archive.ubuntu.com/old-releases.ubuntu.com/" \
-				-e "s/security.ubuntu.com/old-releases.ubuntu.com/" \
-				-e "s/at.archive.ubuntu.com/old-releases.ubuntu.com/" /etc/apt/sources.list
+	# 	# fix 17.04 apt database as it EOL as of Feb-2018
+	# 	ubuntu17.vm.provision "shell", inline: <<-SHELL
+	# 		echo "...fixing apt database..."
+	# 		sed -i -e "s/archive.ubuntu.com/old-releases.ubuntu.com/" \
+	# 			-e "s/security.ubuntu.com/old-releases.ubuntu.com/" \
+	# 			-e "s/archive.ubuntu.com/old-releases.ubuntu.com/" /etc/apt/sources.list
+	# 		apt-get update -y
+	# 		apt-get install -y python
+	# 	SHELL
+	# 	ubuntu17.vm.provision "ansible" do |ansible|
+	# 		ansible.compatibility_mode = "2.0"
+	# 		ansible.playbook = "site.yml"
+	# 		ansible.inventory_path = "./inventory"
+	# 	end
+	# end
+
+		config.vm.define "ubuntu18" do |ubuntu18|
+		ubuntu18.vm.box = "geerlingguy/ubuntu1804" # 18.04-needs python
+		ubuntu18.vm.network 'private_network', ip: '192.168.10.118'
+		ubuntu18.vm.hostname = 'ubuntu18'
+
+		ubuntu18.vm.provision "shell", inline: <<-SHELL
 			apt-get update -y
-			apt-get install -y python
+			# apt-get install -y python
+			apt -y autoremove
 		SHELL
-		ubuntu17.vm.provision "ansible" do |ansible|
+		ubuntu18.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"
 			ansible.inventory_path = "./inventory"
