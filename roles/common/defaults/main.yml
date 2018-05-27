@@ -6,5 +6,6 @@ common_packages:
   - make
   - ntp
   - lsof
+  - moreutils
 
 timezone: America/Los_Angeles

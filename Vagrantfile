@@ -23,8 +23,8 @@ Vagrant.configure("2") do |config|
 	SHELLALL
 
 
-# geerlingguy/centos6    (virtualbox, 1.2.2)
-# geerlingguy/centos7    (virtualbox, 1.2.5)
+# geerlingguy/centos6    (virtualbox, 1.2.4)
+# geerlingguy/centos7    (virtualbox, 1.2.8)
 
 	config.vm.define "centos6" do |centos6|
 		centos6.vm.box = "geerlingguy/centos6"
@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
 		centos6.vm.hostname = 'centos6'
 		
 		centos6.vm.provision "shell", inline: <<-SHELL
-# 			yum update -y
+			yum update -y
 # 			yum install -y https://centos6.iuscommunity.org/ius-release.rpm
 		SHELL
 		centos6.vm.provision "ansible" do |ansible|
@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
 		centos7.vm.hostname = 'centos7'
 
 		centos7.vm.provision "shell", inline: <<-SHELL
-# 			yum update -y
+			yum update -y
 # 			yum install -y https://centos7.iuscommunity.org/ius-release.rpm
 		SHELL
 		centos7.vm.provision "ansible" do |ansible|
@@ -62,8 +62,8 @@ Vagrant.configure("2") do |config|
 
 
 
-# geerlingguy/debian8              (virtualbox, 1.0.6)
-# geerlingguy/debian9              (virtualbox, 1.0.3)
+# geerlingguy/debian8              (virtualbox, 1.0.8)
+# geerlingguy/debian9              (virtualbox, 1.0.6)
 
 	config.vm.define "debian8" do |debian8|
 		debian8.vm.box = "geerlingguy/debian8"
@@ -71,8 +71,8 @@ Vagrant.configure("2") do |config|
 		debian8.vm.hostname = 'debian8'
 		
 		debian8.vm.provision "shell", inline: <<-SHELL
-# 			apt-get update -y
-# 			apt-get install -y python
+			apt-get update -y
+			apt-get install -y python
 		SHELL
 		debian8.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -89,8 +89,8 @@ Vagrant.configure("2") do |config|
 		debian9.vm.hostname = 'debian9'
 		
 		debian9.vm.provision "shell", inline: <<-SHELL
-# 			apt-get update -y
-# 			apt-get install -y python
+			apt-get update -y
+			apt-get install -y python
 		SHELL
 		debian9.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -103,10 +103,10 @@ Vagrant.configure("2") do |config|
 
 
 
-
 # bento/fedora-21        (virtualbox, 2.2.3)
 # bento/fedora-24        (virtualbox, 2.3.7)
-# bento/fedora-27        (virtualbox, 201802.02.0)
+# bento/fedora-27        (virtualbox, 201803.24.0)
+# fedora/28-cloud-base   (virtualbox, 20180425)
 
 	# fedora21+vagrant 2 doesn't set 2nd network config correctly
 	config.vm.define "fedora21" do |fedora21|
@@ -118,8 +118,9 @@ Vagrant.configure("2") do |config|
 			echo "...fixing enp0s8..."
 			sed -i -e "s/BOOTPROTO=none/BOOTPROTO=static/" /etc/sysconfig/network-scripts/ifcfg-enp0s8
 			systemctl restart network
-#			echo "...installing python2 (this may take a while)..."
-#			yum install -y python wget
+			yum update -y
+			echo "...installing python2 (this may take a while)..."
+			yum install -y python wget
 		SHELL
 		fedora21.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -161,11 +162,28 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
+	config.vm.define "fedora28" do |fedora|
+		fedora.vm.box = "fedora/28-cloud-base"
+		fedora.vm.network 'private_network', ip: '192.168.10.128'
+		fedora.vm.hostname = 'fedora28'
+
+		# python2 and virtual box extensions not installed
+		fedora.vm.provision "shell", inline: <<-SHELL
+			echo "...installing python2 (this may take a while)..."
+			dnf install -y python
+		SHELL
+		fedora.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yml"
+			ansible.inventory_path = "./inventory"
+		end
+	end
 
 # geerlingguy/ubuntu1204 (virtualbox, 1.2.2)
-# geerlingguy/ubuntu1404 (virtualbox, 1.2.5)
-# geerlingguy/ubuntu1604 (virtualbox, 1.1.7)
+# geerlingguy/ubuntu1404 (virtualbox, 1.2.7)
+# geerlingguy/ubuntu1604 (virtualbox, 1.2.0)
 # bento/ubuntu-17.04     (virtualbox, 201801.02.0)
+# geerlingguy/ubuntu1804 (virtualbox, 1.0.1)
 
 	config.vm.define "ubuntu12" do |ubuntu12|
 		ubuntu12.vm.box = "geerlingguy/ubuntu1204" # 14.04-python preinstalled
@@ -173,7 +191,8 @@ Vagrant.configure("2") do |config|
 		ubuntu12.vm.hostname = 'ubuntu12'
 
 		ubuntu12.vm.provision "shell", inline: <<-SHELL
-#			apt-get install -y python
+			apt-get update -y
+			apt-get install -y python
 		SHELL
 		ubuntu12.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -188,7 +207,8 @@ Vagrant.configure("2") do |config|
 		ubuntu14.vm.hostname = 'ubuntu14'
 
 		ubuntu14.vm.provision "shell", inline: <<-SHELL
-#			apt-get install -y python
+			apt-get update -y
+			apt-get install -y python
 		SHELL
 		ubuntu14.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -203,7 +223,8 @@ Vagrant.configure("2") do |config|
 		ubuntu16.vm.hostname = 'ubuntu16'
 
 		ubuntu16.vm.provision "shell", inline: <<-SHELL
-#			apt-get install -y python
+			apt-get update -y
+			apt-get install -y python
 		SHELL
 		ubuntu16.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -240,7 +261,7 @@ Vagrant.configure("2") do |config|
 
 		ubuntu18.vm.provision "shell", inline: <<-SHELL
 			apt-get update -y
-			# apt-get install -y python
+			apt-get install -y python
 			apt -y autoremove
 		SHELL
 		ubuntu18.vm.provision "ansible" do |ansible|

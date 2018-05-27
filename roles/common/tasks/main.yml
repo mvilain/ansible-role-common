@@ -32,23 +32,32 @@
           - "{{ ansible_distribution }}.yml"
     - debug: var=group_vars
 
+# note: the following included tasks might configure and enable stuff in common_packages
+# requires 
+#   Debian_{tasks,services}.yml
+#   RedHat_{tasks,services}.yml
+#   CentOS_{tasks,services}.yml
+#   Fedora_{tasks,services}.yml
+#   Ubuntu_{tasks,services}.yml
+# note: these tasks should be done first before the common tasks so prerequisite packages
+# can be added first (e.g. epel for centos)
+
+- include_tasks: "{{ ansible_os_family }}_tasks.yml"
+- include_tasks: "{{ ansible_distribution }}_tasks.yml"
 
 - name: Install common packages (this may take a while)
   package: name={{ item }} state=present
   with_items:
     - "{{ common_packages }}"
 
-# note: the following included tasks might configure and enable stuff in common_packages
-# requires Debian.yml, RedHat.yml, CentOS.yml, Fedora.yml, and Ubuntu.yml
-
-- include_tasks: "{{ ansible_os_family }}.yml"
-- include_tasks: "{{ ansible_distribution }}.yml"
+- include_tasks: "{{ ansible_distribution }}_services.yml"
+- include_tasks: "{{ ansible_os_family }}_services.yml"
 
 
 - name: set timezone and check ntp
   block:
     - timezone: name={{ timezone }}
-    - shell: sleep 4; date
+    - shell: sleep 8; date
       register: tod 
     - command: ntpq -c peer
       register: ntpq
