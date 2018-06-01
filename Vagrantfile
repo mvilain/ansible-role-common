@@ -23,11 +23,11 @@ Vagrant.configure("2") do |config|
 	SHELLALL
 
 
-# geerlingguy/centos6    (virtualbox, 1.2.4)
-# geerlingguy/centos7    (virtualbox, 1.2.8)
+# centos/6 (virtualbox, v1804.02)
+# centos/7 (virtualbox, v1804.02)
 
 	config.vm.define "centos6" do |centos6|
-		centos6.vm.box = "geerlingguy/centos6"
+		centos6.vm.box = "centos/6"
 		centos6.vm.network 'private_network', ip: '192.168.10.106'
 		centos6.vm.hostname = 'centos6'
 		
@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "centos7" do |centos7|
-		centos7.vm.box = "geerlingguy/centos7"
+		centos7.vm.box = "centos/7"
 		centos7.vm.network 'private_network', ip: '192.168.10.107'
 		centos7.vm.hostname = 'centos7'
 
@@ -62,11 +62,11 @@ Vagrant.configure("2") do |config|
 
 
 
-# geerlingguy/debian8              (virtualbox, 1.0.8)
-# geerlingguy/debian9              (virtualbox, 1.0.6)
+# debian/contrib-jessie64   (virtualbox, v8.10.0) + vboxsf
+# debian/contrib-stretch64  (virtualbox, v9.4.0) + vboxsf
 
 	config.vm.define "debian8" do |debian8|
-		debian8.vm.box = "geerlingguy/debian8"
+		debian8.vm.box = "debian/contrib-jessie64"
 		debian8.vm.network 'private_network', ip: '192.168.10.108'
 		debian8.vm.hostname = 'debian8'
 		
@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "debian9" do |debian9|
-		debian9.vm.box = "geerlingguy/debian9"
+		debian9.vm.box = "debian/contrib-stretch64"
 		debian9.vm.network 'private_network', ip: '192.168.10.109'
 		debian9.vm.hostname = 'debian9'
 		
@@ -104,8 +104,9 @@ Vagrant.configure("2") do |config|
 
 
 # bento/fedora-21        (virtualbox, 2.2.3)
-# bento/fedora-24        (virtualbox, 2.3.7)
-# bento/fedora-27        (virtualbox, 201803.24.0)
+# fedora 22 archived to
+# https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/22/Cloud/x86_64/Images/Fedora-Cloud-Base-Vagrant-22-20150521.x86_64.vagrant-virtualbox.box
+# bento/fedora-27
 # fedora/28-cloud-base   (virtualbox, 20180425)
 
 	# fedora21+vagrant 2 doesn't set 2nd network config correctly
@@ -129,38 +130,39 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	config.vm.define "fedora24" do |fedora24|
-		fedora24.vm.box = "bento/fedora-24"
-		fedora24.vm.network 'private_network', ip: '192.168.10.124'
-		fedora24.vm.hostname = 'fedora24'
+	# these two versions are tested because 21 still used yum while 22 used dnf
+	config.vm.define "fedora22" do |fedora22|
+		fedora22.vm.box = "fedora22"
+		fedora22.vm.box_url = "https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/22/Cloud/x86_64/Images/Fedora-Cloud-Base-Vagrant-22-20150521.x86_64.vagrant-virtualbox.box"
+		fedora22.vm.network 'private_network', ip: '192.168.10.122'
+		fedora22.vm.hostname = 'fedora22'
 
-		fedora24.vm.provision "shell", inline: <<-SHELL
+		fedora22.vm.provision "shell", inline: <<-SHELL
 			echo "...installing python2 (this may take a while)..."
-			dnf install -y python
+			dnf install -y python wget
 		SHELL
-		fedora24.vm.provision "ansible" do |ansible|
+		fedora22.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
 
-	config.vm.define "fedora27" do |fedora|
-		fedora.vm.box = "bento/fedora-27"
-		fedora.vm.network 'private_network', ip: '192.168.10.127'
-		fedora.vm.hostname = 'fedora27'
-
-		# python2 not previously installed
-		fedora.vm.provision "shell", inline: <<-SHELL
-			echo "...installing python2 (this may take a while)..."
-			dnf install -y python
-		SHELL
-		fedora.vm.provision "ansible" do |ansible|
-			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
-			ansible.inventory_path = "./inventory"
-		end
-	end
+	# config.vm.define "fedora27" do |fedora|
+	# 	fedora.vm.box = "bento/fedora-27"
+	# 	fedora.vm.network 'private_network', ip: '192.168.10.127'
+	# 	fedora.vm.hostname = 'fedora27'
+	# 	# python2 not previously installed
+	# 	fedora.vm.provision "shell", inline: <<-SHELL
+	# 		echo "...installing python2 (this may take a while)..."
+	# 		dnf install -y python
+	# 	SHELL
+	# 	fedora.vm.provision "ansible" do |ansible|
+	# 		ansible.compatibility_mode = "2.0"
+	# 		ansible.playbook = "site.yml"
+	# 		ansible.inventory_path = "./inventory"
+	# 	end
+	# end
 
 	config.vm.define "fedora28" do |fedora|
 		fedora.vm.box = "fedora/28-cloud-base"
@@ -170,7 +172,7 @@ Vagrant.configure("2") do |config|
 		# python2 and virtual box extensions not installed
 		fedora.vm.provision "shell", inline: <<-SHELL
 			echo "...installing python2 (this may take a while)..."
-			dnf install -y python
+			dnf install -y python wget
 		SHELL
 		fedora.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -179,14 +181,14 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-# geerlingguy/ubuntu1204 (virtualbox, 1.2.2)
-# geerlingguy/ubuntu1404 (virtualbox, 1.2.7)
-# geerlingguy/ubuntu1604 (virtualbox, 1.2.0)
+# ubuntu/precise64 (virtualbox, 20170427.0.0)
+# ubuntu/trusty64  (virtualbox, 20180530.0.0)
+# ubuntu/xenial64  (virtualbox, 20180531.0.0)
 # bento/ubuntu-17.04     (virtualbox, 201801.02.0)
-# geerlingguy/ubuntu1804 (virtualbox, 1.0.1)
+# ubuntu/bionic64  (virtualbox, 20180529.0.0)
 
 	config.vm.define "ubuntu12" do |ubuntu12|
-		ubuntu12.vm.box = "geerlingguy/ubuntu1204" # 14.04-python preinstalled
+		ubuntu12.vm.box = "ubuntu/precise64"
 		ubuntu12.vm.network 'private_network', ip: '192.168.10.112'
 		ubuntu12.vm.hostname = 'ubuntu12'
 
@@ -202,7 +204,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "ubuntu14" do |ubuntu14|
-		ubuntu14.vm.box = "geerlingguy/ubuntu1404" # 14.04-python preinstalled
+		ubuntu14.vm.box = "ubuntu/trusty64"
 		ubuntu14.vm.network 'private_network', ip: '192.168.10.114'
 		ubuntu14.vm.hostname = 'ubuntu14'
 
@@ -218,7 +220,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "ubuntu16" do |ubuntu16|
-		ubuntu16.vm.box = "geerlingguy/ubuntu1604" # 16.04-python preinstalled
+		ubuntu16.vm.box = "ubuntu/xenial64"
 		ubuntu16.vm.network 'private_network', ip: '192.168.10.116'
 		ubuntu16.vm.hostname = 'ubuntu16'
 
@@ -255,7 +257,7 @@ Vagrant.configure("2") do |config|
 	# end
 
 		config.vm.define "ubuntu18" do |ubuntu18|
-		ubuntu18.vm.box = "geerlingguy/ubuntu1804" # 18.04-needs python
+		ubuntu18.vm.box = "ubuntu/bionic64"
 		ubuntu18.vm.network 'private_network', ip: '192.168.10.118'
 		ubuntu18.vm.hostname = 'ubuntu18'
 
