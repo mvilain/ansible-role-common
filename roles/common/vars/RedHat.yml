@@ -1,6 +1,7 @@
 # vars for RedHat
 ---
 
-RedHat_packages: []
+RedHat_packages:
+  - iproute
 
 ntp_host: 0.redhat.pool.ntp.org

@@ -1,6 +1,7 @@
 # vars for Ubuntu
 ---
 
-Ubuntu_packages: []
+Ubuntu_packages:
+  - iproute
 
 ntp_host: 0.ubuntu.pool.ntp.org

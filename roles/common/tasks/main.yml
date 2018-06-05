@@ -13,12 +13,12 @@
 #  FreeBSD = 'FreeBSD', HPUX = 'HP-UX'
 #)
 
-# - block:
-#   - debug: var=ansible_os_family
-#   - debug: var=ansible_distribution
-#   - debug: var=ansible_distribution_major_version
-#   - debug: var=ansible_distribution_release
-#   - debug: var=ansible_distribution_version
+- block:
+  - debug: var=ansible_os_family
+  - debug: var=ansible_distribution
+  - debug: var=ansible_distribution_major_version
+  - debug: var=ansible_distribution_release
+  - debug: var=ansible_distribution_version
 
 - name: set specific variables for distributions
   block:
@@ -81,7 +81,7 @@
 - name: configure SElinux
   selinux:
     state: disabled
-  when: ansible_distribution != "Debian"
+  when: ansible_os_family != "Debian"
 
 - include_tasks: "{{ ansible_distribution }}_services.yml"
 - include_tasks: "{{ ansible_os_family }}_services.yml"
