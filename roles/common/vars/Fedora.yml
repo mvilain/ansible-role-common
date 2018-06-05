@@ -2,3 +2,6 @@
 ---
 
 Fedora_packages: []
+
+ntp_host:
+  - 0.fedora.pool.ntp.org

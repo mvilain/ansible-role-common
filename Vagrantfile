@@ -34,6 +34,7 @@ Vagrant.configure("2") do |config|
 		centos6.vm.provision "shell", inline: <<-SHELL
 			# yum update -y
 			# yum install -y https://centos6.iuscommunity.org/ius-release.rpm
+			yum install -y python libselinux-python
 		SHELL
 		centos6.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -52,6 +53,7 @@ Vagrant.configure("2") do |config|
 		centos7.vm.provision "shell", inline: <<-SHELL
 			# yum update -y
 			# yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+			yum install -y python libselinux-python
 		SHELL
 		centos7.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -104,6 +106,7 @@ Vagrant.configure("2") do |config|
 
 
 # bento/fedora-21        (virtualbox, 2.2.3)
+# bento/fedora-22        (virtualbox, 2.2.4)
 # fedora 22 archived to
 # https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/22/Cloud/x86_64/Images/Fedora-Cloud-Base-Vagrant-22-20150521.x86_64.vagrant-virtualbox.box
 # bento/fedora-27
@@ -121,7 +124,7 @@ Vagrant.configure("2") do |config|
 			systemctl restart network
 			# yum update -y
 			echo "...installing python2 (this may take a while)..."
-			yum install -y python wget
+			yum install -y python wget libselinux-python selinux-policy-default
 		SHELL
 		fedora21.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -133,14 +136,15 @@ Vagrant.configure("2") do |config|
 	# these two versions are tested because 21 still used yum while 22 used dnf
 	config.vm.define "fedora22" do |fedora22|
 		fedora22.vm.box = "fedora22"
-		fedora22.vm.box_url = "https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/22/Cloud/x86_64/Images/Fedora-Cloud-Base-Vagrant-22-20150521.x86_64.vagrant-virtualbox.box"
+		#fedora22.vm.box_url = "https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/22/Cloud/x86_64/Images/Fedora-Cloud-Base-Vagrant-22-20150521.x86_64.vagrant-virtualbox.box"
+		fedora22.vm.box = "bento/fedora-22"
 		fedora22.vm.network 'private_network', ip: '192.168.10.122'
 		fedora22.vm.hostname = 'fedora22'
 
 		fedora22.vm.provision "shell", inline: <<-SHELL
 			# dnf update -y
 			echo "...installing python2 (this may take a while)..."
-			dnf install -y python wget
+			dnf install -y python wget libselinux-python
 		SHELL
 		fedora22.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -157,7 +161,7 @@ Vagrant.configure("2") do |config|
 	# 	fedora.vm.provision "shell", inline: <<-SHELL
 	#		dnf update -y
 	# 		echo "...installing python2 (this may take a while)..."
-	# 		dnf install -y python
+	# 		dnf install -y python libselinux-python
 	# 	SHELL
 	# 	fedora.vm.provision "ansible" do |ansible|
 	# 		ansible.compatibility_mode = "2.0"
@@ -175,7 +179,7 @@ Vagrant.configure("2") do |config|
 		fedora.vm.provision "shell", inline: <<-SHELL
 			# dnf update -y
 			echo "...installing python2 (this may take a while)..."
-			dnf install -y python wget
+			dnf install -y python wget libselinux-python
 		SHELL
 		fedora.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -184,11 +188,11 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-# ubuntu/precise64 (virtualbox, 20170427.0.0)
-# ubuntu/trusty64  (virtualbox, 20180530.0.0)
-# ubuntu/xenial64  (virtualbox, 20180531.0.0)
-# bento/ubuntu-17.04     (virtualbox, 201801.02.0)
-# ubuntu/bionic64  (virtualbox, 20180529.0.0)
+# ubuntu/precise64    (virtualbox, 20170427.0.0)
+# ubuntu/trusty64     (virtualbox, 20180530.1.0)
+# ubuntu/xenial64     (virtualbox, 20180602.0.0)
+# bento/ubuntu-17.04  (virtualbox, 201801.02.0)
+# ubuntu/bionic64     (virtualbox, 20180531.0.0)
 
 	config.vm.define "ubuntu12" do |ubuntu12|
 		ubuntu12.vm.box = "ubuntu/precise64"

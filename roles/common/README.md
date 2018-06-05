@@ -6,7 +6,12 @@ A brief description of the role goes here.
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This module may use SELinux commands which require an extra python module beyond python V2.  Be sure the target systems have this installed as part of the Vagrant file.
+
+Debian and Ubuntu distributions do not use the SELinux features as the ansible modules for them are untested. 
+
+Fedora 21 does not install SELinux by default, so the selinux-policy-default package must be installed by Vagrant prior to provisioning with ansible.
+
 
 Role Variables
 --------------

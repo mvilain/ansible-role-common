@@ -1,7 +1,2 @@
 # Debian services tasks for common
 ---
-- name: configure Debian NTP and timezone
-  service: 
-    name: "{{ Debian_ntp_service }}" 
-    state: started
-    enabled: yes

@@ -2,7 +2,9 @@
 ---
 
 Debian_packages: 
-  - ntpdate 
-  - ntp-doc
+  - ntpdate
 
-Debian_ntp_service: ntp
+ntp_service: ntp
+
+ntp_host:
+  - 0.debian.pool.ntp.org
