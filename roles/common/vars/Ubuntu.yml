@@ -3,5 +3,4 @@
 
 Ubuntu_packages: []
 
-ntp_host:
-  - 0.ubuntu.pool.ntp.org
+ntp_host: 0.ubuntu.pool.ntp.org

@@ -4,5 +4,4 @@
 CentOS_packages:
   - epel-release
 
-ntp_host:
-  - 0.centos.pool.ntp.org
+ntp_host: 0.centos.pool.ntp.org

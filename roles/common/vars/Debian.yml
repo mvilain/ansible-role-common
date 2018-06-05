@@ -6,5 +6,4 @@ Debian_packages:
 
 ntp_service: ntp
 
-ntp_host:
-  - 0.debian.pool.ntp.org
+ntp_host: 0.debian.pool.ntp.org

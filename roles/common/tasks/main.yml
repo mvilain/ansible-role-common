@@ -50,6 +50,39 @@
   with_items:
     - "{{ common_packages }}"
 
+# ntp should be installed from common_packages or one of the distro tasks
+# configure it by removing the server and pool lines
+- name: configure ntp
+  block:
+    # first remove any existing pool directives and comment out servers
+    - lineinfile:
+        path: /etc/ntp.conf
+        backup: yes
+        state: absent
+        regexp: '^pool\s+.*$'
+    - replace:
+        path: /etc/ntp.conf
+        regexp: "{{ item.regexp }}"
+        replace: "{{ item.replace }}"
+      with_items:
+        - { regexp: '^server', replace: '#server'}
+        # - { regexp: '^pool',   replace: '#pool'}
+    # this isn't idempotent, but short of using a template, it'll do
+    - lineinfile:
+        path: /etc/ntp.conf
+        state: present
+        regexp: '^pool\s+.*$'
+        line: "pool {{ ntp_host }} iburst"
+    - service: name="{{ ntp_service }}" state=restarted
+    - shell: grep -E "^pool|^#pool|^server|^#server" /etc/ntp.conf
+      register: ntp
+    - debug: var=ntp.stdout_lines
+
+- name: configure SElinux
+  selinux:
+    state: disabled
+  when: ansible_distribution != "Debian"
+
 - include_tasks: "{{ ansible_distribution }}_services.yml"
 - include_tasks: "{{ ansible_os_family }}_services.yml"
 
