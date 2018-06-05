@@ -32,8 +32,8 @@ Vagrant.configure("2") do |config|
 		centos6.vm.hostname = 'centos6'
 		
 		centos6.vm.provision "shell", inline: <<-SHELL
-			yum update -y
-# 			yum install -y https://centos6.iuscommunity.org/ius-release.rpm
+			# yum update -y
+			# yum install -y https://centos6.iuscommunity.org/ius-release.rpm
 		SHELL
 		centos6.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -50,8 +50,8 @@ Vagrant.configure("2") do |config|
 		centos7.vm.hostname = 'centos7'
 
 		centos7.vm.provision "shell", inline: <<-SHELL
-			yum update -y
-# 			yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+			# yum update -y
+			# yum install -y https://centos7.iuscommunity.org/ius-release.rpm
 		SHELL
 		centos7.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -119,7 +119,7 @@ Vagrant.configure("2") do |config|
 			echo "...fixing enp0s8..."
 			sed -i -e "s/BOOTPROTO=none/BOOTPROTO=static/" /etc/sysconfig/network-scripts/ifcfg-enp0s8
 			systemctl restart network
-			yum update -y
+			# yum update -y
 			echo "...installing python2 (this may take a while)..."
 			yum install -y python wget
 		SHELL
@@ -138,6 +138,7 @@ Vagrant.configure("2") do |config|
 		fedora22.vm.hostname = 'fedora22'
 
 		fedora22.vm.provision "shell", inline: <<-SHELL
+			# dnf update -y
 			echo "...installing python2 (this may take a while)..."
 			dnf install -y python wget
 		SHELL
@@ -154,6 +155,7 @@ Vagrant.configure("2") do |config|
 	# 	fedora.vm.hostname = 'fedora27'
 	# 	# python2 not previously installed
 	# 	fedora.vm.provision "shell", inline: <<-SHELL
+	#		dnf update -y
 	# 		echo "...installing python2 (this may take a while)..."
 	# 		dnf install -y python
 	# 	SHELL
@@ -171,6 +173,7 @@ Vagrant.configure("2") do |config|
 
 		# python2 and virtual box extensions not installed
 		fedora.vm.provision "shell", inline: <<-SHELL
+			# dnf update -y
 			echo "...installing python2 (this may take a while)..."
 			dnf install -y python wget
 		SHELL

@@ -25,6 +25,10 @@ The following sites are very useful for building your own Vagrant boxes in Virtu
 - https://www.engineyard.com/blog/building-a-vagrant-box
 - https://www.skoblenick.com/vagrant/creating-a-custom-box-from-scratch
 
+And this git repo is good for creating packer templates:
+
+* https://github.com/mrlesmithjr/packer-templates.git
+
 ## Appendix B -- OS and Versions Tested
 
 The following OS and versions have been tested:
@@ -34,4 +38,6 @@ The following OS and versions have been tested:
 - Fedora 21, 24, 28*
 - Ubuntu 12.04 (precise) 14.04 (trusty), 16.04 (xenial), 17.04 (zesty), and 18.04 (bionic)
 
-*-- Fedora 28 is the Offical cloud release which lacks the Virtual Box Extensions, which is not required to use this ansible class
+
+
+*-- Fedora 28 is the Offical cloud release which lacks the Virtual Box Extensions, which is not required to use this ansible role

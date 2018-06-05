@@ -1,6 +1,6 @@
 # CentOS install tasks for common
 ---
 - name: CentOS packages
-  package: name={{ item }} state=installed
+  package: name={{ item }} state=present
   with_items:
     - "{{ CentOS_packages }}"

@@ -1,6 +1,6 @@
 # Fedora install tasks for common
 ---
 - name: Fedora packages
-  package: name={{ item }} state=installed
+  package: name={{ item }} state=present
   with_items:
     - "{{ Fedora_packages }}"

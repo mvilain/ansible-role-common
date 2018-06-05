@@ -1,6 +1,6 @@
 # Ubuntu install tasks for common
 ---
 - name: Ubuntu packages
-  package: name={{ item }} state=installed
+  package: name={{ item }} state=present
   with_items:
     - "{{ Ubuntu_packages }}"

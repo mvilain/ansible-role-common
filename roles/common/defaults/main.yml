@@ -3,9 +3,13 @@
 
 common_packages:
   - git
-  - make
-  - ntp
+  - iproute
+  # - iproute-doc
   - lsof
+  - make
   - moreutils
+  - net-tools
+  - ntp
+  - vim
 
 timezone: America/Los_Angeles

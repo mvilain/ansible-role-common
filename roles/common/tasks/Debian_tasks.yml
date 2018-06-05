@@ -1,6 +1,6 @@
 # Debian install tasks for common
 ---
 - name: Debian packages
-  package: name={{ item }} state=installed
+  package: name={{ item }} state=present
   with_items:
     - "{{ Debian_packages }}"
