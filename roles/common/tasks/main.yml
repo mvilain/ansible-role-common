@@ -13,12 +13,12 @@
 #  FreeBSD = 'FreeBSD', HPUX = 'HP-UX'
 #)
 
-- block:
-  - debug: var=ansible_os_family
-  - debug: var=ansible_distribution
-  - debug: var=ansible_distribution_major_version
-  - debug: var=ansible_distribution_release
-  - debug: var=ansible_distribution_version
+# - block:
+#   - debug: var=ansible_os_family
+#   - debug: var=ansible_distribution
+#   - debug: var=ansible_distribution_major_version 
+#   - debug: var=ansible_distribution_release
+#   - debug: var=ansible_distribution_version
 
 - name: set specific variables for distributions
   block:
@@ -51,23 +51,17 @@
     - "{{ common_packages }}"
 
 # ntp should be installed from common_packages or one of the distro tasks
-# configure it by removing the server and pool lines
+# configure it by removing the server and pool lines, then add our own
 - name: configure ntp
   block:
-    # first remove any existing pool directives and comment out servers
     - lineinfile:
         path: /etc/ntp.conf
         backup: yes
         state: absent
-        regexp: '^pool\s+.*$'
-    - replace:
-        path: /etc/ntp.conf
         regexp: "{{ item.regexp }}"
-        replace: "{{ item.replace }}"
       with_items:
-        - { regexp: '^server', replace: '#server'}
-        # - { regexp: '^pool',   replace: '#pool'}
-    # this isn't idempotent, but short of using a template, it'll do
+        - { regexp: '^pool\s+.*$' }
+        - { regexp: '^server\s+.*$' }
     - lineinfile:
         path: /etc/ntp.conf
         state: present
@@ -78,6 +72,7 @@
       register: ntp
     - debug: var=ntp.stdout_lines
 
+# selinux module untested on Debian systems, use edit of selinux/conf instead
 - name: configure SElinux
   selinux:
     state: disabled
