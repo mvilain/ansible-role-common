@@ -1,9 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 #
+# Vagrantfile for ansible-common-role
 
 Vagrant.configure("2") do |config|
-	# config.vm.box = 'centos/7'
 	# config.vm.network 'forwarded_port', guest: 80, host: 8080
 	config.ssh.insert_key = false
 	config.vm.synced_folder '.', '/vagrant', disabled: false
@@ -23,11 +23,8 @@ Vagrant.configure("2") do |config|
 	SHELLALL
 
 
-# centos/6 (virtualbox, v1804.02)
-# centos/7 (virtualbox, v1804.02)
-
 	config.vm.define "centos6" do |centos6|
-		centos6.vm.box = "centos/6"
+		centos6.vm.box = "geerlingguy/centos6"
 		centos6.vm.network 'private_network', ip: '192.168.10.106'
 		centos6.vm.hostname = 'centos6'
 		
@@ -46,7 +43,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "centos7" do |centos7|
-		centos7.vm.box = "centos/7"
+		centos7.vm.box = "geerlingguy/centos7"
 		centos7.vm.network 'private_network', ip: '192.168.10.107'
 		centos7.vm.hostname = 'centos7'
 
@@ -63,12 +60,8 @@ Vagrant.configure("2") do |config|
 	end
 
 
-
-# debian/contrib-jessie64   (virtualbox, v8.10.0) + vboxsf
-# debian/contrib-stretch64  (virtualbox, v9.4.0) + vboxsf
-
 	config.vm.define "debian8" do |debian8|
-		debian8.vm.box = "debian/contrib-jessie64"
+		debian8.vm.box = "geerlingguy/debian8"
 		debian8.vm.network 'private_network', ip: '192.168.10.108'
 		debian8.vm.hostname = 'debian8'
 		
@@ -86,7 +79,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "debian9" do |debian9|
-		debian9.vm.box = "debian/contrib-stretch64"
+		debian9.vm.box = "geerlingguy/debian9"
 		debian9.vm.network 'private_network', ip: '192.168.10.109'
 		debian9.vm.hostname = 'debian9'
 		
@@ -142,7 +135,7 @@ Vagrant.configure("2") do |config|
 		fedora22.vm.hostname = 'fedora22'
 
 		fedora22.vm.provision "shell", inline: <<-SHELL
-			# dnf update -y
+			dnf update -y
 			echo "...installing python2 (this may take a while)..."
 			dnf install -y python wget libselinux-python
 		SHELL
@@ -195,7 +188,7 @@ Vagrant.configure("2") do |config|
 # ubuntu/bionic64     (virtualbox, 20180531.0.0)
 
 	config.vm.define "ubuntu12" do |ubuntu12|
-		ubuntu12.vm.box = "ubuntu/precise64"
+		ubuntu12.vm.box = "geerlingguy/ubuntu1204"
 		ubuntu12.vm.network 'private_network', ip: '192.168.10.112'
 		ubuntu12.vm.hostname = 'ubuntu12'
 
@@ -211,7 +204,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "ubuntu14" do |ubuntu14|
-		ubuntu14.vm.box = "ubuntu/trusty64"
+		ubuntu14.vm.box = "geerlingguy/ubuntu1404"
 		ubuntu14.vm.network 'private_network', ip: '192.168.10.114'
 		ubuntu14.vm.hostname = 'ubuntu14'
 
@@ -227,7 +220,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "ubuntu16" do |ubuntu16|
-		ubuntu16.vm.box = "ubuntu/xenial64"
+		ubuntu16.vm.box = "geerlingguy/ubuntu1604"
 		ubuntu16.vm.network 'private_network', ip: '192.168.10.116'
 		ubuntu16.vm.hostname = 'ubuntu16'
 
@@ -264,7 +257,7 @@ Vagrant.configure("2") do |config|
 	# end
 
 		config.vm.define "ubuntu18" do |ubuntu18|
-		ubuntu18.vm.box = "ubuntu/bionic64"
+		ubuntu18.vm.box = "geerlingguy/ubuntu1804"
 		ubuntu18.vm.network 'private_network', ip: '192.168.10.118'
 		ubuntu18.vm.hostname = 'ubuntu18'
 
