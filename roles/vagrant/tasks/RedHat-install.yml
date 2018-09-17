@@ -17,9 +17,13 @@
   register: vagrant_wget_result
 # - debug: var=vagrant_wget_result.stderr_lines
 
+# Fedora 22+ uses dnf instead of yum to install packages 
+# the package method generalizes this install so there's no need
+# check versions.
+
 # installs into /opt/vagrant and /usr/bin/vagrant
 - name: installing vagrant rpm file (this amy take a minute)
-  yum:
+  package:
     name: "./vagrant_{{ vagrant_version }}_x86_64.rpm"
     state: present
     # allow_unauthenticated: True
