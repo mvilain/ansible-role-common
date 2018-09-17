@@ -8,3 +8,5 @@
 - import_playbook: play-fedora.yml
 
 - import_playbook: play-ubuntu.yml
+
+- import_playbook: play-macos.yml

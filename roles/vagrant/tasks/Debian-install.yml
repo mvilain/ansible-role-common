@@ -1,0 +1,28 @@
+# install for Debian vagrant
+---
+
+- name: check if vagrant already installed
+  stat:
+    path: ./vagrant_{{ vagrant_version }}_x86_64.deb
+  register: vagrant_deb_exists
+# - debug: var=vagrant_deb_exists
+
+# this will work if using a proxy server while
+# deb as URL with apt does not work.
+- name: downloading vagrant deb (this may take a couple minutes)
+  shell: "wget {{ vagrant_url }}{{ vagrant_version }}/vagrant_{{ vagrant_version }}_x86_64.deb"
+  args:
+    warn: false # set warn=false to prevent warning
+    creates: vagrant_{{ vagrant_version }}_x86_64.deb
+  register: vagrant_wget_result
+# - debug: var=vagrant_wget_result
+
+# installs into /opt/vagrant and /usr/bin/vagrant
+- name: installing vagrant deb file
+  apt:
+    deb: ./vagrant_{{ vagrant_version }}_x86_64.deb
+    state: present
+    # allow_unauthenticated: True
+  when: not vagrant_wget_result.failed
+  register: vagrant_apt_deb
+# - debug: var=vagrant_apt_deb

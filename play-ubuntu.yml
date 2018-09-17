@@ -3,4 +3,5 @@
 - hosts: ubuntu
   become: true
   roles:
-    - common
+    # - common
+    - vagrant

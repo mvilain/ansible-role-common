@@ -1,7 +1,7 @@
-Role Name
+common
 =========
 
-A brief description of the role goes here.
+This role can be called to install common packages and services across all hosts in a site.
 
 Requirements
 ------------
@@ -36,8 +36,3 @@ License
 -------
 
 BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).

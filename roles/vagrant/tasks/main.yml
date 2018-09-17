@@ -1,0 +1,11 @@
+# tasks file for vagrant
+---
+
+- include_tasks: Debian-install.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: RedHat-install.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: MacOS-install.yml
+  when: ansible_os_family == 'Darwin'

@@ -5,7 +5,6 @@
 
 Vagrant.configure("2") do |config|
 	# config.vm.network 'forwarded_port', guest: 80, host: 8080
-	config.ssh.insert_key = false
 	config.vm.synced_folder '.', '/vagrant', disabled: false
 	config.vm.provider :virtualbox do |vb|
 		#vb.gui = true
@@ -25,13 +24,15 @@ Vagrant.configure("2") do |config|
 
 	config.vm.define "centos6" do |centos6|
 		centos6.vm.box = "geerlingguy/centos6"
+		centos6.ssh.insert_key = false
 		centos6.vm.network 'private_network', ip: '192.168.10.106'
 		centos6.vm.hostname = 'centos6'
+
 		
 		centos6.vm.provision "shell", inline: <<-SHELL
 			# yum update -y
 			# yum install -y https://centos6.iuscommunity.org/ius-release.rpm
-			yum install -y python libselinux-python
+			# yum install -y python libselinux-python
 		SHELL
 		centos6.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -44,13 +45,14 @@ Vagrant.configure("2") do |config|
 
 	config.vm.define "centos7" do |centos7|
 		centos7.vm.box = "geerlingguy/centos7"
+		centos7.ssh.insert_key = false
 		centos7.vm.network 'private_network', ip: '192.168.10.107'
 		centos7.vm.hostname = 'centos7'
 
 		centos7.vm.provision "shell", inline: <<-SHELL
 			# yum update -y
 			# yum install -y https://centos7.iuscommunity.org/ius-release.rpm
-			yum install -y python libselinux-python
+			# yum install -y python libselinux-python
 		SHELL
 		centos7.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -59,9 +61,31 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
+	# https://app.vagrantup.com/AndrewDryga/boxes/vagrant-box-osx
+	# download box via (this will take 2 hours at 28MB/s)
+	# vagrant box add https://vagrant-osx.nyc3.digitaloceanspaces.com/osx-sierra-0.3.1.box --name macos1011
+	config.vm.define "macos1011" do |macos1011|
+		macos1011.vm.box = "macos1011"
+		macos1011.ssh.insert_key = false
+		macos1011.vm.network 'private_network', ip: '192.168.10.211'
+		macos1011.vm.hostname = 'macos1011'
+
+		# this box already has homebrew and homebrew cask already installed
+		macos1011.vm.provision "shell", inline: <<-SHELL
+			# /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+		SHELL
+		macos1011.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yml"
+			ansible.inventory_path = "./inventory"
+			# ansible.verbose = "v"
+			# ansible.raw_arguments = [""]
+		end
+	end
 
 	config.vm.define "debian8" do |debian8|
 		debian8.vm.box = "geerlingguy/debian8"
+		debian8.ssh.insert_key = false
 		debian8.vm.network 'private_network', ip: '192.168.10.108'
 		debian8.vm.hostname = 'debian8'
 		
@@ -80,6 +104,7 @@ Vagrant.configure("2") do |config|
 
 	config.vm.define "debian9" do |debian9|
 		debian9.vm.box = "geerlingguy/debian9"
+		debian9.ssh.insert_key = false
 		debian9.vm.network 'private_network', ip: '192.168.10.109'
 		debian9.vm.hostname = 'debian9'
 		
@@ -108,6 +133,7 @@ Vagrant.configure("2") do |config|
 	# fedora21+vagrant 2 doesn't set 2nd network config correctly
 	config.vm.define "fedora21" do |fedora21|
 		fedora21.vm.box = "bento/fedora-21"
+		fedora21.ssh.insert_key = false
 		fedora21.vm.network 'private_network', ip: '192.168.10.121'
 		fedora21.vm.hostname = 'fedora21'
 
@@ -128,9 +154,10 @@ Vagrant.configure("2") do |config|
 
 	# these two versions are tested because 21 still used yum while 22 used dnf
 	config.vm.define "fedora22" do |fedora22|
-		fedora22.vm.box = "fedora22"
+		#fedora22.vm.box = "fedora22"
 		#fedora22.vm.box_url = "https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/22/Cloud/x86_64/Images/Fedora-Cloud-Base-Vagrant-22-20150521.x86_64.vagrant-virtualbox.box"
 		fedora22.vm.box = "bento/fedora-22"
+		fedora22.ssh.insert_key = false
 		fedora22.vm.network 'private_network', ip: '192.168.10.122'
 		fedora22.vm.hostname = 'fedora22'
 
@@ -146,17 +173,18 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	# config.vm.define "fedora27" do |fedora|
-	# 	fedora.vm.box = "bento/fedora-27"
-	# 	fedora.vm.network 'private_network', ip: '192.168.10.127'
-	# 	fedora.vm.hostname = 'fedora27'
+	# config.vm.define "fedora27" do |fedora27|
+	# 	fedora27.vm.box = "bento/fedora-27"
+	#	fedora27.ssh.insert_key = false
+	# 	fedora27.vm.network 'private_network', ip: '192.168.10.127'
+	# 	fedora27.vm.hostname = 'fedora27'
 	# 	# python2 not previously installed
-	# 	fedora.vm.provision "shell", inline: <<-SHELL
+	# 	fedora27.vm.provision "shell", inline: <<-SHELL
 	#		dnf update -y
 	# 		echo "...installing python2 (this may take a while)..."
 	# 		dnf install -y python libselinux-python
 	# 	SHELL
-	# 	fedora.vm.provision "ansible" do |ansible|
+	# 	fedora27.vm.provision "ansible" do |ansible|
 	# 		ansible.compatibility_mode = "2.0"
 	# 		ansible.playbook = "site.yml"
 	# 		ansible.inventory_path = "./inventory"
@@ -165,6 +193,7 @@ Vagrant.configure("2") do |config|
 
 	config.vm.define "fedora28" do |fedora|
 		fedora.vm.box = "fedora/28-cloud-base"
+		fedora.ssh.insert_key = false
 		fedora.vm.network 'private_network', ip: '192.168.10.128'
 		fedora.vm.hostname = 'fedora28'
 
@@ -189,6 +218,7 @@ Vagrant.configure("2") do |config|
 
 	config.vm.define "ubuntu12" do |ubuntu12|
 		ubuntu12.vm.box = "geerlingguy/ubuntu1204"
+		ubuntu12.ssh.insert_key = false
 		ubuntu12.vm.network 'private_network', ip: '192.168.10.112'
 		ubuntu12.vm.hostname = 'ubuntu12'
 
@@ -205,6 +235,7 @@ Vagrant.configure("2") do |config|
 
 	config.vm.define "ubuntu14" do |ubuntu14|
 		ubuntu14.vm.box = "geerlingguy/ubuntu1404"
+		ubuntu14.ssh.insert_key = false
 		ubuntu14.vm.network 'private_network', ip: '192.168.10.114'
 		ubuntu14.vm.hostname = 'ubuntu14'
 
@@ -221,6 +252,7 @@ Vagrant.configure("2") do |config|
 
 	config.vm.define "ubuntu16" do |ubuntu16|
 		ubuntu16.vm.box = "geerlingguy/ubuntu1604"
+		ubuntu16.ssh.insert_key = false
 		ubuntu16.vm.network 'private_network', ip: '192.168.10.116'
 		ubuntu16.vm.hostname = 'ubuntu16'
 
@@ -239,6 +271,7 @@ Vagrant.configure("2") do |config|
 	# 	ubuntu17.vm.box = "bento/ubuntu-17.04" # 17.04-needs python
 	# 	ubuntu17.vm.network 'private_network', ip: '192.168.10.117'
 	# 	ubuntu17.vm.hostname = 'ubuntu17'
+	# 	ubuntu17.ssh.insert_key = false
 
 	# 	# fix 17.04 apt database as it EOL as of Feb-2018
 	# 	ubuntu17.vm.provision "shell", inline: <<-SHELL
@@ -258,6 +291,7 @@ Vagrant.configure("2") do |config|
 
 		config.vm.define "ubuntu18" do |ubuntu18|
 		ubuntu18.vm.box = "geerlingguy/ubuntu1804"
+		ubuntu18.ssh.insert_key = false
 		ubuntu18.vm.network 'private_network', ip: '192.168.10.118'
 		ubuntu18.vm.hostname = 'ubuntu18'
 

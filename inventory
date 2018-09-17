@@ -21,11 +21,16 @@ ubuntu18 ansible_host=192.168.10.118
 debian8 ansible_host=192.168.10.108
 debian9 ansible_host=192.168.10.109
 
+[macos]
+mac1011 ansible_host=192.168.10.211
+mac1012 ansible_host=192.168.10.212
+
 [all:children]
 centos
 debian
 fedora
 ubuntu
+macos
 
 [all:vars]
 ansible_ssh_user=vagrant

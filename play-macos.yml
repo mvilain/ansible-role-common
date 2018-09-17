@@ -1,0 +1,8 @@
+# playbook for vagrant hosts
+---
+
+- hosts: macos 
+  become: true
+  # check_mode: yes # yes=dry-run
+  roles:
+    - vagrant
