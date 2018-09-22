@@ -61,28 +61,6 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	# https://app.vagrantup.com/AndrewDryga/boxes/vagrant-box-osx
-	# download box via (this will take 2 hours at 28MB/s)
-	# vagrant box add https://vagrant-osx.nyc3.digitaloceanspaces.com/osx-sierra-0.3.1.box --name macos1011
-	config.vm.define "macos1011" do |macos1011|
-		macos1011.vm.box = "macos1011"
-		macos1011.ssh.insert_key = false
-		macos1011.vm.network 'private_network', ip: '192.168.10.211'
-		macos1011.vm.hostname = 'macos1011'
-
-		# this box already has homebrew and homebrew cask already installed
-		macos1011.vm.provision "shell", inline: <<-SHELL
-			# /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-		SHELL
-		macos1011.vm.provision "ansible" do |ansible|
-			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
-			ansible.inventory_path = "./inventory"
-			# ansible.verbose = "v"
-			# ansible.raw_arguments = [""]
-		end
-	end
-
 	config.vm.define "debian8" do |debian8|
 		debian8.vm.box = "geerlingguy/debian8"
 		debian8.ssh.insert_key = false
@@ -304,6 +282,28 @@ Vagrant.configure("2") do |config|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"
 			ansible.inventory_path = "./inventory"
+		end
+	end
+
+	# https://app.vagrantup.com/AndrewDryga/boxes/vagrant-box-osx
+	# download box via (this will take 2 hours at 28MB/s)
+	# vagrant box add https://vagrant-osx.nyc3.digitaloceanspaces.com/osx-sierra-0.3.1.box --name macos1011
+	config.vm.define "macos1011" do |macos1011|
+		macos1011.vm.box = "macos1011"
+		macos1011.ssh.insert_key = false
+		macos1011.vm.network 'private_network', ip: '192.168.10.211'
+		macos1011.vm.hostname = 'macos1011'
+
+		# this box already has homebrew and homebrew cask already installed
+		macos1011.vm.provision "shell", inline: <<-SHELL
+			# /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+		SHELL
+		macos1011.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yml"
+			ansible.inventory_path = "./inventory"
+			# ansible.verbose = "v"
+			# ansible.raw_arguments = [""]
 		end
 	end
 

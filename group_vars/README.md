@@ -1,6 +1,6 @@
 ## group_vars/README.md
 
-This directory contains separate variable files, one for each inventory group defined in the inventory file.  They are processed automatically by ansible, depending on the hosts: entry in a playlist.  
+This directory contains separate variable files, one for each inventory group defined in the inventory file.  They are processed automatically by ansible, depending on the hosts entry in a playlist.  
 
 The inventory file contains the list of hosts, groups, and any inventory-wide variables.  If you want to define variables that will be on all the hosts in the inventory, place it in the inventory file under the [all:vars] block.
 
