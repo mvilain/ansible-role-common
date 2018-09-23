@@ -140,7 +140,7 @@ Vagrant.configure("2") do |config|
 		fedora22.vm.hostname = 'fedora22'
 
 		fedora22.vm.provision "shell", inline: <<-SHELL
-			dnf update -y
+			#dnf update -y
 			echo "...installing python2 (this may take a while)..."
 			dnf install -y python wget libselinux-python
 		SHELL
@@ -150,24 +150,6 @@ Vagrant.configure("2") do |config|
 			ansible.inventory_path = "./inventory"
 		end
 	end
-
-	# config.vm.define "fedora27" do |fedora27|
-	# 	fedora27.vm.box = "bento/fedora-27"
-	#	fedora27.ssh.insert_key = false
-	# 	fedora27.vm.network 'private_network', ip: '192.168.10.127'
-	# 	fedora27.vm.hostname = 'fedora27'
-	# 	# python2 not previously installed
-	# 	fedora27.vm.provision "shell", inline: <<-SHELL
-	#		dnf update -y
-	# 		echo "...installing python2 (this may take a while)..."
-	# 		dnf install -y python libselinux-python
-	# 	SHELL
-	# 	fedora27.vm.provision "ansible" do |ansible|
-	# 		ansible.compatibility_mode = "2.0"
-	# 		ansible.playbook = "site.yml"
-	# 		ansible.inventory_path = "./inventory"
-	# 	end
-	# end
 
 	config.vm.define "fedora28" do |fedora|
 		fedora.vm.box = "fedora/28-cloud-base"
