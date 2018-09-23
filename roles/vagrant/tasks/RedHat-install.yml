@@ -1,32 +1,39 @@
 # install vagrant on RedHat systems
 ---
 
-- name: check if vagrant already installed
-  stat:
-    path: "./{{ vagrant_rpm_file }}"
-  register: vagrant_rpm_exists
+# - name: check if vagrant already installed
+#   stat:
+#     path: "./{{ vagrant_rpm_file }}"
+#   register: vagrant_rpm_exists
 # - debug: var=vagrant_rpm_exists
-
+#
 # this will work if using a proxy server while
 # rpm directly with yum will not (https not supported)
-- name: downloading vagrant rpm (this may take a couple minutes)
-  shell: "wget {{ vagrant_url }}/{{ vagrant_rpm_file }}"
-  args:
-    warn: false # set warn=false to prevent warning
-    creates: "./{{ vagrant_rpm_file }}"
-  register: vagrant_wget_result
+# - name: downloading vagrant rpm (this may take a couple minutes)
+#   shell: "wget {{ vagrant_url }}/{{ vagrant_rpm_file }}"
+#   args:
+#     warn: false # set warn=false to prevent warning
+#     creates: "./{{ vagrant_rpm_file }}"
+#   register: vagrant_wget_result
 # - debug: var=vagrant_wget_result.stderr_lines
+
+# as of 9/23/18, Hasicorp has restricted access of the rpm file
+# you can only get it from the web site
+# so provide them here in the role's files directory
+- name: providing vagrant rpm
+  copy:
+    src: "../files/{{ vagrant_rpm_file }}"
+    dest: "./{{ vagrant_rpm_file }}"
 
 # Fedora 22+ uses dnf instead of yum to install packages 
 # the package method generalizes this install so there's no need
 # check versions.
-
 # installs into /opt/vagrant and /usr/bin/vagrant
 - name: installing vagrant rpm file (this amy take a minute)
   package:
     name: "./{{ vagrant_rpm_file }}"
     state: present
     # allow_unauthenticated: True
-  when: not vagrant_wget_result.failed
+  # when: not vagrant_wget_result.failed
   register: vagrant_yum_rpm
 # - debug: var=vagrant_yum_rpm.results

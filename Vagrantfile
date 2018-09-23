@@ -129,6 +129,31 @@ Vagrant.configure("2") do |config|
 			ansible.inventory_path = "./inventory"
 		end
 	end
+	# N = 28
+	# (22..N).each do |machine_id|
+	#   config.vm.define "fedora#{machine_id}" do |machine|
+	#     machine.vm.hostname = "fedora#{machine_id}"
+	#     machine.vm.network "private_network", ip: "192.168.10.1#{machine_id}"
+	#     # Only execute once the Ansible provisioner,
+	#     # when all the machines are up and ready.
+	#     if machine_id == N
+	#		machine.vm.provision "shell", inline: <<-SHELL
+	#			echo "...fixing enp0s8..."
+	#			sed -i -e "s/BOOTPROTO=none/BOOTPROTO=static/" /etc/sysconfig/network-scripts/ifcfg-enp0s8
+	#			systemctl restart network
+	#			# yum update -y
+	#			yum install -y python wget libselinux-python selinux-policy-default
+	#		SHELL
+	#       machine.vm.provision :ansible do |ansible|
+	#         # Disable default limit to connect to all the machines
+	#         ansible.limit = "all"
+	#		  ansible.compatibility_mode = "2.0"
+	#         ansible.playbook = "site.yml"
+	#		  ansible.inventory_path = "./inventory"
+	#       end
+	#     end
+	#   end
+	# end
 
 	# these two versions are tested because 21 still used yum while 22 used dnf
 	config.vm.define "fedora22" do |fedora22|

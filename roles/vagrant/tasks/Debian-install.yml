@@ -1,28 +1,36 @@
 # install for Debian vagrant
 ---
 
-- name: check if vagrant already installed
-  stat:
-    path: "{{ vagrant_deb_file }}"
-  register: vagrant_deb_exists
-# - debug: var=vagrant_deb_exists
+# - name: check if vagrant already installed
+#   stat:
+#     path: "{{ vagrant_deb_file }}"
+#   register: vagrant_deb_exists
+# # - debug: var=vagrant_deb_exists
 
-# this will work if using a proxy server while
-# deb as URL with apt does not work.
-- name: downloading vagrant deb (this may take a couple minutes)
-  shell: "wget {{ vagrant_url }}/{{ vagrant_deb_file }}"
-  args:
-    warn: false # set warn=false to prevent warning
-    creates: "{{ vagrant_deb_file }}"
-  register: vagrant_wget_result
-# - debug: var=vagrant_wget_result
+# # this will work if using a proxy server while
+# # deb as URL with apt does not work.
+# - name: downloading vagrant deb (this may take a couple minutes)
+#   shell: "wget {{ vagrant_url }}/{{ vagrant_deb_file }}"
+#   args:
+#     warn: false # set warn=false to prevent warning
+#     creates: "{{ vagrant_deb_file }}"
+#   register: vagrant_wget_result
+# # - debug: var=vagrant_wget_result
+
+# as of 9/23/18, Hasicorp has restricted access of the rpm file
+# you can only get it from the web site
+# so provide them here in the role's files directory
+- name: providing vagrant rpm
+  copy:
+    src: "../files/{{ vagrant_deb_file }}"
+    dest: "./{{ vagrant_deb_file }}"
 
 # installs into /opt/vagrant and /usr/bin/vagrant
 - name: installing vagrant deb file
   apt:
     deb: "{{ vagrant_deb_file }}"
     state: present
-    # allow_unauthenticated: True
-  when: not vagrant_wget_result.failed
+    allow_unauthenticated: True
+  # when: not vagrant_wget_result.failed
   register: vagrant_apt_deb
 # - debug: var=vagrant_apt_deb

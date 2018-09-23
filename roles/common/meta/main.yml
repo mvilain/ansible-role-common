@@ -146,9 +146,9 @@ galaxy_info:
     # - vivid
     # - wily
     - xenial (16.04)
-    - zesty (17.04)
-    - artful (17.10)
-    # - bionic
+    # - zesty (17.04)
+    # - artful (17.10)
+    - bionic (18.04)
   #- name: SLES
   #  versions:
   #  - all

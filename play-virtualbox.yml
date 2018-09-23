@@ -5,7 +5,7 @@
 # check_mode: yes  # yes=dry-run
   roles:
     # - common
-    # - vagrant
+    - vagrant
     - virtualbox
   tags:
     - centos
@@ -15,7 +15,7 @@
 # check_mode: yes  # yes=dry-run
   roles:
     # - common
-    # - vagrant
+    - vagrant
     - virtualbox
   tags:
     - fedora
@@ -25,7 +25,7 @@
 # check_mode: yes  # yes=dry-run
   roles:
     # - common
-    # - vagrant
+    - vagrant
     - virtualbox
   tags:
     - debian
@@ -35,7 +35,7 @@
 # check_mode: yes  # yes=dry-run
   roles:
     # - common
-    # - vagrant
+    - vagrant
     - virtualbox
   tags: 
     - ubuntu
