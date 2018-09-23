@@ -151,6 +151,26 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
+	# virtualbox runs the older 5.0 on Fedora 23 and below
+	# so test that it works
+	config.vm.define "fedora23" do |fedora23|
+		fedora23.vm.box = "bento/fedora-23"
+		fedora23.ssh.insert_key = false
+		fedora23.vm.network 'private_network', ip: '192.168.10.123'
+		fedora23.vm.hostname = 'fedora23'
+
+		fedora23.vm.provision "shell", inline: <<-SHELL
+			#dnf update -y
+			echo "...installing python2 (this may take a while)..."
+			dnf install -y python wget libselinux-python
+		SHELL
+		fedora23.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yml"
+			ansible.inventory_path = "./inventory"
+		end
+	end
+
 	config.vm.define "fedora28" do |fedora|
 		fedora.vm.box = "fedora/28-cloud-base"
 		fedora.ssh.insert_key = false

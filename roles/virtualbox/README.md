@@ -6,7 +6,7 @@ This role installs virtualbox on either a local or remote machine. It will insta
 Requirements
 ------------
 
-This role assumes that the virtualbox application will be running on x86 64-bit systems.
+This role assumes that the virtualbox application will be running on x86 64-bit systems.  This role most likely won't work behind a proxy as the modules can't connect via https.
 
 
 Role Variables
@@ -15,17 +15,15 @@ Role Variables
 The following default variables are define:
 
 - **vb_version** -- default version of Virtual Box release...change once and all the URLs change
-- **u1804_vb_url** -- URL for the Ubuntu 18.04/debian10 deb file
-- **deb9_vb_url** -- URL for the Debian9 install file
-- **deb8_vb_url** -- URL for the Debian8 deb file
+
+- **deb_vb_keyurl** -- URL for the Ubuntu 18.04, Debian 8, or 9 install repo
 - **deb_vb_key** -- URL for the Debian/Ubuntu PGP key for the signed deb file
+- **deb_vb_old_key** -- URL for the Debian/Ubuntu PGP key for older releases (< Ubuntu 18.04, < Debian 8)
 
-- **fed28_vb_url** --  URL for the RHEL Fedora 26,27,28 rpm file
-- **rhel7_vb_url** -- URL for the RHEL CentOS7 rpm file
-- **rhel6_vb_url** -- URL for the RHEL CentOS6 rpm file
-- **rpm_vb_key** -- URL for the Fedora/RHEL6/RHEL7 PGP key for the signed RPM file
+- **rhel_vb_keyurl** -- URL for the RHEL CentOS repo
+- **rhel_vb_key** -- URL for the RHEL CentOS key file
 
-- **macos_vb_url** -- URL for the MacOS DMG file
+- **macos_vb_url** -- URL for the MacOS DMG file (currently untested)
 
 Dependencies
 ------------
@@ -39,7 +37,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { virtualbox }
+         - virtualbox
 
 License
 -------

@@ -7,6 +7,10 @@ centos7 ansible_host=192.168.10.107
 [fedora]
 fedora21 ansible_host=192.168.10.121
 fedora22 ansible_host=192.168.10.122
+fedora23 ansible_host=192.168.10.123
+fedora24 ansible_host=192.168.10.124
+fedora25 ansible_host=192.168.10.125
+fedora26 ansible_host=192.168.10.126
 fedora27 ansible_host=192.168.10.127
 fedora28 ansible_host=192.168.10.128
 
@@ -23,7 +27,6 @@ debian9 ansible_host=192.168.10.109
 
 [macos]
 mac1011 ansible_host=192.168.10.211
-mac1012 ansible_host=192.168.10.212
 
 [all:children]
 centos

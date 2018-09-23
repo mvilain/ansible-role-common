@@ -1,51 +1,7 @@
 # install virtualbox on RedHat systems
 ---
 
-# - block:
-#   - debug: var=ansible_os_family
-#   - debug: var=ansible_distribution
-#   - debug: var=ansible_distribution_major_version 
-#   - debug: var=ansible_distribution_release
-#   - debug: var=ansible_distribution_version
-
-# fed28_vb_url: https://download.virtualbox.org/virtualbox/{{ vb_version }}/VirtualBox-5.2-{{ vb_version }}_124319_fedora26-1.x86_64.rpm
-# rhel7_vb_url: https://download.virtualbox.org/virtualbox/{{ vb_version }}/VirtualBox-5.2-{{ vb_version }}_124319_el7-1.x86_64.rpm
-# rhel6_vb_url: https://download.virtualbox.org/virtualbox/{{ vb_version }}/VirtualBox-5.2-{{ vb_version }}_124319_el6-1.x86_64.rpm
-# rpm_vb_key: https://www.virtualbox.org/download/oracle_vbox.asc
-
-# - name: check if virtualbox already installed
-#   stat:
-#     path: ./virtualbox_{{ virtualbox_version }}_x86_64.rpm
-#   register: virtualbox_rpm_exists
-# # - debug: var=virtualbox_rpm_exists
-
-# # this will work if using a proxy server while
-# # rpm directly with yum will not (https not supported)
-# - name: downloading virtualbox rpm (this may take a couple minutes)
-#   shell: "wget {{ virtualbox_url }}{{ virtualbox_version }}/virtualbox_{{ virtualbox_version }}_x86_64.rpm"
-#   args:
-#     warn: false # set warn=false to prevent warning
-#     creates: virtualbox_{{ virtualbox_version }}_x86_64.rpm
-#   register: virtualbox_wget_result
-# # - debug: var=virtualbox_wget_result.stderr_lines
-
-# # Fedora 22+ uses dnf instead of yum to install packages 
-# # the package method generalizes this install so there's no need
-# # check versions.
-
-# # installs into /opt/virtualbox and /usr/bin/virtualbox
-# - name: installing virtualbox rpm file (this amy take a minute)
-#   package:
-#     name: "./virtualbox_{{ virtualbox_version }}_x86_64.rpm"
-#     state: present
-#     # allow_unauthenticated: True
-#   when: not virtualbox_wget_result.failed
-#   register: virtualbox_yum_rpm
-# # - debug: var=virtualbox_yum_rpm.results
-
-###
-### this if you're not behind a proxy server
-###
+### this won't work if you're behind a proxy server
 - name: adding repo key
   shell: "rpm --import https://www.virtualbox.org/download/oracle_vbox.asc"
   args:
@@ -53,7 +9,6 @@
   register: vb_rpm_key
 # - debug: var=vb_rpm_key
 
-# this may not work if using a proxy server
 - name: adding CentOS/Oracle Linux repo
   yum_repository:
     name: virtualbox
@@ -65,13 +20,6 @@
     enabled: yes
   when: ansible_distribution == "CentOS"
 
-# [virtualbox]
-# name=Fedora $releasever - $basearch - VirtualBox
-# baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch
-# enabled=1
-# gpgcheck=1
-# repo_gpgcheck=1
-# gpgkey=https://www.virtualbox.org/download/oracle_vbox.asc
 - name: adding Fedora repo
   yum_repository:
     name: virtualbox
@@ -83,20 +31,19 @@
     enabled: yes
   when: ansible_distribution == "Fedora"
 
-- name: installing old Fedora (this may take few mintues)
+- name: installing older version (this may take few mintues)
   package:
     name: VirtualBox-5.0
     state: present
-    update_cache: yes
+    # update_cache: yes
   register: vb_install
-  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int < 26
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int < 24
 # - debug: var=vb_install
-- name: installing RedHat (this may take few mintues)
+- name: installing current version (this may take few mintues)
   package:
     name: VirtualBox-5.2
     state: present
-    update_cache: yes
   register: vb_install
-  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 26 or
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 24 or
         ansible_distribution == "CentOS"
 # - debug: var=vb_install
