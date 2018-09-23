@@ -3,26 +3,28 @@
 # you won't get the lastest version of vagrant, but it's less work
 ---
 
-- name: check if vagrant already installed
-  stat:
-    path: ./vagrant_{{ vagrant_version }}_x86_64.dmg
-  register: vagrant_rpm_exists
-# - debug: var=vagrant_rpm_exists
+- debug: msg="Not implemented yet"
 
-- name: downloading vagrant rpm (this may take a couple minutes)
-  shell: "wget {{ vagrant_url }}{{ vagrant_version }}/vagrant_{{ vagrant_version }}_x86_64.dmg"
-  args:
-    warn: false # set warn=false to prevent warning
-    creates: vagrant_{{ vagrant_version }}_x86_64.dmg
-  register: vagrant_wget_result
-# - debug: var=vagrant_wget_result.stderr_lines
+# - name: check if vagrant already installed
+#   stat:
+#     path: ./vagrant_{{ vagrant_version }}_x86_64.dmg
+#   register: vagrant_rpm_exists
+# # - debug: var=vagrant_rpm_exists
 
-# installs into /usr/local/bin/vagrant
-- name: installing vagrant from dmg
-  yum:
-    name: "./vagrant_{{ vagrant_version }}_x86_64.dmg"
-    state: present
-    # allow_unauthenticated: True
-  when: not vagrant_wget_result.failed
-  register: vagrant_yum_rpm
-- debug: var=vagrant_yum_rpm.results
+# - name: downloading vagrant rpm (this may take a couple minutes)
+#   shell: "wget {{ vagrant_url }}{{ vagrant_version }}/vagrant_{{ vagrant_version }}_x86_64.dmg"
+#   args:
+#     warn: false # set warn=false to prevent warning
+#     creates: vagrant_{{ vagrant_version }}_x86_64.dmg
+#   register: vagrant_wget_result
+# # - debug: var=vagrant_wget_result.stderr_lines
+
+# # installs into /usr/local/bin/vagrant
+# - name: installing vagrant from dmg
+#   yum:
+#     name: "./vagrant_{{ vagrant_version }}_x86_64.dmg"
+#     state: present
+#     # allow_unauthenticated: True
+#   when: not vagrant_wget_result.failed
+#   register: vagrant_yum_rpm
+# - debug: var=vagrant_yum_rpm.results

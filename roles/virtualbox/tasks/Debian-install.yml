@@ -1,0 +1,80 @@
+# install for Debian virtualbox
+---
+
+# vb_url: https://download.virtualbox.org/virtualbox/{{ vb_version }}
+# u1804_vb_url: https://download.virtualbox.org/virtualbox/{{ vb_version }}/virtualbox-5.2_{{ vb_version }}-124319~Ubuntu~bionic_amd64.deb
+# deb9_vb_url: https://download.virtualbox.org/virtualbox/{{ vb_version }}/virtualbox-5.2_{{ vb_version }}-124319~Debian~stretch_amd64.deb
+# deb8_vb_url: https://download.virtualbox.org/virtualbox/{{ vb_version }}/virtualbox-5.2_{{ vb_version }}-124319~Debian~jessie_amd64.deb
+# deb_vb_keyurl: https://www.virtualbox.org/download/
+# deb_vb_key: oracle_vbox_2016.asc
+
+# this will work if using a proxy server while
+# deb as URL with apt does not work.
+# only supports Ubuntu1804 and Debian10
+# - name: virtualbox key already downloaded?
+#   stat: path="./{{ deb_vb_key }}"
+#   register: vb_key_exists
+# - debug: var=vb_key_exists
+# - name: downloading key
+#   shell: "wget {{ deb_vb_keyurl }}/{{ deb_vb_key}}"
+#   args:
+#     warn: false # set warn=false to prevent warning
+#     creates: "{{ deb_vb_key}}"
+#   register: vb_wget_key_result
+# - debug: var=vb_wget_key_result
+# - name: adding virtualbox key
+#   apt_key:
+#     file: "{{ deb_vb_key}}"
+#     state: present
+#   register: add_deb_key
+# - debug: var=add_deb_key
+#
+# - name: installing virtualbox u1804_vb_file
+#   block:
+#     - name: check if virtualbox {{ u1804_vb_file }} already downloaded
+#       stat:
+#         path: "./{{ u1804_vb_file }}"
+#       register: vb_deb_exists
+#       when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "18.04"
+#     # - debug: var=vb_deb_exists
+#     - name:  Ubuntu 18.04 downloading deb (this may take a minute)
+#       shell: "wget {{ u1804_vb_url }}"
+#       args:
+#         warn: false # set warn=false to prevent warning
+#         creates: "{{ u1804_vb_file }}"
+#       register: vb_wget_result
+#       when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "18.04" and not vb_deb_exists.failed
+#     # - debug: var=vb_wget_result
+#     - name: installing virtualbox
+#       shell: "dpkg -i {{ u1804_vb_file }}"
+#       args:
+#         warn: false
+#       register: vb_dpkg
+#     # - debug: var=vb_dpkg
+#   tags:
+#     - ubuntu
+
+###
+### OR use this if you're not behind a proxy server
+###
+- name: adding virtualbox key
+  apt_key:
+    url: "{{ deb_vb_keyurl }}/{{ deb_vb_key }}"
+    state: present
+  when: ( ansible_distribution == "Ubuntu" and ansible_distribution_version == "18.04" ) or 
+        ( ansible_distribution == "Debian" and ansible_distribution_version|int == 9 )
+
+# this may not work if using a proxy server
+- name: adding virtualbox repo
+  lineinfile:
+    path: /etc/apt/sources.list
+    backup: yes
+    line: deb http://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib
+
+- name: installing virtualbox (this may take few mintues)
+  apt:
+    name: virtualbox-5.2
+    state: present
+    update_cache: yes
+  register: vb_install
+- debug: var=vb_install

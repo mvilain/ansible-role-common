@@ -1,0 +1,41 @@
+# playbook for vagrant and virtualbox hosts
+---
+- hosts: centos
+  become: true
+# check_mode: yes  # yes=dry-run
+  roles:
+    # - common
+    # - vagrant
+    - virtualbox
+  tags:
+    - centos
+
+- hosts: fedora
+  become: true
+# check_mode: yes  # yes=dry-run
+  roles:
+    # - common
+    # - vagrant
+    - virtualbox
+  tags:
+    - fedora
+
+- hosts: debian
+  become: true
+# check_mode: yes  # yes=dry-run
+  roles:
+    # - common
+    # - vagrant
+    - virtualbox
+  tags:
+    - debian
+
+- hosts: ubuntu
+  become: true
+# check_mode: yes  # yes=dry-run
+  roles:
+    # - common
+    # - vagrant
+    - virtualbox
+  tags: 
+    - ubuntu

@@ -1,0 +1,19 @@
+---
+# place any variables specific to the virtualbox install 
+# and configuration here for multiple platforms
+
+vb_version: "5.2"
+deb_vb_keyurl: https://www.virtualbox.org/download
+deb_vb_key: oracle_vbox_2016.asc
+deb_vb_old_key: oracle_vbox.asc
+
+fed28_vb_url: https://download.virtualbox.org/virtualbox/{{ vb_version }}/VirtualBox-5.2-{{ vb_version }}_124319_fedora26-1.x86_64.rpm
+rhel7_vb_url: https://download.virtualbox.org/virtualbox/{{ vb_version }}/VirtualBox-5.2-{{ vb_version }}_124319_el7-1.x86_64.rpm
+rhel6_vb_url: https://download.virtualbox.org/virtualbox/{{ vb_version }}/VirtualBox-5.2-{{ vb_version }}_124319_el6-1.x86_64.rpm
+rpm_vb_key: https://www.virtualbox.org/download/oracle_vbox.asc
+rpm_out_file: ./virtualbox_{{ vb_version }}_x86_64.rpm
+
+rhel_vb_keyurl: https://www.virtualbox.org/download
+rhel_vb_key: oracle_vbox.asc
+
+macos_vb_url: https://download.virtualbox.org/virtualbox/{{ vb_version }}/VirtualBox-{{ vb_version }}-124319-OSX.dmg
