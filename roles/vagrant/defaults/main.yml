@@ -9,4 +9,3 @@ vagrant_rpm_file: "vagrant_{{ vagrant_version }}_x86_64.rpm"
 
 vagrant_mac_dest: "/opt/local/vagrant"
 vagrant_linux_dest: "/opt/vagrant"
-

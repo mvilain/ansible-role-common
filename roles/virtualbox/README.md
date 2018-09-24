@@ -1,7 +1,7 @@
 virtualbox
 =========
 
-This role installs virtualbox on either a local or remote machine. It will install on a CentOS [67], Debian [8|9|, or MacOS system.
+This role installs virtualbox on either a local or remote machine. It will install on a CentOS [67], Debian [8|9], or MacOS system.
 
 Requirements
 ------------

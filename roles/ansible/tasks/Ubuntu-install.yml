@@ -1,0 +1,23 @@
+# install for Ubuntu ansible
+---
+
+# - block:
+#   - debug: var=ansible_os_family
+#   - debug: var=ansible_distribution
+#   - debug: var=ansible_distribution_major_version 
+#   - debug: var=ansible_distribution_release
+#   - debug: var=ansible_distribution_version
+
+- name: add ubuntu repository
+  apt_repository: 
+    repo: "ppa:ansible/ansible"
+  register: ans_ubunto_repo
+# - debug: var=ans_ubunto_repo
+
+- name: install ubuntu
+  apt:
+    name: ansible
+    update_cache: yes
+    state: present
+  register: ans_ubuntu_install
+# - debug: var=ans_ubuntu_install

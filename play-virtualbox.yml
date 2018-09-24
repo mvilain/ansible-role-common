@@ -1,10 +1,10 @@
-# playbook for vagrant and virtualbox hosts
+# playbook for ansible, vagrant, and virtualbox hosts
 ---
 - hosts: centos
   become: true
 # check_mode: yes  # yes=dry-run
   roles:
-    # - common
+    - ansible
     - vagrant
     - virtualbox
   tags:
@@ -14,7 +14,7 @@
   become: true
 # check_mode: yes  # yes=dry-run
   roles:
-    # - common
+    - ansible
     - vagrant
     - virtualbox
   tags:
@@ -24,7 +24,7 @@
   become: true
 # check_mode: yes  # yes=dry-run
   roles:
-    # - common
+    - ansible
     - vagrant
     - virtualbox
   tags:
@@ -34,7 +34,7 @@
   become: true
 # check_mode: yes  # yes=dry-run
   roles:
-    # - common
+    - ansible
     - vagrant
     - virtualbox
   tags: 
