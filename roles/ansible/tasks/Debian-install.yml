@@ -6,9 +6,8 @@
     repo: "deb http://ftp.debian.org/debian {{ ansible_distribution_release }}-backports main"
     state: present
     filename: "{{ ansible_distribution_release }}_backports"
-  when: ansible_distribution_release
 
-- name: install ansible
+- name: install on debian
   apt:
     name: ansible
     update_cache: yes 

@@ -3,14 +3,14 @@
 
 # vagrant doesn't support https behind proxy
 # none of this won't work behind a proxy server
-- name: adding virtualbox key
+- name: adding key
   apt_key:
     url: "{{ deb_vb_keyurl }}/{{ deb_vb_key }}"
     state: present
   when: ( ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int == 18 ) or 
         ( ansible_distribution == "Debian" and ansible_distribution_version|int == 9 )
 
-- name: adding older virtualbox key
+- name: adding older key
   apt_key:
     url: "{{ deb_vb_keyurl }}/{{ deb_vb_old_key }}"
     state: present
@@ -18,13 +18,13 @@
         ( ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int == 14 ) or
         ( ansible_distribution == "Debian" and ansible_distribution_version|int == 8 )
 
-- name: adding virtualbox repo
+- name: adding repo
   lineinfile:
     path: /etc/apt/sources.list
     backup: yes
     line: deb http://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib
 
-- name: installing virtualbox (this may take a few mintues)
+- name: installing (this may take a few minutes)
   apt:
     name: virtualbox-5.2
     state: present
@@ -34,7 +34,7 @@
   register: vb_install
 # - debug: var=vb_install
 
-- name: installing old virtualbox (this may take a few mintues)
+- name: installing old release (this may take a few minutes)
   apt:
     name: virtualbox-5.1
     state: present

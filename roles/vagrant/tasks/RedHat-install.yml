@@ -29,7 +29,7 @@
 # the package method generalizes this install so there's no need
 # check versions.
 # installs into /opt/vagrant and /usr/bin/vagrant
-- name: installing vagrant rpm file (this amy take a minute)
+- name: installing rpm file (this amy take a minute)
   package:
     name: "./{{ vagrant_rpm_file }}"
     state: present

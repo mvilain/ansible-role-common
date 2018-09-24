@@ -26,7 +26,7 @@
     dest: "./{{ vagrant_deb_file }}"
 
 # installs into /opt/vagrant and /usr/bin/vagrant
-- name: installing vagrant deb file
+- name: installing deb file
   apt:
     deb: "{{ vagrant_deb_file }}"
     state: present

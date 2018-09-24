@@ -1,6 +1,6 @@
 ---
 
-- name: install ansible
+- name: install on fedora
   package: 
     name: ansible 
     state: present
