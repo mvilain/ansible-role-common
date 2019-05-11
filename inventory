@@ -13,6 +13,8 @@ fedora25 ansible_host=192.168.10.125
 fedora26 ansible_host=192.168.10.126
 fedora27 ansible_host=192.168.10.127
 fedora28 ansible_host=192.168.10.128
+fedora29 ansible_host=192.168.10.129
+fedora30 ansible_host=192.168.10.130
 
 [ubuntu]
 ubuntu12 ansible_host=192.168.10.112

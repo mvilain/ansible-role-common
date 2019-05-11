@@ -106,7 +106,7 @@ Vagrant.configure("2") do |config|
 # fedora 22 archived to
 # https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/22/Cloud/x86_64/Images/Fedora-Cloud-Base-Vagrant-22-20150521.x86_64.vagrant-virtualbox.box
 # bento/fedora-27
-# fedora/28-cloud-base   (virtualbox, 20180425)
+# fedora/29-cloud-base   (virtualbox, 29.20181024.1)
 
 	# fedora21+vagrant 2 doesn't set 2nd network config correctly
 	config.vm.define "fedora21" do |fedora21|
@@ -196,11 +196,11 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	config.vm.define "fedora28" do |fedora|
-		fedora.vm.box = "fedora/28-cloud-base"
+	config.vm.define "fedora29" do |fedora|
+		fedora.vm.box = "fedora/29-cloud-base"
 		fedora.ssh.insert_key = false
-		fedora.vm.network 'private_network', ip: '192.168.10.128'
-		fedora.vm.hostname = 'fedora28'
+		fedora.vm.network 'private_network', ip: '192.168.10.129'
+		fedora.vm.hostname = 'fedora29'
 
 		# python2 and virtual box extensions not installed
 		fedora.vm.provision "shell", inline: <<-SHELL
