@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
 
 
 	config.vm.define "centos6" do |centos6|
-		centos6.vm.box = "geerlingguy/centos6"
+		centos6.vm.box = "centos/6"
 		centos6.ssh.insert_key = false
 		centos6.vm.network 'private_network', ip: '192.168.10.106'
 		centos6.vm.hostname = 'centos6'
@@ -44,7 +44,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "centos7" do |centos7|
-		centos7.vm.box = "geerlingguy/centos7"
+		centos7.vm.box = "centos/7"
 		centos7.ssh.insert_key = false
 		centos7.vm.network 'private_network', ip: '192.168.10.107'
 		centos7.vm.hostname = 'centos7'
