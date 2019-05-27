@@ -1,6 +1,6 @@
 # playbook for Ubuntu hosts
 ---
-- hosts: ubuntu
+- hosts: ubuntu_group
   become: true
 # check_mode: yes  # yes=dry-run
   roles:

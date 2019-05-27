@@ -1,6 +1,6 @@
 # playbook for Fedora hosts
 ---
-- hosts: fedora
+- hosts: fedora_group
   become: true
 # check_mode: yes  # yes=dry-run
   roles:

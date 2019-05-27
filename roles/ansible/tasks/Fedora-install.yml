@@ -1,5 +1,9 @@
 ---
-
+# Fedora 30 uses python3, so python3_dnf is already installed. Earlier versions
+# of ansible assume python 2.x is installed which will fail under Fedora 30
+#
+# https://github.com/ansible/ansible/issues/54855
+# https://www.reddit.com/r/Fedora/comments/b5fm39/fedora_30_ansibleplaybook/
 - name: install on fedora
   package: 
     name: ansible 

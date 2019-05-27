@@ -1,6 +1,6 @@
 # playbook for ansible, vagrant, and virtualbox hosts
 ---
-- hosts: centos
+- hosts: centos_group
   become: true
 # check_mode: yes  # yes=dry-run
   roles:
@@ -10,7 +10,7 @@
   tags:
     - centos
 
-- hosts: fedora
+- hosts: fedora_group,fedora30_group
   become: true
 # check_mode: yes  # yes=dry-run
   roles:
@@ -20,7 +20,7 @@
   tags:
     - fedora
 
-- hosts: debian
+- hosts: debian_group
   become: true
 # check_mode: yes  # yes=dry-run
   roles:
@@ -30,7 +30,7 @@
   tags:
     - debian
 
-- hosts: ubuntu
+- hosts: ubuntu_group
   become: true
 # check_mode: yes  # yes=dry-run
   roles:

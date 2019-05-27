@@ -1,6 +1,6 @@
 # playbook for CentOS hosts
 ---
-- hosts: centos
+- hosts: centos_group
   become: true
   # check_mode: yes  # yes=dry-run
   roles:

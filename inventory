@@ -1,10 +1,10 @@
 # test inventory
 
-[centos]
+[centos_group]
 centos6 ansible_host=192.168.10.106
 centos7 ansible_host=192.168.10.107
 
-[fedora]
+[fedora_group]
 fedora21 ansible_host=192.168.10.121
 fedora22 ansible_host=192.168.10.122
 fedora23 ansible_host=192.168.10.123
@@ -14,28 +14,35 @@ fedora26 ansible_host=192.168.10.126
 fedora27 ansible_host=192.168.10.127
 fedora28 ansible_host=192.168.10.128
 fedora29 ansible_host=192.168.10.129
+
+[fedora30_group]
 fedora30 ansible_host=192.168.10.130
 
-[ubuntu]
+[ubuntu_group]
 ubuntu12 ansible_host=192.168.10.112
 ubuntu14 ansible_host=192.168.10.114
 ubuntu16 ansible_host=192.168.10.116
 ubuntu17 ansible_host=192.168.10.117
 ubuntu18 ansible_host=192.168.10.118
 
-[debian]
+[debian_group]
 debian8 ansible_host=192.168.10.108
 debian9 ansible_host=192.168.10.109
 
-[macos]
+[macos_group]
 mac1011 ansible_host=192.168.10.211
 
 [all:children]
-centos
-debian
-fedora
-ubuntu
-macos
+centos_group
+debian_group
+fedora_group
+fedora30_group
+ubuntu_group
+macos_group
+
+# https://www.reddit.com/r/Fedora/comments/b5fm39/fedora_30_ansibleplaybook/
+[fedora30_group:vars]
+ansible_python_interpreter=/usr/bin/python3
 
 [all:vars]
 ansible_ssh_user=vagrant

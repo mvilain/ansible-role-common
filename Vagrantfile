@@ -105,8 +105,8 @@ Vagrant.configure("2") do |config|
 # bento/fedora-22        (virtualbox, 2.2.4)
 # fedora 22 archived to
 # https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/22/Cloud/x86_64/Images/Fedora-Cloud-Base-Vagrant-22-20150521.x86_64.vagrant-virtualbox.box
-# bento/fedora-27
-# fedora/29-cloud-base   (virtualbox, 29.20181024.1)
+# bento/fedora-29
+# fedora/30-cloud-base   (virtualbox, v30.20190425.0)
 
 	# fedora21+vagrant 2 doesn't set 2nd network config correctly
 	config.vm.define "fedora21" do |fedora21|
@@ -129,31 +129,6 @@ Vagrant.configure("2") do |config|
 			ansible.inventory_path = "./inventory"
 		end
 	end
-	# N = 28
-	# (22..N).each do |machine_id|
-	#   config.vm.define "fedora#{machine_id}" do |machine|
-	#     machine.vm.hostname = "fedora#{machine_id}"
-	#     machine.vm.network "private_network", ip: "192.168.10.1#{machine_id}"
-	#     # Only execute once the Ansible provisioner,
-	#     # when all the machines are up and ready.
-	#     if machine_id == N
-	#		machine.vm.provision "shell", inline: <<-SHELL
-	#			echo "...fixing enp0s8..."
-	#			sed -i -e "s/BOOTPROTO=none/BOOTPROTO=static/" /etc/sysconfig/network-scripts/ifcfg-enp0s8
-	#			systemctl restart network
-	#			# yum update -y
-	#			yum install -y python wget libselinux-python selinux-policy-default
-	#		SHELL
-	#       machine.vm.provision :ansible do |ansible|
-	#         # Disable default limit to connect to all the machines
-	#         ansible.limit = "all"
-	#		  ansible.compatibility_mode = "2.0"
-	#         ansible.playbook = "site.yml"
-	#		  ansible.inventory_path = "./inventory"
-	#       end
-	#     end
-	#   end
-	# end
 
 	# these two versions are tested because 21 still used yum while 22 used dnf
 	config.vm.define "fedora22" do |fedora22|
@@ -215,10 +190,29 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
+	config.vm.define "fedora30" do |fedora|
+		fedora.vm.box = "fedora/30-cloud-base"
+		fedora.ssh.insert_key = false
+		fedora.vm.network 'private_network', ip: '192.168.10.130'
+		fedora.vm.hostname = 'fedora30'
+
+		# python3 and virtual box extensions not installed
+		# requires ansible_python_interpreter=/usr/bin/python3 in inventory
+		fedora.vm.provision "shell", inline: <<-SHELL
+			# dnf update -y
+			echo "...installing python3 (this may take a while)..."
+			dnf install -y python3 wget libselinux-python3
+		SHELL
+		fedora.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yml"
+			ansible.inventory_path = "./inventory"
+		end
+	end
+
 # ubuntu/precise64    (virtualbox, 20170427.0.0)
 # ubuntu/trusty64     (virtualbox, 20180530.1.0)
 # ubuntu/xenial64     (virtualbox, 20180602.0.0)
-# bento/ubuntu-17.04  (virtualbox, 201801.02.0)
 # ubuntu/bionic64     (virtualbox, 20180531.0.0)
 
 	config.vm.define "ubuntu12" do |ubuntu12|
@@ -272,29 +266,7 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	# config.vm.define "ubuntu17" do |ubuntu17|
-	# 	ubuntu17.vm.box = "bento/ubuntu-17.04" # 17.04-needs python
-	# 	ubuntu17.vm.network 'private_network', ip: '192.168.10.117'
-	# 	ubuntu17.vm.hostname = 'ubuntu17'
-	# 	ubuntu17.ssh.insert_key = false
-
-	# 	# fix 17.04 apt database as it EOL as of Feb-2018
-	# 	ubuntu17.vm.provision "shell", inline: <<-SHELL
-	# 		echo "...fixing apt database..."
-	# 		sed -i -e "s/archive.ubuntu.com/old-releases.ubuntu.com/" \
-	# 			-e "s/security.ubuntu.com/old-releases.ubuntu.com/" \
-	# 			-e "s/archive.ubuntu.com/old-releases.ubuntu.com/" /etc/apt/sources.list
-	# 		apt-get update -y
-	# 		apt-get install -y python
-	# 	SHELL
-	# 	ubuntu17.vm.provision "ansible" do |ansible|
-	# 		ansible.compatibility_mode = "2.0"
-	# 		ansible.playbook = "site.yml"
-	# 		ansible.inventory_path = "./inventory"
-	# 	end
-	# end
-
-		config.vm.define "ubuntu18" do |ubuntu18|
+	config.vm.define "ubuntu18" do |ubuntu18|
 		ubuntu18.vm.box = "geerlingguy/ubuntu1804"
 		ubuntu18.ssh.insert_key = false
 		ubuntu18.vm.network 'private_network', ip: '192.168.10.118'
