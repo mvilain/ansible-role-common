@@ -35,9 +35,9 @@ The following OS and versions have been tested:
 
 - CentOS 6 and 7
 - Debian 8 (jessie) and 9 (stretch)
-- Fedora 21, 24, 28*
-- Ubuntu 12.04 (precise) 14.04 (trusty), 16.04 (xenial), 17.04 (zesty), and 18.04 (bionic)
+- Fedora 21 - 30*
+- Ubuntu 12.04 (precise) 14.04 (trusty), 16.04 (xenial), and 18.04 (bionic)
 
 
 
-*-- Fedora 28 is the Offical cloud release which lacks the Virtual Box Extensions, which is not required to use this ansible role
+*-- Fedora Offical cloud release lacks the Virtual Box Extensions, which is not required to use this ansible role
