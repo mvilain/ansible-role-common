@@ -62,7 +62,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "debian8" do |debian8|
-		debian8.vm.box = "geerlingguy/debian8"
+		debian8.vm.box = "debian/jessie64"
 		debian8.ssh.insert_key = false
 		debian8.vm.network 'private_network', ip: '192.168.10.108'
 		debian8.vm.hostname = 'debian8'
@@ -81,7 +81,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "debian9" do |debian9|
-		debian9.vm.box = "geerlingguy/debian9"
+		debian9.vm.box = "debian/stretch64"
 		debian9.ssh.insert_key = false
 		debian9.vm.network 'private_network', ip: '192.168.10.109'
 		debian9.vm.hostname = 'debian9'
@@ -211,12 +211,12 @@ Vagrant.configure("2") do |config|
 	end
 
 # ubuntu/precise64    (virtualbox, 20170427.0.0)
-# ubuntu/trusty64     (virtualbox, 20180530.1.0)
-# ubuntu/xenial64     (virtualbox, 20180602.0.0)
-# ubuntu/bionic64     (virtualbox, 20180531.0.0)
+# ubuntu/trusty64     (virtualbox, 20190429.0.1)
+# ubuntu/xenial64     (virtualbox, 20190530.3.0)
+# ubuntu/bionic64     (virtualbox, 20190531.0.0)
 
 	config.vm.define "ubuntu12" do |ubuntu12|
-		ubuntu12.vm.box = "geerlingguy/ubuntu1204"
+		ubuntu12.vm.box = "ubuntu/precise64"
 		ubuntu12.ssh.insert_key = false
 		ubuntu12.vm.network 'private_network', ip: '192.168.10.112'
 		ubuntu12.vm.hostname = 'ubuntu12'
@@ -233,7 +233,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "ubuntu14" do |ubuntu14|
-		ubuntu14.vm.box = "geerlingguy/ubuntu1404"
+		ubuntu14.vm.box = "ubuntu/trusty64"
 		ubuntu14.ssh.insert_key = false
 		ubuntu14.vm.network 'private_network', ip: '192.168.10.114'
 		ubuntu14.vm.hostname = 'ubuntu14'
@@ -250,7 +250,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "ubuntu16" do |ubuntu16|
-		ubuntu16.vm.box = "geerlingguy/ubuntu1604"
+		ubuntu16.vm.box = "ubuntu/xenial64"
 		ubuntu16.ssh.insert_key = false
 		ubuntu16.vm.network 'private_network', ip: '192.168.10.116'
 		ubuntu16.vm.hostname = 'ubuntu16'
@@ -267,7 +267,7 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "ubuntu18" do |ubuntu18|
-		ubuntu18.vm.box = "geerlingguy/ubuntu1804"
+		ubuntu18.vm.box = "ubuntu/bionic64"
 		ubuntu18.ssh.insert_key = false
 		ubuntu18.vm.network 'private_network', ip: '192.168.10.118'
 		ubuntu18.vm.hostname = 'ubuntu18'
