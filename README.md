@@ -21,6 +21,17 @@ run one by one.  But that can be tedious.  I've changed the vagrant boxes from
 the standard ubuntu and fedora distros in which some don't have python already
 installed to ones that run ansible without any prior provisioning.
 
+Both `vagrant up` and `vagrant up --no-provision; ansible-playbook site.yml` work for:
+- CentOS 6 and 7 (c6, c7)
+- Debian 9 and 10 (d9, d10)
+- fedora 22
+- fedora 23
+- fedora 29
+- fedora 30
+
+Only `vagrant up` works for
+- fedora 21 (requires vagrant to provision correctly with 2nd NIC and install python)
+
 
 ## Appendix A -- Building your own Vagrant box with Packer
 
@@ -39,8 +50,5 @@ The following OS and versions have been tested:
 
 - CentOS 6 and 7
 - Debian 9 (stretch 64-bit) and Debian 10 (buster 64-bit)
-- Fedora 21 - 30*
+- Fedora 21, 22, 23, 29, 30
 - Ubuntu 12.04 (precise) 14.04 (trusty), 16.04 (xenial), and 18.04 (bionic)
-
-
-*-- Fedora Offical cloud release lacks the Virtual Box Extensions, which is not required to use this ansible role

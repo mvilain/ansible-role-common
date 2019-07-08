@@ -5,7 +5,7 @@
 
 Vagrant.configure("2") do |config|
 	# config.vm.network 'forwarded_port', guest: 80, host: 8080
-	config.vm.synced_folder '.', '/vagrant', disabled: false
+	config.vm.synced_folder '.', '/vagrant', disabled: true
 	config.vm.provider :virtualbox do |vb|
 		#vb.gui = true
 		vb.memory = '1024'
@@ -24,7 +24,6 @@ Vagrant.configure("2") do |config|
 
 	config.vm.define "c6" do |c6|
 		c6.vm.box = "centos/6"
-# 		c6.vm.box = "geerlingguy/centos6"
 		c6.ssh.insert_key = false
 		c6.vm.network 'private_network', ip: '192.168.10.106'
 		c6.vm.hostname = 'centos6'
@@ -40,7 +39,6 @@ Vagrant.configure("2") do |config|
 
 	config.vm.define "c7" do |c7|
 		c7.vm.box = "centos/7"
-# 		c7.vm.box = "geerlingguy/centos7"
 		c7.ssh.insert_key = false
 		c7.vm.network 'private_network', ip: '192.168.10.107'
 		c7.vm.hostname = 'centos7'
@@ -91,15 +89,14 @@ Vagrant.configure("2") do |config|
 			sed -i -e "s/BOOTPROTO=none/BOOTPROTO=static/" /etc/sysconfig/network-scripts/ifcfg-enp0s8
 			echo "...restarting network..."
 			systemctl restart network
-			sleep 10
+			sleep 5
 			systemctl restart network
 			ip addr
-			for i in /etc/sysconfig/network-scripts/ifcfg-eth1 /etc/sysconfig/network-scripts/ifcfg-enp0s8; do
-				if [ -e ${i} ]; then echo "...displaying ${i}..."; cat ${i}; fi
-		done
-			#yum update -y
+# 			for i in /etc/sysconfig/network-scripts/ifcfg-eth1 /etc/sysconfig/network-scripts/ifcfg-enp0s8; do
+# 				if [ -e ${i} ]; then echo "...displaying ${i}..."; cat ${i}; fi
+# 			done
 			echo "...installing python2 (this may take a while)..."
-			yum install -y python wget libselinux-python selinux-policy-default
+			yum install -y python libselinux-python selinux-policy-default
 		SHELL
 		f21.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -110,17 +107,11 @@ Vagrant.configure("2") do |config|
 
 	# these two versions are tested because 21 still used yum while 22 used dnf
 	config.vm.define "f22" do |f22|
-		#f22.vm.box = "f22"
 		f22.vm.box = "bento/fedora-22"
 		f22.ssh.insert_key = false
 		f22.vm.network 'private_network', ip: '192.168.10.122'
 		f22.vm.hostname = 'f22'
 
-		f22.vm.provision "shell", inline: <<-SHELL
-			#dnf update -y
-			echo "...installing python2 (this may take a while)..."
-			dnf install -y python wget libselinux-python
-		SHELL
 		f22.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"
@@ -128,19 +119,13 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	# virtualbox runs the older 5.0 on Fedora 23 and below
-	# so test that it works
+	# virtualbox runs the older 5.0 on Fedora 23 and below so test that it works
 	config.vm.define "f23" do |f23|
-		f23.vm.box = "bento/fedora-23"
+		f23.vm.box = "akanto/fedora-23-server"
 		f23.ssh.insert_key = false
 		f23.vm.network 'private_network', ip: '192.168.10.123'
 		f23.vm.hostname = 'f23'
 
-		f23.vm.provision "shell", inline: <<-SHELL
-			#dnf update -y
-			echo "...installing python2 (this may take a while)..."
-			dnf install -y python wget libselinux-python
-		SHELL
 		f23.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"
@@ -149,18 +134,11 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "f29" do |f29|
-		f29.vm.box = "fedora/29-cloud-base"
-# 		f29.vm.box = "bento/fedora-29"
+		f29.vm.box = "generic/fedora29"
 		f29.ssh.insert_key = false
 		f29.vm.network 'private_network', ip: '192.168.10.129'
 		f29.vm.hostname = 'f29'
 
-		# python2 and virtual box extensions not installed
-		f29.vm.provision "shell", inline: <<-SHELL
-			# dnf update -y
-			echo "...installing python2 (this may take a while)..."
-			dnf install -y python wget libselinux-python
-		SHELL
 		f29.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"
@@ -169,19 +147,12 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "f30" do |f30|
-		f30.vm.box = "fedora/30-cloud-base"
-# 		f30.vm.box = "bento/fedora-30"
+		f30.vm.box = "generic/fedora30"
 		f30.ssh.insert_key = false
 		f30.vm.network 'private_network', ip: '192.168.10.130'
 		f30.vm.hostname = 'fedora30'
 
-		# python3 and virtual box extensions not installed
 		# requires ansible_python_interpreter=/usr/bin/python3 in inventory
-		f30.vm.provision "shell", inline: <<-SHELL
-			# dnf update -y
-			echo "...installing python3 (this may take a while)..."
-			dnf install -y python3 wget libselinux-python3
-		SHELL
 		f30.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"

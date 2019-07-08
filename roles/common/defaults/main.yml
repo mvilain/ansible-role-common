@@ -9,6 +9,7 @@ common_packages:
   - net-tools
   - ntp
   - vim
+  - wget
 
 ntp_host: 0.north-america.pool.ntp.org
 ntp_service: ntpd
