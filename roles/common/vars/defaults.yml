@@ -1,4 +1,5 @@
 # default vars file for common
 # put default values in defaults/main.yml
 # host-specific variables can also go here
+# NOTE: these cannot be overrriden by the command line
 ---

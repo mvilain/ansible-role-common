@@ -16,6 +16,10 @@ To use this role inside of ansible,
 
 ## Using Vagrant and Virtual Box for testing
 
+This repo works best by typing `vagrant up` and watching the various boxes 
+run one by one.  But that can be tedious.  I've changed the vagrant boxes from
+the standard ubuntu and fedora distros in which some don't have python already
+installed to ones that run ansible without any prior provisioning.
 
 
 ## Appendix A -- Building your own Vagrant box with Packer
@@ -34,10 +38,9 @@ And this git repo is good for creating packer templates:
 The following OS and versions have been tested:
 
 - CentOS 6 and 7
-- Debian 8 (jessie) and 9 (stretch)
+- Debian 9 (stretch 64-bit) and Debian 10 (buster 64-bit)
 - Fedora 21 - 30*
 - Ubuntu 12.04 (precise) 14.04 (trusty), 16.04 (xenial), and 18.04 (bionic)
-
 
 
 *-- Fedora Offical cloud release lacks the Virtual Box Extensions, which is not required to use this ansible role

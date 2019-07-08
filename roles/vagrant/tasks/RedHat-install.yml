@@ -17,6 +17,12 @@
 #   register: vagrant_wget_result
 # - debug: var=vagrant_wget_result.stderr_lines
 
+- name: selinux required
+  package: 
+    name: libselinux-python 
+    state: present
+  when: ansible_distribution == "CentOS"
+
 # as of 9/23/18, Hasicorp has restricted access of the rpm file
 # you can only get it from the web site
 # so provide them here in the role's files directory

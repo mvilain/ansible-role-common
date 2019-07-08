@@ -1,15 +1,32 @@
 # install for Debian ansible
 ---
+# comparing version with |int will cause a deprecated error in ansible 2.8+
 
 - name: enable backports repository
   apt_repository:
     repo: "deb http://ftp.debian.org/debian {{ ansible_distribution_release }}-backports main"
     state: present
     filename: "{{ ansible_distribution_release }}_backports"
+  when: ansible_distribution_major_version|int < 10
 
-- name: install on debian
+- name: install on debian < 10
   apt:
     name: ansible
     update_cache: yes 
     state: present
     default_release: "{{ ansible_distribution_release }}-backports"
+  when: ansible_distribution_major_version|int < 10
+
+# don't use apt: update_cache=yes here because it won't work to trap
+# repo change errors like with Debian 10 because of apt-secure server
+- name: apt-get update
+  shell: 'apt-get update --allow-releaseinfo-change -y'
+  args:
+    warn: no
+  when: ansible_distribution_major_version|int >= 10
+
+- name: install on debian 10
+  apt:
+    name: ansible
+    update_cache: yes 
+    state: present

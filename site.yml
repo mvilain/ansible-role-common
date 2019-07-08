@@ -1,14 +1,9 @@
 # main playbook: site.yml
 ---
-
-# - import_playbook: play-centos.yml
-
-# - import_playbook: play-debian.yml
-
-# - import_playbook: play-fedora.yml
-
-# - import_playbook: play-ubuntu.yml
-
-# - import_playbook: play-macos.yml
+#- hosts: centos_group,fedora_group,fedora30_group,debian_group,ubuntu_group
+#  become: true
+## check_mode: yes  # yes=dry-run
+#  roles:
+#    - common
 
 - import_playbook: play-virtualbox.yml

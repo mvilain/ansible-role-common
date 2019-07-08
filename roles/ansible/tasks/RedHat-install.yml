@@ -13,7 +13,7 @@
   register: epel_install
   when: not epel_repofile_result.stat.exists
 
-- name: instal EPEL key
+- name: install EPEL key
   rpm_key:
     key: "{{ epel_repo_gpg_key_url }}"
     state: present

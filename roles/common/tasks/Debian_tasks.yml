@@ -1,5 +1,15 @@
 # Debian install tasks for common
 ---
+# comparing version with |int will cause a deprecated error in ansible 2.8+
+
+#don't use apt: update_cache=yes here because it won't work to trap
+#repo change errors like with Debian 10 because of apt-secure server
+- name: apt-get update
+  shell: 'apt-get update --allow-releaseinfo-change -y'
+  args:
+    warn: no
+  when: ansible_distribution_major_version|int >= 10
+
 - name: Debian packages
   package: name={{ item }} state=present
   with_items:

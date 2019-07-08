@@ -4,5 +4,5 @@
   become: true
 # check_mode: yes  # yes=dry-run
   roles:
-    # - common
+    - common
     - vagrant

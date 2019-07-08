@@ -1,33 +1,34 @@
 # test inventory
 
 [centos_group]
-centos6 ansible_host=192.168.10.106
-centos7 ansible_host=192.168.10.107
+# requires python-selinux
+c6 ansible_host=192.168.10.106
+c7 ansible_host=192.168.10.107
 
 [fedora_group]
-fedora21 ansible_host=192.168.10.121
-fedora22 ansible_host=192.168.10.122
-fedora23 ansible_host=192.168.10.123
-fedora24 ansible_host=192.168.10.124
-fedora25 ansible_host=192.168.10.125
-fedora26 ansible_host=192.168.10.126
-fedora27 ansible_host=192.168.10.127
-fedora28 ansible_host=192.168.10.128
-fedora29 ansible_host=192.168.10.129
+f21 ansible_host=192.168.10.121
+f22 ansible_host=192.168.10.122
+f23 ansible_host=192.168.10.123
+f24 ansible_host=192.168.10.124
+f25 ansible_host=192.168.10.125
+f26 ansible_host=192.168.10.126
+f27 ansible_host=192.168.10.127
+f28 ansible_host=192.168.10.128
+f29 ansible_host=192.168.10.129
 
 [fedora30_group]
-fedora30 ansible_host=192.168.10.130
+f30 ansible_host=192.168.10.130
 
 [ubuntu_group]
-ubuntu12 ansible_host=192.168.10.112
-ubuntu14 ansible_host=192.168.10.114
-ubuntu16 ansible_host=192.168.10.116
-ubuntu17 ansible_host=192.168.10.117
-ubuntu18 ansible_host=192.168.10.118
+u12 ansible_host=192.168.10.112
+u14 ansible_host=192.168.10.114
+# require python installed first
+u16 ansible_host=192.168.10.116
+u18 ansible_host=192.168.10.118
 
 [debian_group]
-debian8 ansible_host=192.168.10.108
-debian9 ansible_host=192.168.10.109
+d9 ansible_host=192.168.10.109
+d10 ansible_host=192.168.10.110
 
 [macos_group]
 mac1011 ansible_host=192.168.10.211

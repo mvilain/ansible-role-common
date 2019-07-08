@@ -1,5 +1,6 @@
 # install for Debian virtualbox
 ---
+# comparing version with |int will cause a deprecated error in ansible 2.8+
 
 # vagrant doesn't support https behind proxy
 # none of this won't work behind a proxy server
@@ -7,8 +8,8 @@
   apt_key:
     url: "{{ deb_vb_keyurl }}/{{ deb_vb_key }}"
     state: present
-  when: ( ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int == 18 ) or 
-        ( ansible_distribution == "Debian" and ansible_distribution_version|int == 9 )
+  when: ( ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 18 ) or 
+        ( ansible_distribution == "Debian" and ansible_distribution_version|int >= 9 )
 
 - name: adding older key
   apt_key:
@@ -18,19 +19,26 @@
         ( ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int == 14 ) or
         ( ansible_distribution == "Debian" and ansible_distribution_version|int == 8 )
 
+# this may fail for new versions of Virtualbox that don't have their distibutions set up yet.
+# 7/7/19, VirtualBox 5.2 doesn't have a Debian 10 Release file and future ansible runs will fail
 - name: adding repo
   lineinfile:
     path: /etc/apt/sources.list
     backup: yes
     line: deb http://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib
+  when: ( ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int != 12 ) or 
+        ( ansible_distribution == "Debian" and ansible_distribution_version|int < 10 )
 
+# this may fail for new versions of Virtualbox that don't have their distibutions set up yet.
+# 7/7/19, VirtualBox 5.2 doesn't have a Debian 10 Release file and this install will fail
 - name: installing (this may take a few minutes)
   apt:
     name: virtualbox-5.2
     state: present
     allow_unauthenticated: yes
     update_cache: yes
-  when: ( ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int != 12 )
+  when: ( ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int != 12 ) or 
+        ( ansible_distribution == "Debian" and ansible_distribution_version|int < 10 )
   register: vb_install
 # - debug: var=vb_install
 
