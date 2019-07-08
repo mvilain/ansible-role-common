@@ -8,7 +8,7 @@ This is a basic layout for an ansible project that can be expanded to support a 
 To use this role inside of ansible, 
 
 * add the **common/** directory tree to your roles/ directory inside your ansible repository
-* edit your inventory file to use the common role for every host (or specific hosts)
+* edit the inventory file to use the common role for every host (or specific hosts)
 * to add packages, services, files, etc. to the common role:
   - modify variable *base_packages* in **roles/common/defaults/main.yml**
   - modify type or distro files in **roles/common/vars** for OS-specific stuff
@@ -28,6 +28,10 @@ Both `vagrant up` and `vagrant up --no-provision; ansible-playbook site.yml` wor
 - fedora 23
 - fedora 29
 - fedora 30
+- ubuntu 12.04
+- ubuntu 14.04
+- ubuntu 16.04
+- ubuntu 18.04
 
 Only `vagrant up` works for
 - fedora 21 (requires vagrant to provision correctly with 2nd NIC and install python)

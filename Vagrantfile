@@ -160,17 +160,13 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
+
 	config.vm.define "u12" do |u12|
 		u12.vm.box = "ubuntu/precise64"
-# 		u12.vm.box = "geerlingguy/ubuntu1204"
 		u12.ssh.insert_key = false
 		u12.vm.network 'private_network', ip: '192.168.10.112'
 		u12.vm.hostname = 'u12'
 
-		u12.vm.provision "shell", inline: <<-SHELL
-			apt-get update -y
-			apt-get install -y python
-		SHELL
 		u12.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"
@@ -180,15 +176,10 @@ Vagrant.configure("2") do |config|
 
 	config.vm.define "u14" do |u14|
 		u14.vm.box = "ubuntu/trusty64"
-# 		u14.vm.box = "geerlingguy/ubuntu1404"
 		u14.ssh.insert_key = false
 		u14.vm.network 'private_network', ip: '192.168.10.114'
 		u14.vm.hostname = 'u14'
 
-		u14.vm.provision "shell", inline: <<-SHELL
-			apt-get update -y
-			apt-get install -y python
-		SHELL
 		u14.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"
@@ -197,16 +188,11 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "u16" do |u16|
-# 		u16.vm.box = "ubuntu/xenial64"
 		u16.vm.box = "geerlingguy/ubuntu1604"
 		u16.ssh.insert_key = false
 		u16.vm.network 'private_network', ip: '192.168.10.116'
 		u16.vm.hostname = 'u16'
 
-		u16.vm.provision "shell", inline: <<-SHELL
-			apt-get update -y
-			apt-get install -y python
-		SHELL
 		u16.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"
@@ -215,17 +201,11 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "u18" do |u18|
-# 		u18.vm.box = "ubuntu/bionic64"
 		u18.vm.box = "geerlingguy/ubuntu1804"
 		u18.ssh.insert_key = false
 		u18.vm.network 'private_network', ip: '192.168.10.118'
 		u18.vm.hostname = 'u18'
 
-		u18.vm.provision "shell", inline: <<-SHELL
-			apt-get update -y
-			apt-get install -y python
-			apt -y autoremove
-		SHELL
 		u18.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"

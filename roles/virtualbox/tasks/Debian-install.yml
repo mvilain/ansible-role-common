@@ -44,7 +44,7 @@
 
 - name: installing old release (this may take a few minutes)
   apt:
-    name: virtualbox-5.1
+    name: virtualbox
     state: present
     allow_unauthenticated: yes
     update_cache: yes

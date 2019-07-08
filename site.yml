@@ -1,9 +1,9 @@
 # main playbook: site.yml
 ---
-#- hosts: centos_group,fedora_group,fedora30_group,debian_group,ubuntu_group
-#  become: true
-## check_mode: yes  # yes=dry-run
-#  roles:
-#    - common
+- hosts: centos_group,fedora_group,fedora30_group,debian_group,ubuntu_group
+  become: true
+# check_mode: yes  # yes=dry-run
+  roles:
+    - common
 
 - import_playbook: play-virtualbox.yml

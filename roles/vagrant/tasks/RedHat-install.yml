@@ -21,6 +21,6 @@
 - name: installing rpm file (this amy take a minute)
   package:
     name: "./{{ vagrant_rpm_file }}"
-    state: present
+    state: presen
   register: vagrant_yum_rpm
 # - debug: var=vagrant_yum_rpm.results
