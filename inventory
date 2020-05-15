@@ -1,9 +1,12 @@
 # test inventory
 
-[centos_group]
 # requires python-selinux
+[centos_group]
 c6 ansible_host=192.168.10.106
 c7 ansible_host=192.168.10.107
+
+[centos8_group]
+c8 ansible_host=192.168.10.108
 
 [fedora_group]
 f21 ansible_host=192.168.10.121
@@ -16,15 +19,15 @@ f27 ansible_host=192.168.10.127
 f28 ansible_host=192.168.10.128
 f29 ansible_host=192.168.10.129
 
-[fedora30_group]
-f30 ansible_host=192.168.10.130
+[fedora32_group]
+f32 ansible_host=192.168.10.132
 
 [ubuntu_group]
 u12 ansible_host=192.168.10.112
 u14 ansible_host=192.168.10.114
-# require python installed first
 u16 ansible_host=192.168.10.116
 u18 ansible_host=192.168.10.118
+u20 ansible_host=192.168.10.120
 
 [debian_group]
 d9 ansible_host=192.168.10.109
@@ -35,15 +38,16 @@ mac1011 ansible_host=192.168.10.211
 
 [all:children]
 centos_group
+centos8_group
 debian_group
 fedora_group
-fedora30_group
+fedora32_group
 ubuntu_group
 macos_group
 
 # https://www.reddit.com/r/Fedora/comments/b5fm39/fedora_30_ansibleplaybook/
-[fedora30_group:vars]
-ansible_python_interpreter=/usr/bin/python3
+#[fedora32_group:vars]
+# ansible_python_interpreter=/usr/bin/python3
 
 [all:vars]
 ansible_ssh_user=vagrant

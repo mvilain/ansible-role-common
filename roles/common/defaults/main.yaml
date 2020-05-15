@@ -15,3 +15,5 @@ ntp_host: 0.north-america.pool.ntp.org
 ntp_service: ntpd
 
 timezone: America/Los_Angeles
+
+# chrony used in CentOS8 and Ubuntu20

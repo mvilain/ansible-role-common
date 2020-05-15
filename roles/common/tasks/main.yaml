@@ -1,7 +1,7 @@
 ---
 # tasks file for common
 
-#OS_FAMILY = dict(
+#ansible_os_family = dict(
 #  RedHat = 'RedHat', Fedora = 'RedHat', CentOS = 'RedHat', Scientific = 'RedHat',
 #  SLC = 'RedHat', Ascendos = 'RedHat', CloudLinux = 'RedHat', PSBM = 'RedHat',
 #  OracleLinux = 'RedHat', OVS = 'RedHat', OEL = 'RedHat', Amazon = 'RedHat',
@@ -13,12 +13,12 @@
 #  FreeBSD = 'FreeBSD', HPUX = 'HP-UX'
 #)
 
-# - block:
-#   - debug: var=ansible_os_family
-#   - debug: var=ansible_distribution
-#   - debug: var=ansible_distribution_major_version 
-#   - debug: var=ansible_distribution_release
-#   - debug: var=ansible_distribution_version
+- block:
+  - debug: var=ansible_os_family
+  - debug: var=ansible_distribution
+  - debug: var=ansible_distribution_major_version 
+  - debug: var=ansible_distribution_release
+  - debug: var=ansible_distribution_version
 
 - name: set specific variables for distributions
   block:

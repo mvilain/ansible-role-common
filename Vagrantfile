@@ -6,6 +6,7 @@
 Vagrant.configure("2") do |config|
 	# config.vm.network 'forwarded_port', guest: 80, host: 8080
 	config.vm.synced_folder '.', '/vagrant', disabled: true
+	config.ssh.insert_key = false
 	config.vm.provider :virtualbox do |vb|
 		#vb.gui = true
 		vb.memory = '1024'
@@ -26,7 +27,10 @@ Vagrant.configure("2") do |config|
 		c6.vm.box = "centos/6"
 		c6.ssh.insert_key = false
 		c6.vm.network 'private_network', ip: '192.168.10.106'
-		c6.vm.hostname = 'centos6'
+		c6.vm.hostname = 'c6'
+		c6.vm.provision "shell", inline: <<-SHELL
+      yum install -y python libselinux-python
+    SHELL
 
 		c6.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -41,9 +45,31 @@ Vagrant.configure("2") do |config|
 		c7.vm.box = "centos/7"
 		c7.ssh.insert_key = false
 		c7.vm.network 'private_network', ip: '192.168.10.107'
-		c7.vm.hostname = 'centos7'
+		c7.vm.hostname = 'c7'
+		c7.vm.provision "shell", inline: <<-SHELL
+      yum install -y python libselinux-python
+    SHELL
 
 		c7.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yml"
+			ansible.inventory_path = "./inventory"
+		end
+	end
+	
+	config.vm.define "c8" do |c8|
+		c8.vm.box = "centos/8"
+		c8.ssh.insert_key = false
+		c8.vm.network 'private_network', ip: '192.168.10.108'
+		c8.vm.hostname = 'c8'
+    c8.vm.provision "shell", inline: <<-SHELL
+      dnf install -y epel-release
+      dnf makecache
+      dnf install -y ansible
+      alternatives --set python /usr/bin/python3
+    SHELL
+
+		c8.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"
 			ansible.inventory_path = "./inventory"
@@ -54,7 +80,7 @@ Vagrant.configure("2") do |config|
 		d9.vm.box = "debian/stretch64"
 		d9.ssh.insert_key = false
 		d9.vm.network 'private_network', ip: '192.168.10.109'
-		d9.vm.hostname = 'debian9'
+		d9.vm.hostname = 'd9'
 		
 		d9.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -67,7 +93,7 @@ Vagrant.configure("2") do |config|
 		d10.vm.box = "debian/buster64"
 		d10.ssh.insert_key = false
 		d10.vm.network 'private_network', ip: '192.168.10.110'
-		d10.vm.hostname = 'debian10'
+		d10.vm.hostname = 'd10'
 		
 		d10.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -146,14 +172,20 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	config.vm.define "f30" do |f30|
-		f30.vm.box = "generic/fedora30"
-		f30.ssh.insert_key = false
-		f30.vm.network 'private_network', ip: '192.168.10.130'
-		f30.vm.hostname = 'fedora30'
+	config.vm.define "f32" do |f32|
+		f32.vm.box = "fedora/32-cloud-base"
+		f32.ssh.insert_key = false
+		f32.vm.network 'private_network', ip: '192.168.10.132'
+		f32.vm.hostname = 'f32'
+    f32.vm.provision "shell", inline: <<-SHELL
+      echo "IGNORE THIS:  [WARNING]: Module invocation had junk after the JSON data:
+AttributeError(\"module \'platform\' has no attribute \'dist\'\")
+KeyError(\'ansible_os_family\')"
+#       dnf install -y python
+    SHELL
 
 		# requires ansible_python_interpreter=/usr/bin/python3 in inventory
-		f30.vm.provision "ansible" do |ansible|
+		f32.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"
 			ansible.inventory_path = "./inventory"
@@ -163,9 +195,11 @@ Vagrant.configure("2") do |config|
 
 	config.vm.define "u12" do |u12|
 		u12.vm.box = "ubuntu/precise64"
-		u12.ssh.insert_key = false
 		u12.vm.network 'private_network', ip: '192.168.10.112'
 		u12.vm.hostname = 'u12'
+    u12.vm.provision "shell", inline: <<-SHELL
+      apt-get -y install python
+    SHELL
 
 		u12.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -176,9 +210,11 @@ Vagrant.configure("2") do |config|
 
 	config.vm.define "u14" do |u14|
 		u14.vm.box = "ubuntu/trusty64"
-		u14.ssh.insert_key = false
 		u14.vm.network 'private_network', ip: '192.168.10.114'
 		u14.vm.hostname = 'u14'
+    u14.vm.provision "shell", inline: <<-SHELL
+      apt-get -y install python
+    SHELL
 
 		u14.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -188,10 +224,12 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "u16" do |u16|
-		u16.vm.box = "geerlingguy/ubuntu1604"
-		u16.ssh.insert_key = false
+		u16.vm.box = "ubuntu/xenial64"
 		u16.vm.network 'private_network', ip: '192.168.10.116'
 		u16.vm.hostname = 'u16'
+    u16.vm.provision "shell", inline: <<-SHELL
+      apt-get -y install python
+    SHELL
 
 		u16.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -201,12 +239,31 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.define "u18" do |u18|
-		u18.vm.box = "geerlingguy/ubuntu1804"
-		u18.ssh.insert_key = false
+		u18.vm.box = "ubuntu/bionic64"
 		u18.vm.network 'private_network', ip: '192.168.10.118'
 		u18.vm.hostname = 'u18'
+    u18.vm.provision "shell", inline: <<-SHELL
+      apt-get -y install python
+    SHELL
 
 		u18.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yml"
+			ansible.inventory_path = "./inventory"
+		end
+	end
+
+  # https://www.reddit.com/r/Ubuntu/comments/ga187h/focal64_vagrant_box_issues/
+	config.vm.define "u20" do |u20|
+		u20.vm.box = "ubuntu/focal64"
+		u20.vm.network 'private_network', ip: '192.168.10.120'
+		u20.vm.hostname = 'u20'
+    u20.vm.provision "shell", inline: <<-SHELL
+      apt-get -y install python
+      apt autoremove -y
+    SHELL
+
+		u20.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yml"
 			ansible.inventory_path = "./inventory"
