@@ -12,11 +12,12 @@ Debian and Ubuntu distributions do not use the SELinux features as the ansible m
 
 Fedora 21 does not install SELinux by default, so the selinux-policy-default package must be installed by Vagrant prior to provisioning with ansible.
 
+Rather than install ntp, chronyd will be installed and configured as it's best suited for systems that aren't up 24x7.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+A description of the settable variables for this role should go here, including any variables that are in defaults/main.yaml, vars/main.yaml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
 Note that variables put in vars/ directory tree cannot be overridden by the command line prompt.  It's better to put varibables in defaults where the values can be overridden.
 

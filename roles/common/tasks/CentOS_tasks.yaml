@@ -1,6 +1,25 @@
-# CentOS install tasks for common
 ---
+# CentOS install tasks for common
+# if there are more tasks that split on version, 
+# put them in their own tasks file. For now two is OK
+
 - name: CentOS packages
   package: name={{ item }} state=present
   with_items:
     - "{{ CentOS_packages }}"
+#  when: ansible_distribution_major_version|int  < 8
+
+# Most distros use ntp but CentOS 8 and Ubuntu 20 use chrony
+#- include_tasks: ntp.yaml
+#  when: ansible_distribution_major_version|int  < 8
+
+
+#- name: CentOS 8 packages
+#  package: name={{ item }} state=present
+#  with_items:
+#    - "{{ CentOS8_packages }}"
+#  when: ansible_distribution_major_version|int  >= 8
+
+# Most distros use ntp but CentOS 8 and Ubuntu 20 use chrony
+#- include_tasks: chronyc.yaml
+#  when: ansible_distribution_major_version|int  >= 8

@@ -8,14 +8,14 @@
 #   - debug: var=ansible_distribution_release
 #   - debug: var=ansible_distribution_version
 
-- include_tasks: RedHat-install.yml
+- include_tasks: RedHat-install.yaml
   when: ansible_os_family == 'RedHat' and ansible_distribution != 'Fedora'
 
-- include_tasks: Fedora-install.yml
+- include_tasks: Fedora-install.yaml
   when: ansible_distribution == 'Fedora'
 
-- include_tasks: Ubuntu-install.yml
+- include_tasks: Ubuntu-install.yaml
   when: ansible_distribution == 'Ubuntu'
 
-- include_tasks: Debian-install.yml
+- include_tasks: Debian-install.yaml
   when: ansible_distribution == 'Debian'

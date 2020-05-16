@@ -4,6 +4,5 @@
 Debian_packages: 
   - ntpdate
 
-ntp_service: ntp
-
-ntp_host: 0.debian.pool.ntp.org
+time_service: ntp
+time_host: 0.debian.pool.ntp.org

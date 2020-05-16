@@ -1,5 +1,24 @@
 ---
 # handlers file for common
 
-- name: restart_ntp_service
-  service: name="{{ ntp_service }}" state=restarted
+- name: restart time service
+  service: 
+    name: "{{ time_service }}" 
+    state: restarted
+  listen: "restart time services"
+
+- name: get peers
+  shell: sleep 5 && ntpq -c peer
+  register: peers
+  listen: "restart time services"
+  when: time_service == "ntpd" or time_service == "ntp"
+
+- name: chronyc sources
+  shell: sleep 5 && chronyc sources
+  register: peers
+  listen: "restart time services"
+  when: time_service == "chronyd"
+
+- name: display peers after restart
+  debug: var=peers.stdout_lines
+  listen: "restart time services"

@@ -1,7 +1,7 @@
 ---
 # tasks file for common
 
-#ansible_os_family = dict(
+# ansible_os_family = dict(
 #  RedHat = 'RedHat', Fedora = 'RedHat', CentOS = 'RedHat', Scientific = 'RedHat',
 #  SLC = 'RedHat', Ascendos = 'RedHat', CloudLinux = 'RedHat', PSBM = 'RedHat',
 #  OracleLinux = 'RedHat', OVS = 'RedHat', OEL = 'RedHat', Amazon = 'RedHat',
@@ -13,81 +13,45 @@
 #  FreeBSD = 'FreeBSD', HPUX = 'HP-UX'
 #)
 
-- block:
-  - debug: var=ansible_os_family
-  - debug: var=ansible_distribution
-  - debug: var=ansible_distribution_major_version 
-  - debug: var=ansible_distribution_release
-  - debug: var=ansible_distribution_version
+- debug: var="{{ item }}"
+  with_items:
+  - ansible_os_family
+  - ansible_distribution
+  - ansible_distribution_major_version
+  - ansible_distribution_release
+  - ansible_distribution_version
 
 - name: set specific variables for distributions
-  block:
-    - include_vars: "{{ item }}"
-      with_first_found:
-        - files:
-          - "{{ ansible_os_family }}.yml"
-    - include_vars: "{{ item }}"
-      with_first_found:
-        - files:
-          - "{{ ansible_distribution }}.yml"
-    - debug: var=group_vars
+  include_vars: "{{ item }}"
+  with_first_found:
+  - files:
+     - "{{ ansible_distribution }}.yaml"
+     - defaults.yaml
+- debug: var=group_vars
 
 # note: the following included tasks might configure and enable stuff in common_packages
 # requires 
-#   Debian_{tasks,services}.yml
-#   RedHat_{tasks,services}.yml
-#   CentOS_{tasks,services}.yml
-#   Fedora_{tasks,services}.yml
-#   Ubuntu_{tasks,services}.yml
+#   Debian_{tasks,services}.yaml run for Debian distro, NOT Ubuntu
+#   RedHat_{tasks,services}.yaml run for RedHat Enterprise, NOT CentOS
+#   CentOS_{tasks,services}.yaml
+#   Fedora_{tasks,services}.yaml
+#   Ubuntu_{tasks,services}.yaml
 # note: these tasks should be done first before the common tasks so prerequisite packages
 # can be added first (e.g. epel for centos)
 
-- include_tasks: "{{ ansible_os_family }}_tasks.yml"
-- include_tasks: "{{ ansible_distribution }}_tasks.yml"
+#- include_tasks: "{{ ansible_os_family }}_tasks.yaml"
+- include_tasks: "{{ ansible_distribution }}_tasks.yaml"
 
 - name: Install common packages (this may take a while)
   package: name={{ item }} state=present
   with_items:
     - "{{ common_packages }}"
 
-# ntp should be installed from common_packages or one of the distro tasks
-# configure it by removing the server and pool lines, then add our own
-- name: configure ntp
-  block:
-    - lineinfile:
-        path: /etc/ntp.conf
-        backup: yes
-        state: absent
-        regexp: "{{ item.regexp }}"
-      with_items:
-        - { regexp: '^pool\s+.*$' }
-        - { regexp: '^server\s+.*$' }
-    - lineinfile:
-        path: /etc/ntp.conf
-        state: present
-        regexp: '^pool\s+.*$'
-        line: "pool {{ ntp_host }} iburst"
-    - service: name="{{ ntp_service }}" state=restarted
-    - shell: grep -E "^pool|^#pool|^server|^#server" /etc/ntp.conf
-      register: ntp
-    - debug: var=ntp.stdout_lines
+- include_tasks: "{{ ansible_distribution }}_services.yaml"
+#- include_tasks: "{{ ansible_os_family }}_services.yaml"
 
 # selinux module untested on Debian systems, use edit of selinux/conf instead
 - name: configure SElinux
   selinux:
     state: disabled
   when: ansible_os_family != "Debian"
-
-- include_tasks: "{{ ansible_distribution }}_services.yml"
-- include_tasks: "{{ ansible_os_family }}_services.yml"
-
-
-- name: set timezone and check ntp
-  block:
-    - timezone: name={{ timezone }}
-    - shell: sleep 8; date
-      register: tod 
-    - command: ntpq -c peer
-      register: ntpq
-    - debug: var=tod.stdout_lines
-    - debug: var=ntpq.stdout_lines

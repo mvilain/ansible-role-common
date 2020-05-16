@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
 
 		c6.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 			# ansible.verbose = "v"
 			# ansible.raw_arguments = [""]
@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
 
 		c7.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
@@ -71,7 +71,7 @@ Vagrant.configure("2") do |config|
 
 		c8.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
 		
 		d9.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
@@ -97,7 +97,7 @@ Vagrant.configure("2") do |config|
 		
 		d10.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
@@ -126,7 +126,7 @@ Vagrant.configure("2") do |config|
 		SHELL
 		f21.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
@@ -140,34 +140,34 @@ Vagrant.configure("2") do |config|
 
 		f22.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
 
 	# virtualbox runs the older 5.0 on Fedora 23 and below so test that it works
 	config.vm.define "f23" do |f23|
-		f23.vm.box = "akanto/fedora-23-server"
+		f23.vm.box = "bento/fedora-23"
 		f23.ssh.insert_key = false
 		f23.vm.network 'private_network', ip: '192.168.10.123'
 		f23.vm.hostname = 'f23'
 
 		f23.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
 
 	config.vm.define "f29" do |f29|
-		f29.vm.box = "generic/fedora29"
+		f29.vm.box = "bento/fedora-29"
 		f29.ssh.insert_key = false
 		f29.vm.network 'private_network', ip: '192.168.10.129'
 		f29.vm.hostname = 'f29'
 
 		f29.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
@@ -187,7 +187,7 @@ KeyError(\'ansible_os_family\')"
 		# requires ansible_python_interpreter=/usr/bin/python3 in inventory
 		f32.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
@@ -203,7 +203,7 @@ KeyError(\'ansible_os_family\')"
 
 		u12.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
@@ -218,7 +218,7 @@ KeyError(\'ansible_os_family\')"
 
 		u14.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
@@ -233,7 +233,7 @@ KeyError(\'ansible_os_family\')"
 
 		u16.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
@@ -248,24 +248,25 @@ KeyError(\'ansible_os_family\')"
 
 		u18.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
 
   # https://www.reddit.com/r/Ubuntu/comments/ga187h/focal64_vagrant_box_issues/
 	config.vm.define "u20" do |u20|
-		u20.vm.box = "ubuntu/focal64"
+# 		u20.vm.box = "ubuntu/focal64"
+    u20.vm.box = "bento/ubuntu-20.04"
 		u20.vm.network 'private_network', ip: '192.168.10.120'
 		u20.vm.hostname = 'u20'
     u20.vm.provision "shell", inline: <<-SHELL
-      apt-get -y install python
+      apt-get -y install python python-is-python3
       apt autoremove -y
     SHELL
 
 		u20.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yml"
+			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end

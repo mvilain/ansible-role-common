@@ -1,19 +1,17 @@
 ---
 # defaults file for common
 
+time_host: 0.north-america.pool.ntp.org
+time_service: ntpd
+timezone: America/Los_Angeles
+
 common_packages:
   - git
   - lsof
   - make
   - moreutils
   - net-tools
-  - ntp
   - vim
   - wget
-
-ntp_host: 0.north-america.pool.ntp.org
-ntp_service: ntpd
-
-timezone: America/Los_Angeles
-
-# chrony used in CentOS8 and Ubuntu20
+  - chrony
+  - ntp

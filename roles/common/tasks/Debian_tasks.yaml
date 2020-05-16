@@ -2,8 +2,8 @@
 ---
 # comparing version with |int will cause a deprecated error in ansible 2.8+
 
-#don't use apt: update_cache=yes here because it won't work to trap
-#repo change errors like with Debian 10 because of apt-secure server
+# don't use apt: update_cache=yes here because it won't work to trap
+# repo change errors like with Debian 10 because of apt-secure server
 - name: apt-get update
   shell: 'apt-get update --allow-releaseinfo-change -y'
   args:
@@ -14,3 +14,5 @@
   package: name={{ item }} state=present
   with_items:
     - "{{ Debian_packages }}"
+
+#- include_tasks: ntp.yaml

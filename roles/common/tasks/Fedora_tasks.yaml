@@ -4,3 +4,6 @@
   package: name={{ item }} state=present
   with_items:
     - "{{ Fedora_packages }}"
+
+# Most distros use ntp but CentOS 8 and Ubuntu 20 use chrony
+#- include_tasks: ntp.yaml

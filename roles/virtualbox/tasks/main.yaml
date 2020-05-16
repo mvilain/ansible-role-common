@@ -19,4 +19,4 @@
 #   - debug: var=ansible_distribution_release
 #   - debug: var=ansible_distribution_version
 
-- include_tasks: "{{ ansible_os_family }}-install.yml"
+- include_tasks: "{{ ansible_os_family }}-install.yaml"
