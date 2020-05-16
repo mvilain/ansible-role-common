@@ -2,12 +2,10 @@
 # place any variables specific to the virtualbox install 
 # and configuration here for multiple platforms
 
-vb_version: "5.2.30"
+vb_version: "6.1.6"     # released April 14 2020
 deb_vb_keyurl: https://www.virtualbox.org/download
 deb_vb_key: oracle_vbox_2016.asc
 deb_vb_old_key: oracle_vbox.asc
 
 rhel_vb_keyurl: https://www.virtualbox.org/download
 rhel_vb_key: oracle_vbox.asc
-
-macos_vb_url: https://download.virtualbox.org/virtualbox/{{ vb_version }}/VirtualBox-{{ vb_version }}-124319-OSX.dmg
