@@ -1,9 +1,6 @@
-# install for Debian vagrant
+# install for Ubuntu vagrant
 ---
 
-# as of 9/23/18, Hasicorp has restricted access of the rpm file
-# you can only get it from the web site
-# so provide them here in the role's files directory
 - name: providing vagrant rpm
   copy:
     src: "../files/{{ vagrant_deb_file }}"

@@ -7,19 +7,3 @@
   package: name={{ item }} state=present
   with_items:
     - "{{ CentOS_packages }}"
-#  when: ansible_distribution_major_version|int  < 8
-
-# Most distros use ntp but CentOS 8 and Ubuntu 20 use chrony
-#- include_tasks: ntp.yaml
-#  when: ansible_distribution_major_version|int  < 8
-
-
-#- name: CentOS 8 packages
-#  package: name={{ item }} state=present
-#  with_items:
-#    - "{{ CentOS8_packages }}"
-#  when: ansible_distribution_major_version|int  >= 8
-
-# Most distros use ntp but CentOS 8 and Ubuntu 20 use chrony
-#- include_tasks: chronyc.yaml
-#  when: ansible_distribution_major_version|int  >= 8

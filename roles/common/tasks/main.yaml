@@ -13,13 +13,13 @@
 #  FreeBSD = 'FreeBSD', HPUX = 'HP-UX'
 #)
 
-- debug: var="{{ item }}"
-  with_items:
-  - ansible_os_family
-  - ansible_distribution
-  - ansible_distribution_major_version
-  - ansible_distribution_release
-  - ansible_distribution_version
+#- debug: var="{{ item }}"
+#  with_items:
+#  - ansible_os_family
+#  - ansible_distribution
+#  - ansible_distribution_major_version
+#  - ansible_distribution_release
+#  - ansible_distribution_version
 
 - name: set specific variables for distributions
   include_vars: "{{ item }}"
@@ -39,19 +39,24 @@
 # note: these tasks should be done first before the common tasks so prerequisite packages
 # can be added first (e.g. epel for centos)
 
-#- include_tasks: "{{ ansible_os_family }}_tasks.yaml"
 - include_tasks: "{{ ansible_distribution }}_tasks.yaml"
 
-- name: Install common packages (this may take a while)
+- name: Install COMMON packages (this may take a while)
   package: name={{ item }} state=present
   with_items:
     - "{{ common_packages }}"
 
 - include_tasks: "{{ ansible_distribution }}_services.yaml"
-#- include_tasks: "{{ ansible_os_family }}_services.yaml"
 
 # selinux module untested on Debian systems, use edit of selinux/conf instead
 - name: configure SElinux
   selinux:
     state: disabled
   when: ansible_os_family != "Debian"
+
+# CentOS 8 doesn't have a ntp package...use chrony
+- include_tasks: ntp.yaml
+  when: time_service == "ntpd" or time_service == "ntp"
+
+- include_tasks: chrony.yaml
+  when: time_service == "chronyd"

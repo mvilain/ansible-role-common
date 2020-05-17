@@ -4,4 +4,5 @@
 Fedora_packages:
   - iproute
 
+time_service: ntpd
 time_host: 0.fedora.pool.ntp.org

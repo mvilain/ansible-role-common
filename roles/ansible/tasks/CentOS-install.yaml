@@ -1,6 +1,6 @@
-# install ansible on RedHat systems (except Fedora)
 ---
-
+# CentOS
+#
 - name: EPEL repo is already configured
   stat: 
     path: "{{ epel_repofile_path }}"

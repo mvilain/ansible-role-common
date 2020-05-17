@@ -15,4 +15,3 @@
   with_items:
     - "{{ Debian_packages }}"
 
-#- include_tasks: ntp.yaml

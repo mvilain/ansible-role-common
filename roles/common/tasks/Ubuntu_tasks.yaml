@@ -12,6 +12,3 @@
 - name: Ubuntu18 packages
   package: name=iproute2 state=present
   when: ansible_distribution_major_version|int >= 18
-
-# Most distros use ntp but CentOS 8 and Ubuntu 20 use chrony
-#- include_tasks: ntp.yaml

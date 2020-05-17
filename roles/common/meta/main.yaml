@@ -23,8 +23,8 @@ galaxy_info:
     - 28 (untested, but should work)
     - 29
     - 30 (untested, but should work)
-    - 31 (untested, but should work)
-    - 32
+    - 31
+    - 32 (5/15/20: ansible doesn't run on this yet)
   - name: Ubuntu
     versions:
     - precise (12.04)

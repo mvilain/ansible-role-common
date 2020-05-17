@@ -1,9 +1,9 @@
-# install vagrant on RedHat systems
+# install vagrant on Fedora systems
 ---
 
-- name: selinux required on RedHat
+- name: selinux required on Fedora
   package: 
-    name: libselinux-python 
+    name: python3-libselinux
     state: present
 
 # as of 9/23/18, Hasicorp has restricted access of the rpm file

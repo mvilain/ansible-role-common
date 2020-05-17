@@ -4,5 +4,3 @@
 CentOS_packages:
   - epel-release
   - iproute
-
-time_host: 0.centos.pool.ntp.org

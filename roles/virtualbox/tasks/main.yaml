@@ -1,6 +1,6 @@
 # tasks file for virtualbox
 ---
-#OS_FAMILY = dict(
+#ansible_os_family = dict(
 #  RedHat = 'RedHat', Fedora = 'RedHat', CentOS = 'RedHat', Scientific = 'RedHat',
 #  SLC = 'RedHat', Ascendos = 'RedHat', CloudLinux = 'RedHat', PSBM = 'RedHat',
 #  OracleLinux = 'RedHat', OVS = 'RedHat', OEL = 'RedHat', Amazon = 'RedHat',
@@ -19,4 +19,4 @@
 #   - debug: var=ansible_distribution_release
 #   - debug: var=ansible_distribution_version
 
-- include_tasks: "{{ ansible_os_family }}-install.yaml"
+- include_tasks: "{{ ansible_distribution }}-install.yaml"

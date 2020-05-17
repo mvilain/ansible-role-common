@@ -1,0 +1,3 @@
+# group_vars for fedora python3 group
+---
+group_vars: "fedora-py3"

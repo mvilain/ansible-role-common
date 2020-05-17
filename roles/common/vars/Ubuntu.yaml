@@ -3,5 +3,7 @@
 
 Ubuntu_packages:
   - iproute
+  - apt-transport-https
 
+time_service: ntp
 time_host: 0.ubuntu.pool.ntp.org

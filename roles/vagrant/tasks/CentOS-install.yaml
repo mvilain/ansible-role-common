@@ -1,10 +1,11 @@
-# install vagrant on RedHat systems
+# install vagrant on CentOS systems
 ---
 
-- name: selinux required on RedHat
+- name: selinux required on CentOS
   package: 
     name: libselinux-python 
     state: present
+  when: ansible_distribution_major_version != "8"
 
 # as of 9/23/18, Hasicorp has restricted access of the rpm file
 # you can only get it from the web site

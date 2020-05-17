@@ -1,21 +1,4 @@
 # tasks file for ansible
 ---
 
-# - block:
-#   - debug: var=ansible_os_family
-#   - debug: var=ansible_distribution
-#   - debug: var=ansible_distribution_major_version 
-#   - debug: var=ansible_distribution_release
-#   - debug: var=ansible_distribution_version
-
-- include_tasks: RedHat-install.yaml
-  when: ansible_os_family == 'RedHat' and ansible_distribution != 'Fedora'
-
-- include_tasks: Fedora-install.yaml
-  when: ansible_distribution == 'Fedora'
-
-- include_tasks: Ubuntu-install.yaml
-  when: ansible_distribution == 'Ubuntu'
-
-- include_tasks: Debian-install.yaml
-  when: ansible_distribution == 'Debian'
+- include_tasks: "{{ ansible_distribution }}-install.yaml"

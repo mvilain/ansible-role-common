@@ -13,5 +13,5 @@ common_packages:
   - net-tools
   - vim
   - wget
-  - chrony
-  - ntp
+
+# NOTE: group_vars for CentOS8 redefines common_packages to exclude moreutils 5/16/20
