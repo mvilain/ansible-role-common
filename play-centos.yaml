@@ -1,8 +1,7 @@
 # playbook for CentOS hosts
 ---
-- hosts: centos_group
+- hosts: centos_group,centos8_group
   become: true
-  # check_mode: yes  # yes=dry-run
   roles:
     - common
     - vagrant
