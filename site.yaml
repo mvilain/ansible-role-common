@@ -1,6 +1,6 @@
 # main playbook: site.yaml
 ---
-- hosts: centos_group,fedora_group,fedora32_group,debian_group,ubuntu_group
+- hosts: centos_group,centos8_group,fedora_group,fedora_py3_group,debian_group,ubuntu_group
   become: true
 # check_mode: yes  # yes=dry-run
   roles:
