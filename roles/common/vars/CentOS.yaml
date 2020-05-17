@@ -4,3 +4,5 @@
 CentOS_packages:
   - epel-release
   - iproute
+
+# time_service is defined in group_vars/{centos,centos8}_group
