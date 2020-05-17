@@ -7,6 +7,7 @@ Vagrant.configure("2") do |config|
 	# config.vm.network 'forwarded_port', guest: 80, host: 8080
 	config.vm.synced_folder '.', '/vagrant', disabled: true
 	config.ssh.insert_key = false
+	config.vm.boot_timeout = 30
 	config.vm.provider :virtualbox do |vb|
 		#vb.gui = true
 		vb.memory = '1024'
@@ -79,7 +80,7 @@ Vagrant.configure("2") do |config|
 	config.vm.define "d9" do |d9|
 		d9.vm.box = "debian/stretch64"
 		d9.ssh.insert_key = false
-		d9.vm.network 'private_network', ip: '192.168.10.109'
+		d9.vm.network 'private_network', ip: '192.168.10.209'
 		d9.vm.hostname = 'd9'
 		
 		d9.vm.provision "ansible" do |ansible|
@@ -92,7 +93,7 @@ Vagrant.configure("2") do |config|
 	config.vm.define "d10" do |d10|
 		d10.vm.box = "debian/buster64"
 		d10.ssh.insert_key = false
-		d10.vm.network 'private_network', ip: '192.168.10.110'
+		d10.vm.network 'private_network', ip: '192.168.10.210'
 		d10.vm.hostname = 'd10'
 		
 		d10.vm.provision "ansible" do |ansible|
@@ -172,25 +173,44 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	config.vm.define "f32" do |f32|
-		f32.vm.box = "fedora/32-cloud-base"
-		f32.ssh.insert_key = false
-		f32.vm.network 'private_network', ip: '192.168.10.132'
-		f32.vm.hostname = 'f32'
-    f32.vm.provision "shell", inline: <<-SHELL
-      echo "IGNORE THIS:  [WARNING]: Module invocation had junk after the JSON data:
-AttributeError(\"module \'platform\' has no attribute \'dist\'\")
-KeyError(\'ansible_os_family\')"
-#       dnf install -y python
+	config.vm.define "f31" do |f31|
+		f31.vm.box = "fedora/31-cloud-base"
+		f31.ssh.insert_key = false
+		f31.vm.network 'private_network', ip: '192.168.10.131'
+		f31.vm.hostname = 'f31'
+    f31.vm.provision "shell", inline: <<-SHELL
+      #dnf install -y python2
     SHELL
 
 		# requires ansible_python_interpreter=/usr/bin/python3 in inventory
-		f32.vm.provision "ansible" do |ansible|
+		f31.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
+
+  # 5/15/20 ansible doesn't run on f32 out of the box. 
+  #         All the ansible_os variables are undefined
+# 	config.vm.define "f32" do |f32|
+# 		f32.vm.box = "fedora/32-cloud-base"
+# 		f32.ssh.insert_key = false
+# 		f32.vm.network 'private_network', ip: '192.168.10.132'
+# 		f32.vm.hostname = 'f32'
+#     f32.vm.provision "shell", inline: <<-SHELL
+#       #dnf install -y python2
+#       echo "IGNORE THIS:  [WARNING]: Module invocation had junk after the JSON data:
+# AttributeError(\"module \'platform\' has no attribute \'dist\'\")
+# KeyError(\'ansible_os_family\')"
+#     SHELL
+# 
+# 		# requires ansible_python_interpreter=/usr/bin/python3 in inventory
+# 		f32.vm.provision "ansible" do |ansible|
+# 			ansible.compatibility_mode = "2.0"
+# 			ansible.playbook = "site.yaml"
+# 			ansible.inventory_path = "./inventory"
+# 		end
+# 	end
 
 
 	config.vm.define "u12" do |u12|
@@ -260,7 +280,7 @@ KeyError(\'ansible_os_family\')"
 		u20.vm.network 'private_network', ip: '192.168.10.120'
 		u20.vm.hostname = 'u20'
     u20.vm.provision "shell", inline: <<-SHELL
-      apt-get -y install python python-is-python3
+      apt-get -y install python python-is-python2
       apt autoremove -y
     SHELL
 
