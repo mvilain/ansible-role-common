@@ -32,17 +32,21 @@
   dnf:
     name: "VirtualBox-5.1"
     state: latest
-#    update_cache: yes
   register: vb51_install
   when: 
   - ansible_distribution_major_version|int < 26
   - ansible_distribution_major_version|int > 21
 # - debug: var=vb51_install
 
-- name: installing lastest version (this may take few minutes)
-  dnf:
-    name: "VirtualBox-6.1"
-    state: latest
+# starting with F29, VB lumps all versions in same directory, so exclude 5.2
+# https://www.virtualbox.org/ticket/18113
+# 5/18/20 says F29 dnf virtualbox 6.1 has errors (libm + libvpx missing?)
+# dnf module won't install it, but dnf command works
+# note: exclude added in ansible 2.7 but can't send array...fixed in 2.7.15
+- name: installing lastest version (this may take a while)
+  command: dnf install -y VirtualBox-6.1 --exclude VirtualBox-5.2,VirtualBox-6.0
+  args:
+    warn: no
   register: vb6_install
   when: ansible_distribution_major_version|int >= 26
-# - debug: var=vb6_install
+#- debug: var=vb6_install.stdout_lines

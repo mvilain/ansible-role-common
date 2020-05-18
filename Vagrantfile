@@ -253,6 +253,23 @@ Vagrant.configure("2") do |config|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
+# 			ansible.verbose = "-vvv"
+		end
+	end
+
+	config.vm.define "f30" do |f30|
+		f30.vm.box = "fedora/30-cloud-base"
+		f30.ssh.insert_key = false
+		f30.vm.network 'private_network', ip: '192.168.10.130'
+		f30.vm.hostname = 'f30'
+    f30.vm.provision "shell", inline: <<-SHELL
+      dnf install -y python libselinux-python
+    SHELL
+
+		f30.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yaml"
+			ansible.inventory_path = "./inventory"
 		end
 	end
 

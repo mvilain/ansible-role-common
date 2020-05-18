@@ -3,8 +3,8 @@
 # this requires specific package manager because vim requires vim-common
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1329015
-# dnf is installed since F18...fixed in f27+
-- name: Fedora vim fixes vim-minimal which is too old
+# (dnf is installed since F18...fixed in f27+)
+- name: fix Fedora vim-minimal which is too old
   command: dnf update -y --allowerasing vim-minimal
   args:
     warn: no
@@ -13,25 +13,22 @@
   - ansible_distribution_major_version|int > 21
   - ansible_distribution_major_version|int <= 26
 
+# ansible 2.7 deprecates with_items and nosquash, use variable directly
 - name: Fedora 21 yum packages
   yum: 
-    name: "{{ item }}"
+    name: '{{ Fedora_packages }}'
     state: present
     skip_broken: yes
     update_cache: yes
   register: package
-  with_items:
-    - "{{ Fedora_packages }}"
   when: ansible_distribution_major_version|int == 21
 
+# ansible 2.7 deprecates with_items and nosquash, use variable directly
 - name: Fedora 22+ dnf packages
   dnf: 
-    name: "{{ item }}"
+    name: "{{ Fedora_packages }}"
     state: latest
   register: dnf
-  with_items:
-    - "{{ Fedora_packages }}"
-    - vim-common   # older version collides with vim-common until F27
   when: ansible_distribution_major_version|int > 21
 
 #- debug: var="{{ item }}"
