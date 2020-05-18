@@ -1,6 +1,42 @@
 # Fedora install tasks for common
 ---
-- name: Fedora packages
-  package: name={{ item }} state=present
+# this requires specific package manager because vim requires vim-common
+# sudo requires vim-minimum and is already installed.  So skip_broken.
+- name: Fedora yum packages
+  yum: 
+    name: "{{ item }}"
+    state: present
+    skip_broken: yes
+    update_cache: yes
+  register: package
   with_items:
     - "{{ Fedora_packages }}"
+  when: ansible_distribution_major_version|int <= 21
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1329015
+- name: Fedora vim fixes (vim-minimal to old)
+  command: dnf update -y --allowerasing vim-minimal
+  args:
+    warn: no
+  register: vim_min
+  when: ansible_distribution_major_version|int > 21
+
+- name: Fedora dnf packages
+  dnf: 
+    name: "{{ item }}"
+    state: latest
+#    autoremove: yes    # not on f22
+#    skip_broken: yes
+#    update_cache: yes
+  register: dnf
+  with_items:
+    - "{{ Fedora_packages }}"
+    - vim-common   # older version collides with vim-common
+  when: ansible_distribution_major_version|int > 21
+
+
+#- debug: var="{{ item }}"
+#  with_items:
+#  - package
+#  - vim_min.stdout_lines
+#  - dnf.results

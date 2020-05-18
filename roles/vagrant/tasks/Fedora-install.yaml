@@ -1,10 +1,18 @@
 # install vagrant on Fedora systems
 ---
 
-- name: selinux required on Fedora
+- name: python3-libselinux required on Fedora 29+
   package: 
     name: python3-libselinux
     state: present
+  when: ansible_distribution_major_version|int > 29
+
+- name: libselinux-python required on Fedora < 29
+  package: 
+    name: libselinux-python
+    state: present
+  when: ansible_distribution_major_version|int <= 29
+
 
 # as of 9/23/18, Hasicorp has restricted access of the rpm file
 # you can only get it from the web site

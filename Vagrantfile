@@ -7,6 +7,8 @@ Vagrant.configure("2") do |config|
 	# config.vm.network 'forwarded_port', guest: 80, host: 8080
 	config.vm.synced_folder '.', '/vagrant', disabled: true
 	config.ssh.insert_key = false
+#   config.ssh.username = 'root'
+#   config.ssh.password = 'vagrant'
 	config.vm.boot_timeout = 30
 	config.vm.provider :virtualbox do |vb|
 		#vb.gui = true
@@ -18,6 +20,7 @@ Vagrant.configure("2") do |config|
 	config.vm.provision "shell", inline: <<-SHELLALL
 		echo "...disabling CheckHostIP..."
 		sed -i.orig -e "s/#   CheckHostIP yes/CheckHostIP no/" /etc/ssh/ssh_config
+		sed -i -e "s/.*PermitRootLogin.*/PermitRootLogin yes/" /etc/ssh/ssh_config
 # 		for i in /etc/sysconfig/network-scripts/ifcfg-eth1 /etc/sysconfig/network-scripts/ifcfg-enp0s8; do
 # 			if [ -e ${i} ]; then echo "...displaying ${i}..."; cat ${i}; fi
 # 		done
@@ -104,7 +107,8 @@ Vagrant.configure("2") do |config|
 	end
 
 
-	# fedora-21+vagrant doesn't set 2nd network config correctly
+	# fedora-21 vagrant box doesn't set 2nd network config correctly
+	# fedora 21 doesn't install sudo
 	config.vm.define "f21" do |f21|
 		f21.vm.box = "bento/fedora-21"
 		f21.ssh.insert_key = false
@@ -112,19 +116,17 @@ Vagrant.configure("2") do |config|
 		f21.vm.hostname = 'f21'
 
 		f21.vm.provision "shell", inline: <<-SHELL
+			echo "...installing python (this may take a while)..."
+			yum install -y python libselinux-python
 			echo "...fixing enp0s8..."
 			sed -i -e "s/BOOTPROTO=none/BOOTPROTO=static/" /etc/sysconfig/network-scripts/ifcfg-enp0s8
 			echo "...restarting network..."
 			systemctl restart network
-			sleep 5
+			sleep 10
 			systemctl restart network
 			ip addr
-# 			for i in /etc/sysconfig/network-scripts/ifcfg-eth1 /etc/sysconfig/network-scripts/ifcfg-enp0s8; do
-# 				if [ -e ${i} ]; then echo "...displaying ${i}..."; cat ${i}; fi
-# 			done
-			echo "...installing python2 (this may take a while)..."
-			yum install -y python libselinux-python selinux-policy-default
 		SHELL
+
 		f21.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
@@ -138,6 +140,9 @@ Vagrant.configure("2") do |config|
 		f22.ssh.insert_key = false
 		f22.vm.network 'private_network', ip: '192.168.10.122'
 		f22.vm.hostname = 'f22'
+		f22.vm.provision "shell", inline: <<-SHELL
+      dnf install -y python libselinux-python
+		SHELL
 
 		f22.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -152,6 +157,9 @@ Vagrant.configure("2") do |config|
 		f23.ssh.insert_key = false
 		f23.vm.network 'private_network', ip: '192.168.10.123'
 		f23.vm.hostname = 'f23'
+    f23.vm.provision "shell", inline: <<-SHELL
+      dnf install -y python libselinux-python
+    SHELL
 
 		f23.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -165,6 +173,9 @@ Vagrant.configure("2") do |config|
 		f29.ssh.insert_key = false
 		f29.vm.network 'private_network', ip: '192.168.10.129'
 		f29.vm.hostname = 'f29'
+    f29.vm.provision "shell", inline: <<-SHELL
+      dnf install -y python libselinux-python
+    SHELL
 
 		f29.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -179,7 +190,7 @@ Vagrant.configure("2") do |config|
 		f31.vm.network 'private_network', ip: '192.168.10.131'
 		f31.vm.hostname = 'f31'
     f31.vm.provision "shell", inline: <<-SHELL
-      #dnf install -y python2
+      dnf install -y python2 
     SHELL
 
 		# requires ansible_python_interpreter=/usr/bin/python3 in inventory
