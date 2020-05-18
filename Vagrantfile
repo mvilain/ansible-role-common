@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
 	config.ssh.insert_key = false
 #   config.ssh.username = 'root'
 #   config.ssh.password = 'vagrant'
-	config.vm.boot_timeout = 30
+	config.vm.boot_timeout = 120
 	config.vm.provider :virtualbox do |vb|
 		#vb.gui = true
 		vb.memory = '1024'
@@ -126,7 +126,6 @@ Vagrant.configure("2") do |config|
 			systemctl restart network
 			ip addr
 		SHELL
-
 		f21.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
@@ -143,7 +142,6 @@ Vagrant.configure("2") do |config|
 		f22.vm.provision "shell", inline: <<-SHELL
       dnf install -y python libselinux-python
 		SHELL
-
 		f22.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
@@ -160,8 +158,82 @@ Vagrant.configure("2") do |config|
     f23.vm.provision "shell", inline: <<-SHELL
       dnf install -y python libselinux-python
     SHELL
-
 		f23.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yaml"
+			ansible.inventory_path = "./inventory"
+		end
+	end
+	# virtualbox runs the older 5.0 on Fedora 23 and below so test that it works
+	config.vm.define "f24" do |f24|
+		f24.vm.box = "bento/fedora-24"
+		f24.ssh.insert_key = false
+		f24.vm.network 'private_network', ip: '192.168.10.124'
+		f24.vm.hostname = 'f24'
+    f24.vm.provision "shell", inline: <<-SHELL
+      dnf install -y python libselinux-python
+    SHELL
+		f24.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yaml"
+			ansible.inventory_path = "./inventory"
+		end
+	end
+	# virtualbox runs the older 5.0 on Fedora 23 and below so test that it works
+	config.vm.define "f25" do |f25|
+		f25.vm.box = "bento/fedora-25"
+		f25.ssh.insert_key = false
+		f25.vm.network 'private_network', ip: '192.168.10.125'
+		f25.vm.hostname = 'f25'
+    f25.vm.provision "shell", inline: <<-SHELL
+      dnf install -y python libselinux-python
+    SHELL
+		f25.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yaml"
+			ansible.inventory_path = "./inventory"
+		end
+	end
+	# virtualbox runs the older 5.0 on Fedora 23 and below so test that it works
+	config.vm.define "f26" do |f26|
+		f26.vm.box = "bento/fedora-26"
+		f26.ssh.insert_key = false
+		f26.vm.network 'private_network', ip: '192.168.10.126'
+		f26.vm.hostname = 'f26'
+    f26.vm.provision "shell", inline: <<-SHELL
+      dnf install -y python libselinux-python
+    SHELL
+		f26.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yaml"
+			ansible.inventory_path = "./inventory"
+		end
+	end
+	# virtualbox runs the older 5.0 on Fedora 23 and below so test that it works
+	config.vm.define "f27" do |f27|
+		f27.vm.box = "bento/fedora-27"
+		f27.ssh.insert_key = false
+		f27.vm.network 'private_network', ip: '192.168.10.127'
+		f27.vm.hostname = 'f27'
+    f27.vm.provision "shell", inline: <<-SHELL
+      dnf install -y python libselinux-python
+    SHELL
+		f27.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yaml"
+			ansible.inventory_path = "./inventory"
+		end
+	end
+	# virtualbox runs the older 5.0 on Fedora 23 and below so test that it works
+	config.vm.define "f28" do |f28|
+		f28.vm.box = "bento/fedora-28"
+		f28.ssh.insert_key = false
+		f28.vm.network 'private_network', ip: '192.168.10.128'
+		f28.vm.hostname = 'f28'
+    f28.vm.provision "shell", inline: <<-SHELL
+      dnf install -y python libselinux-python
+    SHELL
+		f28.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"

@@ -1,13 +1,13 @@
 # install vagrant on Fedora systems
 ---
 
-- name: python3-libselinux required on Fedora 29+
+- name: python3-libselinux required on Fedora 30+
   package: 
     name: python3-libselinux
     state: present
   when: ansible_distribution_major_version|int > 29
 
-- name: libselinux-python required on Fedora < 29
+- name: libselinux-python required on Fedora <= 29
   package: 
     name: libselinux-python
     state: present
