@@ -290,27 +290,27 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-  # 5/15/20 ansible doesn't run on f32 out of the box. 
+  # 5/15/20 ansible doesn't run on f32 out of the box w/ ansible 2.6
   #         All the ansible_os variables are undefined
-# 	config.vm.define "f32" do |f32|
-# 		f32.vm.box = "fedora/32-cloud-base"
-# 		f32.ssh.insert_key = false
-# 		f32.vm.network 'private_network', ip: '192.168.10.132'
-# 		f32.vm.hostname = 'f32'
-#     f32.vm.provision "shell", inline: <<-SHELL
-#       #dnf install -y python2
-#       echo "IGNORE THIS:  [WARNING]: Module invocation had junk after the JSON data:
-# AttributeError(\"module \'platform\' has no attribute \'dist\'\")
-# KeyError(\'ansible_os_family\')"
-#     SHELL
-# 
-# 		# requires ansible_python_interpreter=/usr/bin/python3 in inventory
-# 		f32.vm.provision "ansible" do |ansible|
-# 			ansible.compatibility_mode = "2.0"
-# 			ansible.playbook = "site.yaml"
-# 			ansible.inventory_path = "./inventory"
-# 		end
-# 	end
+	config.vm.define "f32" do |f32|
+		f32.vm.box = "fedora/32-cloud-base"
+		f32.ssh.insert_key = false
+		f32.vm.network 'private_network', ip: '192.168.10.132'
+		f32.vm.hostname = 'f32'
+    f32.vm.provision "shell", inline: <<-SHELL
+      #dnf install -y python2
+      echo "IGNORE THIS:  [WARNING]: Module invocation had junk after the JSON data:
+AttributeError(\"module \'platform\' has no attribute \'dist\'\")
+KeyError(\'ansible_os_family\')"
+    SHELL
+
+		# requires ansible_python_interpreter=/usr/bin/python3 in inventory
+		f32.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
+			ansible.playbook = "site.yaml"
+			ansible.inventory_path = "./inventory"
+		end
+	end
 
 
 	config.vm.define "u12" do |u12|
