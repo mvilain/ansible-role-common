@@ -31,4 +31,4 @@
         enabled: true
     - shell: grep -E "^pool|^#pool|^server|^#server" /etc/ntp.conf
       register: ntp
-    - debug: var=ntp.stdout_lines
+#    - debug: var=ntp.stdout_lines

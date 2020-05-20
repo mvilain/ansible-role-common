@@ -45,16 +45,16 @@
     state: present
     allow_unauthenticated: yes
     update_cache: yes
-  when: ansible_distribution_major_version|int != 12
+  when: ansible_distribution_major_version|int > 12
   register: vb_install
 # - debug: var=vb_install
 
 - name: installing old release (this may take a few minutes)
   apt:
-    name: virtualbox
-    state: present
+    name: virtualbox-5.1
+    state: latest
     allow_unauthenticated: yes
     update_cache: yes
   when: ansible_distribution_major_version|int == 12
-  register: vb_install
-# - debug: var=vb_install
+  register: vbold_install
+- debug: var=vbold_install.stdout_lines
