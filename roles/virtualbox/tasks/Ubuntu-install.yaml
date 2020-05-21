@@ -47,7 +47,7 @@
     update_cache: yes
   when: ansible_distribution_major_version|int > 12
   register: vb_install
-# - debug: var=vb_install
+# - debug: var=vb_install.stdout_lines
 
 - name: installing old release (this may take a few minutes)
   apt:
@@ -57,4 +57,4 @@
     update_cache: yes
   when: ansible_distribution_major_version|int == 12
   register: vbold_install
-- debug: var=vbold_install.stdout_lines
+#- debug: var=vbold_install.stdout_lines
