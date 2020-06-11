@@ -20,13 +20,16 @@
   - ansible_distribution_major_version
   - ansible_distribution_release
   - ansible_distribution_version
+  - ansible_version.full
 
 # Fedora requires dnf module with exclude feature
+# Fedora 32 won't resolve ansible_distribution variables w/ ansible 2.7
+# use pip install 'ansible==2.8.12' --update
 - name: Verify Ansible meets common-role's version requirements.
   assert:
-    that: "ansible_version.full is version_compare('2.7.15', '>=')"
+    that: "ansible_version.full is version_compare('2.8.12', '>=')"
     msg: >
-      "You must update Ansible to at least 2.7.15 to use this version."
+      "You must update Ansible to at least 2.8.12 to use this version."
 
 
 - name: set specific variables for distributions
@@ -50,7 +53,7 @@
 - include_tasks: "{{ ansible_distribution }}_tasks.yaml"
 
 # ansible 2.7 deprecates with_items and nosquash, use variable directly
-- name: Install COMMON packages (this may take a while)
+- name: Install COMMON packages (this may take a while, especially on Fedora 32)
   package: 
     name: "{{ common_packages }}"
     state: present

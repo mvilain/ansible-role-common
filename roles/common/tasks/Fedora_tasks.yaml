@@ -24,7 +24,7 @@
   when: ansible_distribution_major_version|int == 21
 
 # ansible 2.7 deprecates with_items and nosquash, use variable directly
-- name: Fedora 22+ dnf packages
+- name: Fedora 22+ dnf packages (this may take a few minutes on Fedora 32)
   dnf: 
     name: "{{ Fedora_packages }}"
     state: latest

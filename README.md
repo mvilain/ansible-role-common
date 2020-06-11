@@ -52,7 +52,7 @@ And this git repo is good for creating packer templates:
 
 The following OS and versions have been tested:
 
-- CentOS 6 and 7
+- CentOS 6, 7, 8
 - Debian 9 (stretch 64-bit) and Debian 10 (buster 64-bit)
-- Fedora 21, 22, 23, 29, 30
-- Ubuntu 12.04 (precise) 14.04 (trusty), 16.04 (xenial), and 18.04 (bionic)
+- Fedora 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32
+- Ubuntu 12.04 (precise) 14.04 (trusty), 16.04 (xenial), 18.04 (bionic), 20.04 (focal)
