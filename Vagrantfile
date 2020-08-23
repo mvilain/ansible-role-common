@@ -1,4 +1,4 @@
-# -*- mode: ruby -*-
+#  -*- mode: ruby -*-
 # vi: set ft=ruby :
 #
 # Vagrantfile for ansible-common-role
@@ -310,7 +310,7 @@ Vagrant.configure("2") do |config|
 
 
 	config.vm.define "u12" do |u12|
-		u12.vm.box = "ubuntu/precise64"
+		u12.vm.box = "bento/ubuntu-12.04"
 		u12.vm.network 'private_network', ip: '192.168.10.112'
 		u12.vm.hostname = 'u12'
     u12.vm.provision "shell", inline: <<-SHELL
