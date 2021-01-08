@@ -1,5 +1,4 @@
 # vars for Debian
 ---
 
-time_service: ntp
 time_host: 0.debian.pool.ntp.org
