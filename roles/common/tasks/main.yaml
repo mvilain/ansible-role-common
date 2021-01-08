@@ -13,14 +13,14 @@
 #  FreeBSD = 'FreeBSD', HPUX = 'HP-UX'
 #)
 
-- debug: var="{{ item }}"
-  with_items:
-  - ansible_os_family
-  - ansible_distribution
-  - ansible_distribution_major_version
-  - ansible_distribution_release
-  - ansible_distribution_version
-  - ansible_version.full
+#- debug: var="{{ item }}"
+#  with_items:
+#  - ansible_os_family
+#  - ansible_distribution
+#  - ansible_distribution_major_version
+#  - ansible_distribution_release
+#  - ansible_distribution_version
+
 
 # Fedora requires dnf module with exclude feature
 # Fedora 32 won't resolve ansible_distribution variables w/ ansible 2.7
@@ -29,15 +29,17 @@
   assert:
     that: "ansible_version.full is version_compare('2.8.12', '>=')"
     msg: >
-      "You must update Ansible to at least 2.8.12 to use this version."
+      "You must update Ansible to at least 2.8.12 to use this role."
+#- debug: var=ansible_version.full
 
 
-- name: set specific variables for distributions
+- name: override specific variables for distributions
+  # allow OS-specific file to override defaults/main.yaml
   include_vars: "{{ item }}"
   with_first_found:
   - files:
-     - "{{ ansible_distribution }}.yaml"
-     - defaults.yaml
+    - "{{ ansible_distribution }}.yaml"
+    - defaults.yaml
 - debug: var=group_vars
 
 # note: the following included tasks might configure and enable stuff in common_packages
@@ -57,8 +59,6 @@
   package: 
     name: "{{ common_packages }}"
     state: present
-#  with_items:
-#    - "{{ common_packages }}"
 
 - include_tasks: "{{ ansible_distribution }}_services.yaml"
 
@@ -68,9 +68,10 @@
     state: disabled
   when: ansible_os_family != "Debian"
 
-# CentOS 8 doesn't have a ntp package...use chrony
+
 - include_tasks: ntp.yaml
   when: time_service == "ntpd" or time_service == "ntp"
 
+# CentOS 8 and Ubuntu 18+ use chrony instead of ntp (set in distro-specific task file)
 - include_tasks: chrony.yaml
   when: time_service == "chronyd"
