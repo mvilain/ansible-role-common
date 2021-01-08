@@ -23,6 +23,8 @@ f27 ansible_host=192.168.10.127
 f28 ansible_host=192.168.10.128
 f29 ansible_host=192.168.10.129
 
+# requires python3 installed prior to running ansible
+# and setting ansible_python_interpreter=/usr/bin/python3 below
 [fedora_py3_group]
 f30 ansible_host=192.168.10.130
 f31 ansible_host=192.168.10.131
@@ -31,9 +33,14 @@ f32 ansible_host=192.168.10.132
 [ubuntu_group]
 u12 ansible_host=192.168.10.112
 u14 ansible_host=192.168.10.114
+
+# requires python3 installed prior to running ansible
+# and setting ansible_python_interpreter=/usr/bin/python3 below
+[ubuntu_py3_group]
 u16 ansible_host=192.168.10.116
 u18 ansible_host=192.168.10.118
 u20 ansible_host=192.168.10.120
+
 
 [all:children]
 centos_group
@@ -42,9 +49,17 @@ debian_group
 fedora_group
 fedora_py3_group
 ubuntu_group
+ubuntu_py3_group
+
+# centos8 uses python3 for ansible interpeter
+[centos8_group:vars]
+ansible_python_interpreter=/usr/libexec/platform-python
 
 # https://docs.ansible.com/ansible/latest/reference_appendices/python_3_support.html
 [fedora_py3_group:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+[ubuntu_py3_group:vars]
 ansible_python_interpreter=/usr/bin/python3
 
 [all:vars]
