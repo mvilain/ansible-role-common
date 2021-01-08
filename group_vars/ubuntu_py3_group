@@ -1,0 +1,3 @@
+# group_vars for ubuntu python3 group (Ubuntu 18,20+)
+---
+group_vars: "ubuntu_py3"
