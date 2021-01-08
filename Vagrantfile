@@ -61,6 +61,7 @@ Vagrant.configure("2") do |config|
 		end
 	end
 	
+	# https://bugzilla.redhat.com/show_bug.cgi?id=1820925
 	config.vm.define "c8" do |c8|
 		c8.vm.box = "centos/8"
 		c8.ssh.insert_key = false
@@ -68,6 +69,7 @@ Vagrant.configure("2") do |config|
 		c8.vm.hostname = 'c8'
     c8.vm.provision "shell", inline: <<-SHELL
       dnf install -y epel-release
+      dnf config-manager --set-enabled powertools
       dnf makecache
       dnf install -y ansible
       alternatives --set python /usr/bin/python3
@@ -354,12 +356,13 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
+    # ansible uses python3 1/7/21
 	config.vm.define "u18" do |u18|
 		u18.vm.box = "ubuntu/bionic64"
 		u18.vm.network 'private_network', ip: '192.168.10.118'
 		u18.vm.hostname = 'u18'
     u18.vm.provision "shell", inline: <<-SHELL
-      apt-get -y install python
+      apt-get -y install python3
     SHELL
 
 		u18.vm.provision "ansible" do |ansible|
@@ -370,14 +373,15 @@ Vagrant.configure("2") do |config|
 	end
 
   # https://www.reddit.com/r/Ubuntu/comments/ga187h/focal64_vagrant_box_issues/
+  # 1/7/21 earlier releases of focal64 didn't work with vagrant but that's now been fixed
+  # requires setting ansible_python_interpreter=/usr/bin/python3 
 	config.vm.define "u20" do |u20|
-# 		u20.vm.box = "ubuntu/focal64"
-    u20.vm.box = "bento/ubuntu-20.04"
+	    u20.vm.box = "ubuntu/focal64"
+        #u20.vm.box = "bento/ubuntu-20.04"
 		u20.vm.network 'private_network', ip: '192.168.10.120'
 		u20.vm.hostname = 'u20'
     u20.vm.provision "shell", inline: <<-SHELL
-      apt-get -y install python python-is-python2
-      apt autoremove -y
+      apt-get -y install python3
     SHELL
 
 		u20.vm.provision "ansible" do |ansible|
