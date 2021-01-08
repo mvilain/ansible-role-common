@@ -1,8 +1,4 @@
 # vars for RedHat Enterprise (*NOT* CentOS)
 ---
 
-RedHat_packages:
-  - iproute
-
-time_service: ntp
 time_host: 0.redhat.pool.ntp.org

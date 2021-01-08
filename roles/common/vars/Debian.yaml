@@ -1,9 +1,5 @@
 # vars for Debian
 ---
 
-Debian_packages: 
-  - ntpdate
-  - apt-transport-https
-
 time_service: ntp
 time_host: 0.debian.pool.ntp.org

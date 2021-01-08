@@ -1,9 +1,6 @@
-# vars for Ubuntu
+# defaults for Ubuntu
 ---
 
-Ubuntu_packages:
-  - iproute
-  - apt-transport-https
-
+# time_service is overridden in inventory file for Ubuntu 18+ which uses chrony
 time_service: ntp
 time_host: 0.ubuntu.pool.ntp.org

@@ -1,9 +1,4 @@
 # vars for Fedora
 ---
 
-Fedora_packages:
-  - iproute
-  - vim-common
-
-time_service: ntpd
 time_host: 0.fedora.pool.ntp.org
