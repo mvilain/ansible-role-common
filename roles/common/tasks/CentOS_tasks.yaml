@@ -7,3 +7,15 @@
   package: name={{ item }} state=present
   with_items:
     - "{{ CentOS_packages }}"
+
+# CentOS 8 uses chrony
+- name: CentOS8 set
+  set_fact: 
+    time_service: chronyd
+  when: ansible_distribution_major_version|int > 7
+
+# CentOS 8 uses ntpd
+- name: CentOS7 set
+  set_fact: 
+    time_service: ntpd
+  when: ansible_distribution_major_version|int <= 7
