@@ -2,13 +2,4 @@
 ---
 group_vars: "centos8"
 
-common_packages:
-  - git
-  - lsof
-  - make
-  - net-tools
-  - vim
-  - wget
-#   - moreutils   # 5/16/20 can't load perl-IPC-Run needed by moreutils-0.63-1.el8.x86_64
-
-time_service: chronyd
+# time_service: chronyd
