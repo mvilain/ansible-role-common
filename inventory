@@ -8,7 +8,6 @@ c7 ansible_host=192.168.10.107
 c8 ansible_host=192.168.10.108
 
 [debian_group]
-d8 ansible_host=192.168.10.208
 d9 ansible_host=192.168.10.209
 d10 ansible_host=192.168.10.210
 
@@ -54,6 +53,9 @@ ubuntu_py3_group
 # centos8 uses python3 for ansible interpeter
 [centos8_group:vars]
 ansible_python_interpreter=/usr/libexec/platform-python
+
+[debian_group:vars]
+ansible_python_interpreter=/usr/bin/python3
 
 # https://docs.ansible.com/ansible/latest/reference_appendices/python_3_support.html
 [fedora_py3_group:vars]
