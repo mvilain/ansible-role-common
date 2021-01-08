@@ -2,4 +2,3 @@
 ---
 group_vars: "centos8"
 
-# time_service: chronyd
