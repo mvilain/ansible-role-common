@@ -27,9 +27,9 @@ CentOS_packages:
   - iproute
   - moreutils
 
-Debian_packages: 
-  - ntpdate
+Debian_packages:
   - apt-transport-https
+  - ntpdate
 
 Fedora_packages:
   - iproute
