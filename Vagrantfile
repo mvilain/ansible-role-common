@@ -82,11 +82,16 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
+    # https://stackoverflow.com/questions/56460494/apt-get-install-apt-transport-https-fails-in-docker
 	config.vm.define "d9" do |d9|
 		d9.vm.box = "debian/stretch64"
 		d9.ssh.insert_key = false
 		d9.vm.network 'private_network', ip: '192.168.10.209'
 		d9.vm.hostname = 'd9'
+		d9.vm.provision "shell", inline: <<-SHELL
+		    apt-get update
+		    apt-get install -y apt-transport-https
+		SHELL
 		
 		d9.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -95,11 +100,17 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
+    # don't use apt: update_cache=yes here because it won't work to trap
+    # repo change errors like with Debian 10 because of apt-secure server
 	config.vm.define "d10" do |d10|
 		d10.vm.box = "debian/buster64"
 		d10.ssh.insert_key = false
 		d10.vm.network 'private_network', ip: '192.168.10.210'
 		d10.vm.hostname = 'd10'
+		d10.vm.provision "shell", inline: <<-SHELL
+		    apt-get update --allow-releaseinfo-change -y
+		    apt-get install -y apt-transport-https
+		SHELL
 		
 		d10.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
