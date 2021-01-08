@@ -28,10 +28,13 @@ Both `vagrant up` and `vagrant up --no-provision; ansible-playbook site.yaml` wo
 - fedora 23
 - fedora 29
 - fedora 30
+- fedora 31
+- fedora 32
 - ubuntu 12.04
 - ubuntu 14.04
 - ubuntu 16.04
 - ubuntu 18.04
+- ubuntu 20.04
 
 Only `vagrant up` works for
 - fedora 21 (requires vagrant to provision correctly with 2nd NIC and install python)
