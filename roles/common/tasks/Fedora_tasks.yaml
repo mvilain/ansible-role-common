@@ -4,7 +4,7 @@
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1329015
 # (dnf is installed since F18...fixed in f27+)
-- name: fix Fedora[18-26] vim-minimal which is too old
+- name: fix Fedora[21-26] vim-minimal
   command: dnf update -y --allowerasing vim-minimal
   args:
     warn: no
@@ -13,31 +13,44 @@
   - ansible_distribution_major_version|int > 21
   - ansible_distribution_major_version|int <= 26
 
-# ansible 2.7 deprecates with_items and nosquash, use variable directly
-- name: Fedora 21 yum packages
-  yum: 
-    name: '{{ Fedora_packages }}'
+- name: fix Fedora[21-23] python2 dnf not allowing signatures
+  command: dnf install -y python-yumdaemon python-pip
+  args:
+    warn: no
+  register: yumdaemon
+  when: 
+  - ansible_distribution_major_version|int > 21
+  - ansible_distribution_major_version|int <= 23
+
+- name: Fedora 21-23 pip package
+  pip: 
+    name: yum
     state: present
-    skip_broken: yes
-    update_cache: yes
-  register: package
-  when: ansible_distribution_major_version|int == 21
+  register: yum
+  when: 
+  - ansible_distribution_major_version|int > 21
+  - ansible_distribution_major_version|int <= 23
 
 # ansible 2.7 deprecates with_items and nosquash, use variable directly
-- name: Fedora 22+ dnf packages (this may take a few minutes on Fedora 32+)
+- name: Fedora 21-23 bypass broken dnf module (not idempotent)
+  command: dnf install -y '{{ item }}'
+  args:
+    warn: no
+  register: package
+  with_items:
+    - '{{ Fedora_packages }}'
+  when: 
+  - ansible_distribution_major_version|int > 21
+  - ansible_distribution_major_version|int <= 23
+
+- name: Fedora 24+ dnf packages
   dnf: 
     name: "{{ Fedora_packages }}"
     state: latest
   register: dnf
-  when: ansible_distribution_major_version|int > 21
+  when: ansible_distribution_major_version|int > 23
 
 # Fedora uses ntpd
 - name: Fedora set
   set_fact: 
     time_service: ntpd
-
-#- debug: var="{{ item }}"
-#  with_items:
-#  - package
-#  - vim_min.stdout_lines
-#  - dnf.results

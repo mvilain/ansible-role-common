@@ -147,13 +147,15 @@ Vagrant.configure("2") do |config|
 	end
 
 	# these two versions are tested because 21 still used yum while 22 used dnf
+	# https://github.com/rpm-software-management/dnf/commit/176a81e357b8e169008c831963c3b487b3bac40a
+	# https://bugzilla.redhat.com/show_bug.cgi?id=1338564
 	config.vm.define "f22" do |f22|
-		f22.vm.box = "bento/fedora-22"
+  		f22.vm.box = "bento/fedora-22"
 		f22.ssh.insert_key = false
 		f22.vm.network 'private_network', ip: '192.168.10.122'
 		f22.vm.hostname = 'f22'
 		f22.vm.provision "shell", inline: <<-SHELL
-            dnf install -y python libselinux-python
+#             dnf install -y python libselinux-python
 		SHELL
 
 		f22.vm.provision "ansible" do |ansible|
@@ -164,13 +166,14 @@ Vagrant.configure("2") do |config|
 	end
 
 	# virtualbox runs the older 5.0 on Fedora 23 and below so test that it works
+	# python3 is 3.4 which won't run ansible, so use python2.7 with broken dnf module
 	config.vm.define "f23" do |f23|
 		f23.vm.box = "bento/fedora-23"
 		f23.ssh.insert_key = false
 		f23.vm.network 'private_network', ip: '192.168.10.123'
 		f23.vm.hostname = 'f23'
         f23.vm.provision "shell", inline: <<-SHELL
-          dnf install -y python libselinux-python
+            dnf install -y python libselinux-python
         SHELL
 
 		f23.vm.provision "ansible" do |ansible|
@@ -187,7 +190,7 @@ Vagrant.configure("2") do |config|
 		f24.vm.network 'private_network', ip: '192.168.10.124'
 		f24.vm.hostname = 'f24'
         f24.vm.provision "shell", inline: <<-SHELL
-          dnf install -y python libselinux-python
+#             dnf install -y python3
         SHELL
 
 		f24.vm.provision "ansible" do |ansible|
@@ -204,7 +207,7 @@ Vagrant.configure("2") do |config|
 		f25.vm.network 'private_network', ip: '192.168.10.125'
 		f25.vm.hostname = 'f25'
         f25.vm.provision "shell", inline: <<-SHELL
-          dnf install -y python libselinux-python
+#             dnf install -y python3
         SHELL
 
 		f25.vm.provision "ansible" do |ansible|
@@ -221,7 +224,7 @@ Vagrant.configure("2") do |config|
 		f26.vm.network 'private_network', ip: '192.168.10.126'
 		f26.vm.hostname = 'f26'
         f26.vm.provision "shell", inline: <<-SHELL
-          dnf install -y python libselinux-python
+#             dnf install -y python3
         SHELL
 
 		f26.vm.provision "ansible" do |ansible|
@@ -237,7 +240,7 @@ Vagrant.configure("2") do |config|
 		f27.vm.network 'private_network', ip: '192.168.10.127'
 		f27.vm.hostname = 'f27'
         f27.vm.provision "shell", inline: <<-SHELL
-          dnf install -y python libselinux-python
+#             dnf install -y python3
         SHELL
 
 		f27.vm.provision "ansible" do |ansible|
@@ -254,7 +257,7 @@ Vagrant.configure("2") do |config|
 		f28.vm.network 'private_network', ip: '192.168.10.128'
 		f28.vm.hostname = 'f28'
         f28.vm.provision "shell", inline: <<-SHELL
-          dnf install -y python libselinux-python
+#             dnf install -y python3
         SHELL
 
 		f28.vm.provision "ansible" do |ansible|
@@ -270,7 +273,7 @@ Vagrant.configure("2") do |config|
 		f29.vm.network 'private_network', ip: '192.168.10.129'
 		f29.vm.hostname = 'f29'
         f29.vm.provision "shell", inline: <<-SHELL
-          dnf install -y python libselinux-python
+#             dnf install -y python3
         SHELL
 
 		f29.vm.provision "ansible" do |ansible|
@@ -287,7 +290,7 @@ Vagrant.configure("2") do |config|
 		f30.vm.network 'private_network', ip: '192.168.10.130'
 		f30.vm.hostname = 'f30'
         f30.vm.provision "shell", inline: <<-SHELL
-          dnf install -y python libselinux-python
+            dnf install -y python3 #python libselinux-python
         SHELL
 
 		f30.vm.provision "ansible" do |ansible|
@@ -303,10 +306,9 @@ Vagrant.configure("2") do |config|
 		f31.vm.network 'private_network', ip: '192.168.10.131'
 		f31.vm.hostname = 'f31'
         f31.vm.provision "shell", inline: <<-SHELL
-          dnf install -y python2 
+          dnf install -y python3 #python2
         SHELL
 
-		# requires ansible_python_interpreter=/usr/bin/python3 in inventory
 		f31.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
@@ -315,17 +317,16 @@ Vagrant.configure("2") do |config|
 	end
 
   # 6/10/20 ansible 2.8 required to define ansible_os variables
-  #         network for f32 packages is very slow
+  #         network for f32 packages is VERY slow
 	config.vm.define "f32" do |f32|
 		f32.vm.box = "fedora/32-cloud-base"
 		f32.ssh.insert_key = false
 		f32.vm.network 'private_network', ip: '192.168.10.132'
 		f32.vm.hostname = 'f32'
         f32.vm.provision "shell", inline: <<-SHELL
-          #dnf install -y python2
+          #dnf install -y python3 #python2
         SHELL
 
-		# requires ansible_python_interpreter=/usr/bin/python3 in inventory
 		f32.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
@@ -339,7 +340,7 @@ Vagrant.configure("2") do |config|
 		f33.vm.network 'private_network', ip: '192.168.10.133'
 		f33.vm.hostname = 'f33'
         f33.vm.provision "shell", inline: <<-SHELL
-          #dnf install -y python2
+          #dnf install -y python3 #python2
         SHELL
 
         # requires ansible_python_interpreter=/usr/bin/python3 in inventory
@@ -356,7 +357,7 @@ Vagrant.configure("2") do |config|
 		u12.vm.network 'private_network', ip: '192.168.10.112'
 		u12.vm.hostname = 'u12'
     u12.vm.provision "shell", inline: <<-SHELL
-      apt-get -y install python
+      apt-get -y install python 
     SHELL
 
 		u12.vm.provision "ansible" do |ansible|
