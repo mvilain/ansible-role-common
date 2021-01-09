@@ -4,7 +4,7 @@
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1329015
 # (dnf is installed since F18...fixed in f27+)
-- name: fix Fedora vim-minimal which is too old
+- name: fix Fedora[18-26] vim-minimal which is too old
   command: dnf update -y --allowerasing vim-minimal
   args:
     warn: no
@@ -24,7 +24,7 @@
   when: ansible_distribution_major_version|int == 21
 
 # ansible 2.7 deprecates with_items and nosquash, use variable directly
-- name: Fedora 22+ dnf packages (this may take a few minutes on Fedora 32)
+- name: Fedora 22+ dnf packages (this may take a few minutes on Fedora 32+)
   dnf: 
     name: "{{ Fedora_packages }}"
     state: latest

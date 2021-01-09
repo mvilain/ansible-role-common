@@ -153,8 +153,9 @@ Vagrant.configure("2") do |config|
 		f22.vm.network 'private_network', ip: '192.168.10.122'
 		f22.vm.hostname = 'f22'
 		f22.vm.provision "shell", inline: <<-SHELL
-      dnf install -y python libselinux-python
+            dnf install -y python libselinux-python
 		SHELL
+
 		f22.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
@@ -168,54 +169,61 @@ Vagrant.configure("2") do |config|
 		f23.ssh.insert_key = false
 		f23.vm.network 'private_network', ip: '192.168.10.123'
 		f23.vm.hostname = 'f23'
-    f23.vm.provision "shell", inline: <<-SHELL
-      dnf install -y python libselinux-python
-    SHELL
+        f23.vm.provision "shell", inline: <<-SHELL
+          dnf install -y python libselinux-python
+        SHELL
+
 		f23.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
+	
 	# virtualbox runs the older 5.0 on Fedora 23 and below so test that it works
 	config.vm.define "f24" do |f24|
 		f24.vm.box = "bento/fedora-24"
 		f24.ssh.insert_key = false
 		f24.vm.network 'private_network', ip: '192.168.10.124'
 		f24.vm.hostname = 'f24'
-    f24.vm.provision "shell", inline: <<-SHELL
-      dnf install -y python libselinux-python
-    SHELL
+        f24.vm.provision "shell", inline: <<-SHELL
+          dnf install -y python libselinux-python
+        SHELL
+
 		f24.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
+
 	# virtualbox runs the older 5.0 on Fedora 23 and below so test that it works
 	config.vm.define "f25" do |f25|
 		f25.vm.box = "bento/fedora-25"
 		f25.ssh.insert_key = false
 		f25.vm.network 'private_network', ip: '192.168.10.125'
 		f25.vm.hostname = 'f25'
-    f25.vm.provision "shell", inline: <<-SHELL
-      dnf install -y python libselinux-python
-    SHELL
+        f25.vm.provision "shell", inline: <<-SHELL
+          dnf install -y python libselinux-python
+        SHELL
+
 		f25.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
+
 	# virtualbox runs the older 5.0 on Fedora 23 and below so test that it works
 	config.vm.define "f26" do |f26|
 		f26.vm.box = "bento/fedora-26"
 		f26.ssh.insert_key = false
 		f26.vm.network 'private_network', ip: '192.168.10.126'
 		f26.vm.hostname = 'f26'
-    f26.vm.provision "shell", inline: <<-SHELL
-      dnf install -y python libselinux-python
-    SHELL
+        f26.vm.provision "shell", inline: <<-SHELL
+          dnf install -y python libselinux-python
+        SHELL
+
 		f26.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
@@ -228,24 +236,27 @@ Vagrant.configure("2") do |config|
 		f27.ssh.insert_key = false
 		f27.vm.network 'private_network', ip: '192.168.10.127'
 		f27.vm.hostname = 'f27'
-    f27.vm.provision "shell", inline: <<-SHELL
-      dnf install -y python libselinux-python
-    SHELL
+        f27.vm.provision "shell", inline: <<-SHELL
+          dnf install -y python libselinux-python
+        SHELL
+
 		f27.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
 	end
+
 	# virtualbox runs the older 5.0 on Fedora 23 and below so test that it works
 	config.vm.define "f28" do |f28|
 		f28.vm.box = "bento/fedora-28"
 		f28.ssh.insert_key = false
 		f28.vm.network 'private_network', ip: '192.168.10.128'
 		f28.vm.hostname = 'f28'
-    f28.vm.provision "shell", inline: <<-SHELL
-      dnf install -y python libselinux-python
-    SHELL
+        f28.vm.provision "shell", inline: <<-SHELL
+          dnf install -y python libselinux-python
+        SHELL
+
 		f28.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
@@ -258,9 +269,9 @@ Vagrant.configure("2") do |config|
 		f29.ssh.insert_key = false
 		f29.vm.network 'private_network', ip: '192.168.10.129'
 		f29.vm.hostname = 'f29'
-    f29.vm.provision "shell", inline: <<-SHELL
-      dnf install -y python libselinux-python
-    SHELL
+        f29.vm.provision "shell", inline: <<-SHELL
+          dnf install -y python libselinux-python
+        SHELL
 
 		f29.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -275,9 +286,9 @@ Vagrant.configure("2") do |config|
 		f30.ssh.insert_key = false
 		f30.vm.network 'private_network', ip: '192.168.10.130'
 		f30.vm.hostname = 'f30'
-    f30.vm.provision "shell", inline: <<-SHELL
-      dnf install -y python libselinux-python
-    SHELL
+        f30.vm.provision "shell", inline: <<-SHELL
+          dnf install -y python libselinux-python
+        SHELL
 
 		f30.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -291,9 +302,9 @@ Vagrant.configure("2") do |config|
 		f31.ssh.insert_key = false
 		f31.vm.network 'private_network', ip: '192.168.10.131'
 		f31.vm.hostname = 'f31'
-    f31.vm.provision "shell", inline: <<-SHELL
-      dnf install -y python2 
-    SHELL
+        f31.vm.provision "shell", inline: <<-SHELL
+          dnf install -y python2 
+        SHELL
 
 		# requires ansible_python_interpreter=/usr/bin/python3 in inventory
 		f31.vm.provision "ansible" do |ansible|
@@ -310,15 +321,33 @@ Vagrant.configure("2") do |config|
 		f32.ssh.insert_key = false
 		f32.vm.network 'private_network', ip: '192.168.10.132'
 		f32.vm.hostname = 'f32'
-    f32.vm.provision "shell", inline: <<-SHELL
-      #dnf install -y python2
-    SHELL
+        f32.vm.provision "shell", inline: <<-SHELL
+          #dnf install -y python2
+        SHELL
+
 		# requires ansible_python_interpreter=/usr/bin/python3 in inventory
 		f32.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "site.yaml"
 			ansible.inventory_path = "./inventory"
 		end
+	end
+	
+	config.vm.define "f33" do |f33|
+		f33.vm.box = "fedora/33-cloud-base"
+		f33.ssh.insert_key = false
+		f33.vm.network 'private_network', ip: '192.168.10.133'
+		f33.vm.hostname = 'f33'
+        f33.vm.provision "shell", inline: <<-SHELL
+          #dnf install -y python2
+        SHELL
+
+        # requires ansible_python_interpreter=/usr/bin/python3 in inventory
+        f33.vm.provision "ansible" do |ansible|
+            ansible.compatibility_mode = "2.0"
+            ansible.playbook = "site.yaml"
+            ansible.inventory_path = "./inventory"
+        end
 	end
 
 

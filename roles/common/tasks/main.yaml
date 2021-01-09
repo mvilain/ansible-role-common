@@ -55,7 +55,7 @@
 - include_tasks: "{{ ansible_distribution }}_tasks.yaml"
 
 # ansible 2.7 deprecates with_items and nosquash, use variable directly
-- name: Install COMMON packages (this may take a while, especially on Fedora 32)
+- name: Install COMMON packages (this may take a while, especially on Fedora 32+)
   package: 
     name: "{{ common_packages }}"
     state: present
