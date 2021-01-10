@@ -130,7 +130,8 @@ Vagrant.configure("2") do |config|
 
 		f21.vm.provision "shell", inline: <<-SHELL
 			echo "...installing python (this may take a while)..."
-			yum install -y python libselinux-python
+			yum install -y sudo python libselinux-python python3
+
 			echo "...fixing enp0s8..."
 			sed -i -e "s/BOOTPROTO=none/BOOTPROTO=static/" /etc/sysconfig/network-scripts/ifcfg-enp0s8
 			echo "...restarting network..."
@@ -155,7 +156,7 @@ Vagrant.configure("2") do |config|
 		f22.vm.network 'private_network', ip: '192.168.10.122'
 		f22.vm.hostname = 'f22'
 		f22.vm.provision "shell", inline: <<-SHELL
-#             dnf install -y python libselinux-python
+            dnf install -y python libselinux-python python3
 		SHELL
 
 		f22.vm.provision "ansible" do |ansible|
@@ -173,7 +174,7 @@ Vagrant.configure("2") do |config|
 		f23.vm.network 'private_network', ip: '192.168.10.123'
 		f23.vm.hostname = 'f23'
         f23.vm.provision "shell", inline: <<-SHELL
-            dnf install -y python libselinux-python
+            dnf install -y python libselinux-python python3
         SHELL
 
 		f23.vm.provision "ansible" do |ansible|
@@ -190,7 +191,7 @@ Vagrant.configure("2") do |config|
 		f24.vm.network 'private_network', ip: '192.168.10.124'
 		f24.vm.hostname = 'f24'
         f24.vm.provision "shell", inline: <<-SHELL
-#             dnf install -y python3
+            dnf install -y python3
         SHELL
 
 		f24.vm.provision "ansible" do |ansible|
@@ -207,7 +208,7 @@ Vagrant.configure("2") do |config|
 		f25.vm.network 'private_network', ip: '192.168.10.125'
 		f25.vm.hostname = 'f25'
         f25.vm.provision "shell", inline: <<-SHELL
-#             dnf install -y python3
+            dnf install -y python3
         SHELL
 
 		f25.vm.provision "ansible" do |ansible|
@@ -224,7 +225,7 @@ Vagrant.configure("2") do |config|
 		f26.vm.network 'private_network', ip: '192.168.10.126'
 		f26.vm.hostname = 'f26'
         f26.vm.provision "shell", inline: <<-SHELL
-#             dnf install -y python3
+            dnf install -y python3
         SHELL
 
 		f26.vm.provision "ansible" do |ansible|
@@ -240,7 +241,7 @@ Vagrant.configure("2") do |config|
 		f27.vm.network 'private_network', ip: '192.168.10.127'
 		f27.vm.hostname = 'f27'
         f27.vm.provision "shell", inline: <<-SHELL
-#             dnf install -y python3
+            dnf install -y python3
         SHELL
 
 		f27.vm.provision "ansible" do |ansible|
@@ -257,7 +258,7 @@ Vagrant.configure("2") do |config|
 		f28.vm.network 'private_network', ip: '192.168.10.128'
 		f28.vm.hostname = 'f28'
         f28.vm.provision "shell", inline: <<-SHELL
-#             dnf install -y python3
+            dnf install -y python3
         SHELL
 
 		f28.vm.provision "ansible" do |ansible|
@@ -273,7 +274,7 @@ Vagrant.configure("2") do |config|
 		f29.vm.network 'private_network', ip: '192.168.10.129'
 		f29.vm.hostname = 'f29'
         f29.vm.provision "shell", inline: <<-SHELL
-#             dnf install -y python3
+            dnf install -y python3
         SHELL
 
 		f29.vm.provision "ansible" do |ansible|
@@ -290,7 +291,7 @@ Vagrant.configure("2") do |config|
 		f30.vm.network 'private_network', ip: '192.168.10.130'
 		f30.vm.hostname = 'f30'
         f30.vm.provision "shell", inline: <<-SHELL
-            dnf install -y python3 #python libselinux-python
+            dnf install -y python3
         SHELL
 
 		f30.vm.provision "ansible" do |ansible|
@@ -306,7 +307,7 @@ Vagrant.configure("2") do |config|
 		f31.vm.network 'private_network', ip: '192.168.10.131'
 		f31.vm.hostname = 'f31'
         f31.vm.provision "shell", inline: <<-SHELL
-          dnf install -y python3 #python2
+           dnf install -y python3
         SHELL
 
 		f31.vm.provision "ansible" do |ansible|
@@ -324,7 +325,7 @@ Vagrant.configure("2") do |config|
 		f32.vm.network 'private_network', ip: '192.168.10.132'
 		f32.vm.hostname = 'f32'
         f32.vm.provision "shell", inline: <<-SHELL
-          #dnf install -y python3 #python2
+           dnf install -y python3
         SHELL
 
 		f32.vm.provision "ansible" do |ansible|
@@ -340,7 +341,7 @@ Vagrant.configure("2") do |config|
 		f33.vm.network 'private_network', ip: '192.168.10.133'
 		f33.vm.hostname = 'f33'
         f33.vm.provision "shell", inline: <<-SHELL
-          #dnf install -y python3 #python2
+           dnf install -y python3
         SHELL
 
         # requires ansible_python_interpreter=/usr/bin/python3 in inventory
@@ -356,9 +357,9 @@ Vagrant.configure("2") do |config|
 		u12.vm.box = "bento/ubuntu-12.04"
 		u12.vm.network 'private_network', ip: '192.168.10.112'
 		u12.vm.hostname = 'u12'
-    u12.vm.provision "shell", inline: <<-SHELL
-      apt-get -y install python 
-    SHELL
+        u12.vm.provision "shell", inline: <<-SHELL
+            apt-get -y install python 
+        SHELL
 
 		u12.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -371,9 +372,9 @@ Vagrant.configure("2") do |config|
 		u14.vm.box = "ubuntu/trusty64"
 		u14.vm.network 'private_network', ip: '192.168.10.114'
 		u14.vm.hostname = 'u14'
-    u14.vm.provision "shell", inline: <<-SHELL
-      apt-get -y install python
-    SHELL
+        u14.vm.provision "shell", inline: <<-SHELL
+            apt-get -y install python
+        SHELL
 
 		u14.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -386,9 +387,9 @@ Vagrant.configure("2") do |config|
 		u16.vm.box = "ubuntu/xenial64"
 		u16.vm.network 'private_network', ip: '192.168.10.116'
 		u16.vm.hostname = 'u16'
-    u16.vm.provision "shell", inline: <<-SHELL
-      apt-get -y install python
-    SHELL
+        u16.vm.provision "shell", inline: <<-SHELL
+            apt-get -y install python3
+        SHELL
 
 		u16.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -402,9 +403,9 @@ Vagrant.configure("2") do |config|
 		u18.vm.box = "ubuntu/bionic64"
 		u18.vm.network 'private_network', ip: '192.168.10.118'
 		u18.vm.hostname = 'u18'
-    u18.vm.provision "shell", inline: <<-SHELL
-      apt-get -y install python3
-    SHELL
+        u18.vm.provision "shell", inline: <<-SHELL
+            apt-get -y install python3
+        SHELL
 
 		u18.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
@@ -421,9 +422,9 @@ Vagrant.configure("2") do |config|
         #u20.vm.box = "bento/ubuntu-20.04"
 		u20.vm.network 'private_network', ip: '192.168.10.120'
 		u20.vm.hostname = 'u20'
-    u20.vm.provision "shell", inline: <<-SHELL
-      apt-get -y install python3
-    SHELL
+        u20.vm.provision "shell", inline: <<-SHELL
+            apt-get -y install python3
+        SHELL
 
 		u20.vm.provision "ansible" do |ansible|
 			ansible.compatibility_mode = "2.0"
