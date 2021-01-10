@@ -47,7 +47,7 @@
   register: package
   with_items:
     - '{{ Fedora_packages }}'
-    
+
 # Fedora uses ntpd
 - name: Fedora set
   set_fact: 
