@@ -14,6 +14,8 @@ Fedora 21 does not install SELinux by default, so the selinux-policy-default pac
 
 Rather than install ntp, chronyd will be installed and configured as it's best suited for systems that aren't up 24x7.
 
+Fedora32's repos are hosted on mirrors with very poor network response from my VPN.  Tasks that install products take a very long time and frequently timed out. I even get timeouts on my straight ISP connection, so I have no workaround for this.  User's experience of Fedora32 may vary. Use Fedora33 instead.
+
 Role Variables
 --------------
 
