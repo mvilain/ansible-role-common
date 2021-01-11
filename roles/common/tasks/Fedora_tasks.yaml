@@ -49,8 +49,8 @@
   with_items:
     - '{{ Fedora_packages }}'
 
-# for some reason moreutils on Fedora32 is on a repo with very bad network connectivity
-# regardless of the network connection, trying to add it just times-out. 
+# mirror mirror.genesisadaptive.com and mirror.ette.biz for moreutils on Fedora32 return 404
+# regardless of the network connection, trying to add it sometimes times-out. 
 # So code a hard copy add for all other versions
 - name: non-Fedora32 moreutils
   package:

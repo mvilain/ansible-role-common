@@ -32,6 +32,7 @@ Debian_packages:
   - ntpdate
 
 # for some reason moreutils on Fedora32 is on a repo with very bad network connectivity
+# if you install packages manually, many mirrors show code 404 for packages
 # regardless of the network connection, trying to add it just times-out. 
 # So code a hard copy add for all other versions
 Fedora_packages:
