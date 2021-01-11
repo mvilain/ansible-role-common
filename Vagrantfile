@@ -317,24 +317,28 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-  # 6/10/20 ansible 2.8 required to define ansible_os variables
-  #         network for f32 packages is VERY slow
-  # try updating packages and see if that improves things
+  # 202101.10 lots of mirrors are broken for f32 making package install VERY slow
+  # https://superuser.com/questions/1035780/how-can-i-use-a-specific-mirror-server-in-fedora
+  # try updating packages and see if that improves things (not really)
+  # added fastestmirror and specific mirror
+  # tried changing from fedora/32-cloud-base to another box
 	config.vm.define "f32" do |f32|
 		f32.vm.box = "fedora/32-cloud-base"
 		f32.ssh.insert_key = false
-		f32.vm.network 'private_network', ip: '192.168.10.132'
+ 		f32.vm.network 'private_network', ip: '192.168.10.132'
 		f32.vm.hostname = 'f32'
         f32.vm.provision "shell", inline: <<-SHELL
-           dnf install -y python3
-           dnf update -y
+            dnf config-manager --setopt=fastestmirror=True --save
+            dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/32/Everything/x86_64/os/
+            dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/32/Everything/x86_64/os/
+            dnf install -y python3
         SHELL
 
-		f32.vm.provision "ansible" do |ansible|
-			ansible.compatibility_mode = "2.0"
-			ansible.playbook = "site.yaml"
-			ansible.inventory_path = "./inventory"
-		end
+ 		f32.vm.provision "ansible" do |ansible|
+ 			ansible.compatibility_mode = "2.0"
+ 			ansible.playbook = "site.yaml"
+ 			ansible.inventory_path = "./inventory"
+ 		end
 	end
 	
 	config.vm.define "f33" do |f33|
