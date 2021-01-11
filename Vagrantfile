@@ -319,6 +319,7 @@ Vagrant.configure("2") do |config|
 
   # 6/10/20 ansible 2.8 required to define ansible_os variables
   #         network for f32 packages is VERY slow
+  # try updating packages and see if that improves things
 	config.vm.define "f32" do |f32|
 		f32.vm.box = "fedora/32-cloud-base"
 		f32.ssh.insert_key = false
@@ -326,6 +327,7 @@ Vagrant.configure("2") do |config|
 		f32.vm.hostname = 'f32'
         f32.vm.provision "shell", inline: <<-SHELL
            dnf install -y python3
+           dnf update -y
         SHELL
 
 		f32.vm.provision "ansible" do |ansible|
