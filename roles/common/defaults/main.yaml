@@ -31,14 +31,14 @@ Debian_packages:
   - apt-transport-https
   - ntpdate
 
-# for some reason moreutils on Fedora32 is on a repo with very bad network connectivity
+# for some reason moreutils on Fedora32 is on bad repos
 # if you install packages manually, many mirrors show code 404 for packages
-# regardless of the network connection, trying to add it just times-out. 
-# So code a hard copy add for all other versions
+# regardless of the network connection, trying to add it just times-out.
+# https://superuser.com/questions/1035780/how-can-i-use-a-specific-mirror-server-in-fedora 
 Fedora_packages:
   - iproute
   - vim-common
-#  - moreutils
+  - moreutils
 
 RedHat_packages:
   - iproute
