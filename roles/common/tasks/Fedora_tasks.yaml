@@ -40,6 +40,7 @@
 
 # ansible 2.7 deprecates with_items and nosquash, should use variable directly
 # but it takes a long time to process all the packages at once, so do separately
+# this times out with Fedora32, even with bare ISP connection
 - name: Fedora packages
   package:
     name: '{{ item }}'
@@ -47,6 +48,16 @@
   register: package
   with_items:
     - '{{ Fedora_packages }}'
+
+# for some reason moreutils on Fedora32 is on a repo with very bad network connectivity
+# regardless of the network connection, trying to add it just times-out. 
+# So code a hard copy add for all other versions
+- name: non-Fedora32 moreutils
+  package:
+    name: moreutils
+    state: present
+  register: moreutils
+  when: ansible_distribution_major_version|int != 32
 
 # Fedora uses ntpd
 - name: Fedora set
