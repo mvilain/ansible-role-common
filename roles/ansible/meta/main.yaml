@@ -30,6 +30,7 @@ galaxy_info:
     - 31
     - 32
     - 33
+    - 34
   - name: Ubuntu
     versions:
     - precise (12.04)
