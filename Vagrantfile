@@ -271,7 +271,7 @@ Vagrant.configure("2") do |config|
     end
 
   config.vm.define "f30" do |f30|
-      f30.vm.box = "fedora/30-cloud-base"
+      f30.vm.box = "bento/fedora-30"
       f30.ssh.insert_key = false
       f30.vm.network 'private_network', ip: '192.168.10.130'
       f30.vm.hostname = 'f30'
@@ -286,7 +286,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "f31" do |f31|
-      f31.vm.box = "fedora/31-cloud-base"
+      f31.vm.box = "bento/fedora-31"
       f31.ssh.insert_key = false
       f31.vm.network 'private_network', ip: '192.168.10.131'
       f31.vm.hostname = 'f31'
