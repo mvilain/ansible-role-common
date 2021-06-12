@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder '.', '/vagrant', disabled: true
   config.ssh.insert_key = false
 #   config.ssh.username = 'root'
-#   config.ssh.password = 'vagrant'
+  config.ssh.password = 'vagrant'
   config.vm.boot_timeout = 120
   config.vm.provider :virtualbox do |vb|
     #vb.gui = true
@@ -25,6 +25,31 @@ Vagrant.configure("2") do |config|
 #       if [ -e ${i} ]; then echo "...displaying ${i}..."; cat ${i}; fi
 #     done
   SHELLALL
+
+# 6/12/21 centos/8 and almalinux/8 stopped being able to auth w/ insecure private key
+# https://stackoverflow.com/questions/22922891/vagrant-ssh-authentication-failure
+# cp ~/.vagrant.d/insecure_private_key ~/.vagrant/machines/default/virtualbox/private_key
+# once box is running, can login with vagrant/vagrant but vagrant can't ssh into it
+  config.vm.define "a8" do |a8|
+    a8.vm.box = "almalinux/8"
+    a8.ssh.insert_key = false
+    a8.vm.network 'private_network', ip: '192.168.10.188'
+    a8.vm.hostname = 'a8'
+    a8.vm.provision "shell", inline: <<-SHELL
+      dnf install -y epel-release
+      dnf config-manager --set-enabled powertools
+      dnf makecache
+      dnf install -y ansible
+      alternatives --set python /usr/bin/python3
+    SHELL
+    a8.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yaml"
+      ansible.inventory_path = "./inventory"
+      # ansible.verbose = "v"
+      # ansible.raw_arguments = [""]
+    end
+  end
 
 
   config.vm.define "c6" do |c6|
@@ -59,9 +84,11 @@ Vagrant.configure("2") do |config|
       end
   end
   
+  # 6/12/21 centos/8 and almalinux/8 stopped being able to auth w/ insecure private key
+  # so switch to bento's release
   # https://bugzilla.redhat.com/show_bug.cgi?id=1820925
   config.vm.define "c8" do |c8|
-      c8.vm.box = "centos/8"
+      c8.vm.box = "bento/centos-8"
       c8.ssh.insert_key = false
       c8.vm.network 'private_network', ip: '192.168.10.108'
       c8.vm.hostname = 'c8'
