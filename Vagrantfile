@@ -120,10 +120,11 @@ Vagrant.configure("2") do |config|
       end
     end
 
-    # don't use apt: update_cache=yes here because it won't work to trap
-    # repo change errors like with Debian 10 because of apt-secure server
+  # don't use apt: update_cache=yes here because it won't work to trap
+  # repo change errors like with Debian 10 because of apt-secure server
+  # 6/13/21 debian9 won't pass username/password to box, switch to bento
   config.vm.define "d10" do |d10|
-      d10.vm.box = "debian/buster64"
+      d10.vm.box = "bento/debian-10"
       d10.ssh.insert_key = false
       d10.vm.network 'private_network', ip: '192.168.10.210'
       d10.vm.hostname = 'd10'
