@@ -102,9 +102,10 @@ Vagrant.configure("2") do |config|
     end
   end
 
-    # https://stackoverflow.com/questions/56460494/apt-get-install-apt-transport-https-fails-in-docker
+  # https://stackoverflow.com/questions/56460494/apt-get-install-apt-transport-https-fails-in-docker
+  # 6/13/21 debian9 won't pass username/password to box, switch to bento
   config.vm.define "d9" do |d9|
-      d9.vm.box = "debian/stretch64"
+      d9.vm.box = "bento/debian-9"
       d9.ssh.insert_key = false
       d9.vm.network 'private_network', ip: '192.168.10.209'
       d9.vm.hostname = 'd9'
