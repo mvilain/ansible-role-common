@@ -49,20 +49,20 @@ Vagrant.configure("2") do |config|
 
 
   config.vm.define "c6" do |c6|
-      c6.vm.box = "bento/centos-6"
-      c6.ssh.insert_key = false
-      c6.vm.network 'private_network', ip: '192.168.10.106'
-      c6.vm.hostname = 'c6'
-      c6.vm.provision "shell", inline: <<-SHELL
-        yum install -y python libselinux-python
-      SHELL
-      c6.vm.provision "ansible" do |ansible|
-        ansible.compatibility_mode = "2.0"
-        ansible.playbook = "site.yaml"
-        ansible.inventory_path = "./inventory"
-        # ansible.verbose = "v"
-        # ansible.raw_arguments = [""]
-      end
+    c6.vm.box = "bento/centos-6"
+    c6.ssh.insert_key = false
+    config.ssh.password = 'vagrant'
+    c6.vm.network 'private_network', ip: '192.168.10.106'
+    c6.vm.hostname = 'c6'
+    c6.vm.provision "shell", inline: <<-SHELL
+      yum install -y epel-release
+      yum install -y ansible libselinux-python
+    SHELL
+    c6.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yaml"
+      ansible.inventory_path = "./inventory"
+    end
   end
 
   config.vm.define "c7" do |c7|
