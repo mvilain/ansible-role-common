@@ -26,10 +26,6 @@ Vagrant.configure("2") do |config|
 #     done
   SHELLALL
 
-# 6/12/21 centos/8 and almalinux/8 stopped being able to auth w/ insecure private key
-# https://stackoverflow.com/questions/22922891/vagrant-ssh-authentication-failure
-# cp ~/.vagrant.d/insecure_private_key ~/.vagrant/machines/default/virtualbox/private_key
-# once box is running, can login with vagrant/vagrant but vagrant can't ssh into it
   config.vm.define "a8" do |a8|
     a8.vm.box = "almalinux/8"
     a8.ssh.insert_key = false
@@ -332,15 +328,16 @@ Vagrant.configure("2") do |config|
   # try updating packages and see if that improves things (not really)
   # added fastestmirror and specific mirror
   # tried changing from fedora/32-cloud-base to another box
+  # 2021.06.13 mirrors seem to be OK now, removing alternate repos
   config.vm.define "f32" do |f32|
     f32.vm.box = "fedora/32-cloud-base"
     f32.ssh.insert_key = false
      f32.vm.network 'private_network', ip: '192.168.10.132'
     f32.vm.hostname = 'f32'
         f32.vm.provision "shell", inline: <<-SHELL
-            dnf config-manager --setopt=fastestmirror=True --save
-            dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/32/Everything/x86_64/os/
-            dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/32/Everything/x86_64/os/
+#             dnf config-manager --setopt=fastestmirror=True --save
+#             dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/32/Everything/x86_64/os/
+#             dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/32/Everything/x86_64/os/
             dnf install -y python3
         SHELL
      f32.vm.provision "ansible" do |ansible|
