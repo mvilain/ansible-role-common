@@ -14,13 +14,28 @@
     src: "../files/{{ vagrant_rpm_file }}"
     dest: "./{{ vagrant_rpm_file }}"
 
-# Fedora 22+ uses dnf instead of yum to install packages 
-# the package method generalizes this install so there's no need
-# check versions.
+# 6/12/21 https://www.hashicorp.com/security
+- rpm_key:
+    state: present
+    key: files/hashicorp_pgp_public_key
+  register: pgp_key
+- debug: var=pgp_key
+
 # installs into /opt/vagrant and /usr/bin/vagrant
-- name: installing rpm file (this may take a minute)
-  package:
+- name: installing RedHat 7 rpm file (this may take a minute)
+  yum:
     name: "./{{ vagrant_rpm_file }}"
     state: present
+    disable_gpg_check: yes
   register: vagrant_yum_rpm
+  when: ansible_distribution_major_version|int < 8
+# - debug: var=vagrant_yum_rpm.results
+
+- name: installing RedHat 8 rpm file (this may take a minute)
+  dnf:
+    name: "./{{ vagrant_rpm_file }}"
+    state: present
+    disable_gpg_check: yes
+  register: vagrant_yum_rpm
+  when: ansible_distribution_major_version|int >= 8
 # - debug: var=vagrant_yum_rpm.results

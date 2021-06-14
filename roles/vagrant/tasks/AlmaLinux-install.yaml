@@ -1,0 +1,19 @@
+# install vagrant on AlmaLinux systems
+---
+
+# as of 9/23/18, Hasicorp has restricted access of the rpm file
+# you can only get it from the web site
+# so provide them here in the role's files directory
+- name: providing vagrant rpm
+  copy:
+    src: "../files/{{ vagrant_rpm_file }}"
+    dest: "./{{ vagrant_rpm_file }}"
+
+# installs into /opt/vagrant and /usr/bin/vagrant
+- name: installing AlmaLinux 8 rpm file (this may take a minute)
+  dnf:
+    name: "./{{ vagrant_rpm_file }}"
+    state: present
+    disable_gpg_check: yes
+  register: vagrant_yum_rpm
+# - debug: var=vagrant_yum_rpm.results
