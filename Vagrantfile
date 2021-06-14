@@ -7,8 +7,6 @@ Vagrant.configure("2") do |config|
   # config.vm.network 'forwarded_port', guest: 80, host: 8080
   config.vm.synced_folder '.', '/vagrant', disabled: true
   config.ssh.insert_key = false
-#   config.ssh.username = 'root'
-  config.ssh.password = 'vagrant'
   config.vm.boot_timeout = 120
   config.vm.provider :virtualbox do |vb|
     #vb.gui = true
@@ -51,7 +49,6 @@ Vagrant.configure("2") do |config|
   config.vm.define "c6" do |c6|
     c6.vm.box = "bento/centos-6"
     c6.ssh.insert_key = false
-    config.ssh.password = 'vagrant'
     c6.vm.network 'private_network', ip: '192.168.10.106'
     c6.vm.hostname = 'c6'
     c6.vm.provision "shell", inline: <<-SHELL
