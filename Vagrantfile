@@ -322,12 +322,16 @@ Vagrant.configure("2") do |config|
   end
 
   # 2021.06.13 mirrors seem to be OK now, removing alternate repos
+  # 2021.06.17 mirrors are slow with Torguard VPN
   config.vm.define "f32" do |f32|
     f32.vm.box = "fedora/32-cloud-base"
     f32.ssh.insert_key = false
     f32.vm.network 'private_network', ip: '192.168.10.132'
     f32.vm.hostname = 'f32'
     f32.vm.provision "shell", inline: <<-SHELL
+        dnf config-manager --setopt=fastestmirror=True --save
+#         dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/32/Everything/x86_64/os/
+#         dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/32/Everything/x86_64/os/
         dnf install -y python3
     SHELL
     f32.vm.provision "ansible" do |ansible|
