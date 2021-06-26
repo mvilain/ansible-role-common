@@ -1,0 +1,14 @@
+---
+# RockyLinux install tasks for common
+# if there are more tasks that split on version, 
+# put them in their own tasks file. For now two is OK
+
+- name: RockyLinux packages
+  package: name={{ item }} state=present
+  with_items:
+    - "{{ CentOS_packages }}"
+
+# RockyLinux 8 uses chrony
+- name: RockyLinux set time_service
+  set_fact: 
+    time_service: chronyd
