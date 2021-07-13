@@ -163,6 +163,20 @@ Vagrant.configure("2") do |config|
   end
 
 
+ config.vm.define "s15" do |s15|
+    s15.vm.box = "suse-15.3"
+    s15.ssh.insert_key = false
+    s15.vm.network 'private_network', ip: '192.168.10.215'
+    s15.vm.hostname = 's15'
+    # s15.vm.provision "shell", inline: <<-SHELL
+    # SHELL
+    s15.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yaml"
+      ansible.inventory_path = "./inventory"
+    end
+  end
+
 
   # fedora-21 vagrant box doesn't set 2nd network config correctly
   # fedora 21 doesn't install sudo
