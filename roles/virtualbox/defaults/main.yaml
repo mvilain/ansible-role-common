@@ -2,7 +2,7 @@
 # place any variables specific to the virtualbox install 
 # and configuration here for multiple platforms
 
-vb_version: "6.1.6"     # released April 14 2020
+vb_version: "6.1.26"     # released 202107.29
 deb_vb_keyurl: https://www.virtualbox.org/download
 deb_vb_key: oracle_vbox_2016.asc
 deb_vb_old_key: oracle_vbox.asc
