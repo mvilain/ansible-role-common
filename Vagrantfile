@@ -76,7 +76,7 @@ Vagrant.configure("2") do |config|
         ansible.inventory_path = "./inventory"
       end
   end
-  
+
   # 6/12/21 centos/8 and almalinux/8 stopped being able to auth w/ insecure private key
   # so switch to bento's release
   # https://bugzilla.redhat.com/show_bug.cgi?id=1820925
@@ -99,8 +99,8 @@ Vagrant.configure("2") do |config|
       ansible.inventory_path = "./inventory"
     end
   end
-  
-  
+
+
   config.vm.define "r8" do |r8|
     r8.vm.box = "rockylinux/8"
     r8.ssh.insert_key = false
@@ -156,6 +156,22 @@ Vagrant.configure("2") do |config|
       apt-get install -y apt-transport-https
     SHELL
     d10.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yaml"
+      ansible.inventory_path = "./inventory"
+    end
+  end
+
+  config.vm.define "d11" do |d11|
+    d11.vm.box = "bento/debian-11"
+    d11.ssh.insert_key = false
+    d11.vm.network 'private_network', ip: '192.168.10.211'
+    d11.vm.hostname = 'd11'
+    d11.vm.provision "shell", inline: <<-SHELL
+      apt-get update --allow-releaseinfo-change -y
+      apt-get install -y apt-transport-https
+    SHELL
+    d11.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yaml"
       ansible.inventory_path = "./inventory"

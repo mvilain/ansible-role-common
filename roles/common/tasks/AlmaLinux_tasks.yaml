@@ -1,6 +1,6 @@
 ---
 # CentOS install tasks for common
-# if there are more tasks that split on version, 
+# if there are more tasks that split on version,
 # put them in their own tasks file. For now two is OK
 
 - name: AlmaLinux packages

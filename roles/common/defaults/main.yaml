@@ -9,7 +9,7 @@ common_packages:
   - vim
   - wget
 
-# NOTE: group_vars for CentOS8 and Ubuntu 20.04 
+# NOTE: group_vars for CentOS8 and Ubuntu 20.04
 # redefine common_packages to exclude moreutils 5/16/20
 # remove moreutils Ubuntu 20.04 1/7/21
 

@@ -11,6 +11,7 @@ a8 ansible_host=192.168.10.188
 [debian_group]
 d9 ansible_host=192.168.10.209
 d10 ansible_host=192.168.10.210
+d11 ansible_host=192.168.10.211
 
 # requires python35 but repo has python34, so use python27 with broken dnf module
 [fedora_group]

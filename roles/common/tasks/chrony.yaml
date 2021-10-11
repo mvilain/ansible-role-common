@@ -2,8 +2,8 @@
 # configure chronyc time service
 
 - name: Install chrony time service
-  package: 
-    name: chrony 
+  package:
+    name: chrony
     state: present
 
 - name: configure chronyd

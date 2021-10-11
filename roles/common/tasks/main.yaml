@@ -15,10 +15,10 @@
 #  MacOSX = 'Darwin', FreeBSD = 'FreeBSD', HPUX = 'HP-UX'
 #)
 
-#- debug: var="{{ item }}"
-#  with_items:
-#  - ansible_os_family
-#  - ansible_distribution
+- debug: var="{{ item }}"
+  with_items:
+  - ansible_os_family
+  - ansible_distribution
 #  - ansible_distribution_major_version
 #  - ansible_distribution_release
 #  - ansible_distribution_version
@@ -40,10 +40,11 @@
     timeout: 2
   register: aws_uri_check
   failed_when: False
-#- debug: var=aws_uri_check
+- debug: var=aws_uri_check
 
 - set_fact:
     is_aws_environment: "{{ aws_uri_check.status == 200 }}"
+# - debug: var=is_aws_environment
 
 - name: setting hostname with hostnamectl
   command: hostnamectl set-hostname "{{ inventory_hostname }}"
@@ -63,7 +64,7 @@
 - debug: var=group_vars
 
 # note: the following included tasks might configure and enable stuff in common_packages
-# requires 
+# requires
 #   Debian_{tasks,services}.yaml run for Debian distro, NOT Ubuntu
 #   RedHat_{tasks,services}.yaml run for RedHat Enterprise, NOT CentOS
 #   CentOS_{tasks,services}.yaml
@@ -76,17 +77,18 @@
 
 # ansible 2.7 deprecates with_items and nosquash, use variable directly
 - name: Install COMMON packages (this may take a while, especially on Fedora 32+)
-  package: 
+  package:
     name: "{{ common_packages }}"
     state: present
 
 - include_tasks: "{{ ansible_distribution }}_services.yaml"
 
 # selinux module untested on Debian systems, use edit of selinux/conf instead
+# or condition doesn't work on ansible 2.9
 - name: configure SElinux
   selinux:
     state: disabled
-  when: not is_aws_environment or ansible_os_family != "Debian"
+  when: ansible_os_family == 'RedHat' and not is_aws_environment
 
 
 - include_tasks: ntp.yaml

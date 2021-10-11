@@ -5,8 +5,8 @@
 # configure it by removing the server and pool lines, then add our own
 
   - name: Install ntp time service
-    package: 
-      name: ntp 
+    package:
+      name: ntp
       state: present
 
   - name: configure ntp time service
