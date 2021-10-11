@@ -1,4 +1,4 @@
-# install virtualbox on RockyLinux systems
+# install virtualbox on Rocky systems
 ---
 
 ### this won't work if you're behind a proxy server

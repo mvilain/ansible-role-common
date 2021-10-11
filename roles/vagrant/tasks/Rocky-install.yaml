@@ -1,4 +1,4 @@
-# install vagrant on RockyLinux systems
+# install vagrant on Rocky systems
 ---
 
 # as of 9/23/18, Hasicorp has restricted access of the rpm file
@@ -10,7 +10,7 @@
     dest: "./{{ vagrant_rpm_file }}"
 
 # installs into /opt/vagrant and /usr/bin/vagrant
-- name: installing AlmaLinux 8 rpm file (this may take a minute)
+- name: installing Rocky 8 rpm file (this may take a minute)
   dnf:
     name: "./{{ vagrant_rpm_file }}"
     state: present

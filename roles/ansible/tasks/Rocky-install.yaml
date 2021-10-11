@@ -1,5 +1,5 @@
 ---
-# RockyLinux
+# Rocky
 #
 - name: EPEL repo is already configured
   stat: 

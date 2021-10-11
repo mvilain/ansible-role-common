@@ -7,6 +7,7 @@ c7 ansible_host=192.168.10.107
 [centos8_group]
 c8 ansible_host=192.168.10.108
 a8 ansible_host=192.168.10.188
+r8 ansible_host=192.168.10.189
 
 [debian_group]
 d9 ansible_host=192.168.10.209
