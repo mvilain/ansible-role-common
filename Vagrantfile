@@ -427,19 +427,20 @@ Vagrant.configure("2") do |config|
   end
 
 
-  config.vm.define "u12" do |u12|
-      u12.vm.box = "bento/ubuntu-12.04"
-      u12.vm.network 'private_network', ip: '192.168.10.112'
-      u12.vm.hostname = 'u12'
-      u12.vm.provision "shell", inline: <<-SHELL
-        apt-get -y install python 
-      SHELL
-      u12.vm.provision "ansible" do |ansible|
-        ansible.compatibility_mode = "2.0"
-        ansible.playbook = "site.yaml"
-        ansible.inventory_path = "./inventory"
-      end
-    end
+#   config.vm.define "u12" do |u12|
+#       u12.vm.box = "bento/ubuntu-12.04"
+#       u12.vm.network 'private_network', ip: '192.168.10.112'
+#       u12.vm.hostname = 'u12'
+#       u12.vm.provision "shell", inline: <<-SHELL
+# 		apt-get -y update
+#         apt-get -y install python 
+#       SHELL
+#       u12.vm.provision "ansible" do |ansible|
+#         ansible.compatibility_mode = "2.0"
+#         ansible.playbook = "site.yaml"
+#         ansible.inventory_path = "./inventory"
+#       end
+#     end
 
   config.vm.define "u14" do |u14|
       u14.vm.box = "ubuntu/trusty64"
@@ -496,6 +497,22 @@ Vagrant.configure("2") do |config|
         apt-get -y install python3
       SHELL
       u20.vm.provision "ansible" do |ansible|
+        ansible.compatibility_mode = "2.0"
+        ansible.playbook = "site.yaml"
+        ansible.inventory_path = "./inventory"
+      end
+  end
+
+  config.vm.define "u21" do |u21|
+      u21.vm.box = "ubuntu/hirsute64"
+      #u21.vm.box = "bento/ubuntu-21.04"
+      u21.vm.network 'private_network', ip: '192.168.10.121'
+      u21.vm.hostname = 'u21'
+      u21.vm.provision "shell", inline: <<-SHELL
+		apt-get -y update
+        apt-get -y install python3
+      SHELL
+      u21.vm.provision "ansible" do |ansible|
         ansible.compatibility_mode = "2.0"
         ansible.playbook = "site.yaml"
         ansible.inventory_path = "./inventory"

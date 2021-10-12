@@ -16,27 +16,27 @@ d11 ansible_host=192.168.10.211
 
 # requires python35 but repo has python34, so use python27 with broken dnf module
 [fedora_group]
-f21 ansible_host=192.168.10.121
-f22 ansible_host=192.168.10.122
-f23 ansible_host=192.168.10.123
+f21 ansible_host=192.168.10.221
+f22 ansible_host=192.168.10.222
+f23 ansible_host=192.168.10.223
 
 # requires python3.5 installed prior to running ansible
 # and setting ansible_python_interpreter=/usr/bin/python3 below
 [fedora_py3_group]
-f24 ansible_host=192.168.10.124
-f25 ansible_host=192.168.10.125
-f26 ansible_host=192.168.10.126
-f27 ansible_host=192.168.10.127
-f28 ansible_host=192.168.10.128
-f29 ansible_host=192.168.10.129
-f30 ansible_host=192.168.10.130
-f31 ansible_host=192.168.10.131
-f32 ansible_host=192.168.10.132
-f33 ansible_host=192.168.10.133
-f34 ansible_host=192.168.10.134
+f24 ansible_host=192.168.10.224
+f25 ansible_host=192.168.10.225
+f26 ansible_host=192.168.10.226
+f27 ansible_host=192.168.10.227
+f28 ansible_host=192.168.10.228
+f29 ansible_host=192.168.10.229
+f30 ansible_host=192.168.10.230
+f31 ansible_host=192.168.10.231
+f32 ansible_host=192.168.10.232
+f33 ansible_host=192.168.10.233
+f34 ansible_host=192.168.10.234
 
 [ubuntu_group]
-u12 ansible_host=192.168.10.112
+# u12 ansible_host=192.168.10.112
 u14 ansible_host=192.168.10.114
 
 # requires python3 installed prior to running ansible
@@ -45,7 +45,7 @@ u14 ansible_host=192.168.10.114
 u16 ansible_host=192.168.10.116
 u18 ansible_host=192.168.10.118
 u20 ansible_host=192.168.10.120
-
+u21 ansible_host=192.168.10.121
 
 [all:children]
 centos_group
