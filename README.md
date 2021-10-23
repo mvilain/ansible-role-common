@@ -59,3 +59,7 @@ The following OS and versions have been tested:
 - Debian 9 (stretch 64-bit) and Debian 10 (buster 64-bit)
 - Fedora 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32
 - Ubuntu 12.04 (precise) 14.04 (trusty), 16.04 (xenial), 18.04 (bionic), 20.04 (focal)
+
+Note: 10/22/21, 
+- virtualbox 6.1.28 does ##not## work with Vagrant 2.18
+- ubuntu 21.11 does not have a working install of ansible, virtualbox, 

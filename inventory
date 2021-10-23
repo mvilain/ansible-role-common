@@ -36,7 +36,6 @@ f33 ansible_host=192.168.10.233
 f34 ansible_host=192.168.10.234
 
 [ubuntu_group]
-# u12 ansible_host=192.168.10.112
 u14 ansible_host=192.168.10.114
 
 # requires python3 installed prior to running ansible
