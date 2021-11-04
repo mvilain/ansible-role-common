@@ -9,6 +9,7 @@
   register: vb_rpm_key
 # - debug: var=vb_rpm_key
 
+# 11/03/21 this will flag an error for "virtualbox" for fedora 35
 - name: adding Fedora repo
   yum_repository:
     name: virtualbox
@@ -43,10 +44,13 @@
 # 5/18/20 says F29 dnf virtualbox 6.1 has errors (libm + libvpx missing?)
 # dnf module won't install it, but dnf command works
 # note: exclude added in ansible 2.7 but can't send array...fixed in 2.7.15
+# 11/3/21 virtualbox repo screwed up for Fedora 35, so ignore it
 - name: installing lastest version (this may take a while)
   command: dnf install -y VirtualBox-6.1 --exclude VirtualBox-5.2,VirtualBox-6.0
   args:
     warn: no
   register: vb6_install
-  when: ansible_distribution_major_version|int >= 26
+  when: 
+  - ansible_distribution_major_version|int >= 26
+  - ansible_distribution_major_version|int <= 34
 #- debug: var=vb6_install.stdout_lines

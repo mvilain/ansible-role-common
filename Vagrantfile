@@ -199,7 +199,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f21" do |f21|
     f21.vm.box = "bento/fedora-21"
     f21.ssh.insert_key = false
-    f21.vm.network 'private_network', ip: '192.168.10.121'
+    f21.vm.network 'private_network', ip: '192.168.10.221'
     f21.vm.hostname = 'f21'
     f21.vm.provision "shell", inline: <<-SHELL
       echo "...installing python (this may take a while)..."
@@ -225,7 +225,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f22" do |f22|
     f22.vm.box = "bento/fedora-22"
     f22.ssh.insert_key = false
-    f22.vm.network 'private_network', ip: '192.168.10.122'
+    f22.vm.network 'private_network', ip: '192.168.10.222'
     f22.vm.hostname = 'f22'
     f22.vm.provision "shell", inline: <<-SHELL
       dnf install -y python libselinux-python python3
@@ -242,7 +242,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f23" do |f23|
     f23.vm.box = "bento/fedora-23"
     f23.ssh.insert_key = false
-    f23.vm.network 'private_network', ip: '192.168.10.123'
+    f23.vm.network 'private_network', ip: '192.168.10.223'
     f23.vm.hostname = 'f23'
     f23.vm.provision "shell", inline: <<-SHELL
       dnf install -y python libselinux-python python3
@@ -257,7 +257,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f24" do |f24|
     f24.vm.box = "bento/fedora-24"
     f24.ssh.insert_key = false
-    f24.vm.network 'private_network', ip: '192.168.10.124'
+    f24.vm.network 'private_network', ip: '192.168.10.224'
     f24.vm.hostname = 'f24'
     f24.vm.provision "shell", inline: <<-SHELL
       dnf install -y python3
@@ -272,7 +272,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f25" do |f25|
     f25.vm.box = "bento/fedora-25"
     f25.ssh.insert_key = false
-    f25.vm.network 'private_network', ip: '192.168.10.125'
+    f25.vm.network 'private_network', ip: '192.168.10.225'
     f25.vm.hostname = 'f25'
     f25.vm.provision "shell", inline: <<-SHELL
       dnf install -y python3
@@ -287,7 +287,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f26" do |f26|
     f26.vm.box = "bento/fedora-26"
     f26.ssh.insert_key = false
-    f26.vm.network 'private_network', ip: '192.168.10.126'
+    f26.vm.network 'private_network', ip: '192.168.10.226'
     f26.vm.hostname = 'f26'
     f26.vm.provision "shell", inline: <<-SHELL
       dnf install -y python3
@@ -302,7 +302,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f27" do |f27|
     f27.vm.box = "bento/fedora-27"
     f27.ssh.insert_key = false
-    f27.vm.network 'private_network', ip: '192.168.10.127'
+    f27.vm.network 'private_network', ip: '192.168.10.227'
     f27.vm.hostname = 'f27'
     f27.vm.provision "shell", inline: <<-SHELL
       dnf install -y python3
@@ -317,7 +317,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f28" do |f28|
     f28.vm.box = "bento/fedora-28"
     f28.ssh.insert_key = false
-    f28.vm.network 'private_network', ip: '192.168.10.128'
+    f28.vm.network 'private_network', ip: '192.168.10.228'
     f28.vm.hostname = 'f28'
     f28.vm.provision "shell", inline: <<-SHELL
       dnf install -y python3
@@ -332,7 +332,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f29" do |f29|
     f29.vm.box = "bento/fedora-29"
     f29.ssh.insert_key = false
-    f29.vm.network 'private_network', ip: '192.168.10.129'
+    f29.vm.network 'private_network', ip: '192.168.10.229'
     f29.vm.hostname = 'f29'
     f29.vm.provision "shell", inline: <<-SHELL
       dnf install -y python3
@@ -347,7 +347,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f30" do |f30|
     f30.vm.box = "bento/fedora-30"
     f30.ssh.insert_key = false
-    f30.vm.network 'private_network', ip: '192.168.10.130'
+    f30.vm.network 'private_network', ip: '192.168.10.230'
     f30.vm.hostname = 'f30'
     f30.vm.provision "shell", inline: <<-SHELL
       dnf install -y python3
@@ -362,7 +362,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f31" do |f31|
     f31.vm.box = "bento/fedora-31"
     f31.ssh.insert_key = false
-    f31.vm.network 'private_network', ip: '192.168.10.131'
+    f31.vm.network 'private_network', ip: '192.168.10.231'
     f31.vm.hostname = 'f31'
     f31.vm.provision "shell", inline: <<-SHELL
       dnf install -y python3
@@ -379,7 +379,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f32" do |f32|
     f32.vm.box = "fedora/32-cloud-base"
     f32.ssh.insert_key = false
-    f32.vm.network 'private_network', ip: '192.168.10.132'
+    f32.vm.network 'private_network', ip: '192.168.10.232'
     f32.vm.hostname = 'f32'
     f32.vm.provision "shell", inline: <<-SHELL
         dnf config-manager --setopt=fastestmirror=True --save
@@ -397,7 +397,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f33" do |f33|
     f33.vm.box = "fedora/33-cloud-base"
     f33.ssh.insert_key = false
-    f33.vm.network 'private_network', ip: '192.168.10.133'
+    f33.vm.network 'private_network', ip: '192.168.10.233'
     f33.vm.hostname = 'f33'
     f33.vm.provision "shell", inline: <<-SHELL
        dnf install -y python3
@@ -413,13 +413,29 @@ Vagrant.configure("2") do |config|
   config.vm.define "f34" do |f34|
     f34.vm.box = "fedora/34-cloud-base"
     f34.ssh.insert_key = false
-    f34.vm.network 'private_network', ip: '192.168.10.134'
+    f34.vm.network 'private_network', ip: '192.168.10.234'
     f34.vm.hostname = 'f34'
       f34.vm.provision "shell", inline: <<-SHELL
          dnf install -y python3
       SHELL
     # requires ansible_python_interpreter=/usr/bin/python3 in inventory
     f34.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yaml"
+      ansible.inventory_path = "./inventory"
+    end
+  end
+
+  config.vm.define "f35" do |f35|
+    f35.vm.box = "fedora/35-cloud-base"
+    f35.ssh.insert_key = false
+    f35.vm.network 'private_network', ip: '192.168.10.235'
+    f35.vm.hostname = 'f35'
+      f35.vm.provision "shell", inline: <<-SHELL
+         dnf install -y python3
+      SHELL
+    # requires ansible_python_interpreter=/usr/bin/python3 in inventory
+    f35.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yaml"
       ansible.inventory_path = "./inventory"
@@ -476,7 +492,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "u20" do |u20|
       u20.vm.box = "ubuntu/focal64"
       #u20.vm.box = "bento/ubuntu-20.04"
-      u20.vm.network 'private_network', ip: '192.168.10.120'
+      u20.vm.network 'private_network', ip: '192.168.10.220'
       u20.vm.hostname = 'u20'
       u20.vm.provision "shell", inline: <<-SHELL
         apt-get -y install python3
@@ -492,7 +508,7 @@ Vagrant.configure("2") do |config|
 #       u21.vm.box = "ubuntu/impish64" # 10/22/21 not all repos work yet
       u21.vm.box = "ubuntu/hirsute64"
 #       u21.vm.box = "bento/ubuntu-21.04"
-      u21.vm.network 'private_network', ip: '192.168.10.121'
+      u21.vm.network 'private_network', ip: '192.168.10.221'
       u21.vm.hostname = 'u21'
       u21.vm.provision "shell", inline: <<-SHELL
 		apt-get -y update
