@@ -492,7 +492,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "u20" do |u20|
       u20.vm.box = "ubuntu/focal64"
       #u20.vm.box = "bento/ubuntu-20.04"
-      u20.vm.network 'private_network', ip: '192.168.10.220'
+      u20.vm.network 'private_network', ip: '192.168.10.120'
       u20.vm.hostname = 'u20'
       u20.vm.provision "shell", inline: <<-SHELL
         apt-get -y install python3
@@ -506,9 +506,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "u21" do |u21|
 #       u21.vm.box = "ubuntu/impish64" # 10/22/21 not all repos work yet
-      u21.vm.box = "ubuntu/hirsute64"
+      u21.vm.box = "ubuntu/impish64"
 #       u21.vm.box = "bento/ubuntu-21.04"
-      u21.vm.network 'private_network', ip: '192.168.10.221'
+      u21.vm.network 'private_network', ip: '192.168.10.121'
       u21.vm.hostname = 'u21'
       u21.vm.provision "shell", inline: <<-SHELL
 		apt-get -y update
