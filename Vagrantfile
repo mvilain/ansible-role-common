@@ -383,8 +383,6 @@ Vagrant.configure("2") do |config|
     f32.vm.hostname = 'f32'
     f32.vm.provision "shell", inline: <<-SHELL
         dnf config-manager --setopt=fastestmirror=True --save
-#         dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/32/Everything/x86_64/os/
-#         dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/32/Everything/x86_64/os/
         dnf install -y python3
     SHELL
     f32.vm.provision "ansible" do |ansible|
@@ -400,9 +398,8 @@ Vagrant.configure("2") do |config|
     f33.vm.network 'private_network', ip: '192.168.10.233'
     f33.vm.hostname = 'f33'
     f33.vm.provision "shell", inline: <<-SHELL
-       dnf install -y python3
+      dnf install -y python3
     SHELL
-    # requires ansible_python_interpreter=/usr/bin/python3 in inventory
     f33.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yaml"
@@ -410,15 +407,16 @@ Vagrant.configure("2") do |config|
     end
   end
   
+  # 2021.11.06 mirrors b/c regular is slow
   config.vm.define "f34" do |f34|
     f34.vm.box = "fedora/34-cloud-base"
     f34.ssh.insert_key = false
     f34.vm.network 'private_network', ip: '192.168.10.234'
     f34.vm.hostname = 'f34'
       f34.vm.provision "shell", inline: <<-SHELL
-         dnf install -y python3
+        dnf config-manager --setopt=fastestmirror=True --save
+        dnf install -y python3
       SHELL
-    # requires ansible_python_interpreter=/usr/bin/python3 in inventory
     f34.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yaml"
@@ -426,15 +424,18 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  # 2021.11.06 mirrors b/c regular is slow
   config.vm.define "f35" do |f35|
     f35.vm.box = "fedora/35-cloud-base"
     f35.ssh.insert_key = false
     f35.vm.network 'private_network', ip: '192.168.10.235'
     f35.vm.hostname = 'f35'
       f35.vm.provision "shell", inline: <<-SHELL
-         dnf install -y python3
+        dnf config-manager --setopt=fastestmirror=True --save
+        dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/35/Everything/x86_64/os/
+        dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/35/Everything/x86_64/os/
+        dnf install -y python3
       SHELL
-    # requires ansible_python_interpreter=/usr/bin/python3 in inventory
     f35.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yaml"
