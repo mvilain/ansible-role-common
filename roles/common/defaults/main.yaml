@@ -25,7 +25,6 @@ timezone: America/Los_Angeles
 CentOS_packages:
   - epel-release
   - iproute
-  - moreutils
 
 Debian_packages:
   - apt-transport-https
