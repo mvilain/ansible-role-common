@@ -1,7 +1,8 @@
 vagrant
 =========
 
-This role installs the vagrant binary on either a local or remote machine. It will install on a CentOS, Debian, or MacOS system.
+This role installs the vagrant binary on either a local or remote machine. 
+It will install on a CentOS, Debian, or Fedora system. Installed from HashiCorp site.
 
 Requirements
 ------------
@@ -16,7 +17,8 @@ The following default variables are define:
 
 - **vagrant_version** -- this is the default version of vagrant to download and install
 - **vagrant_url** --  this is the base part of HashiCorp's vagrant URL
-- **vagrant_dest** -- this is the destination directory where the vagrant binary will be installed
+- **vagrant_dest** -- this is the destination directory where the vagrant binary 
+will be installed
 
 Dependencies
 ------------
@@ -26,7 +28,8 @@ none.
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Including an example of how to use your role (for instance, with variables 
+passed in as parameters) is always nice for users too:
 
     - hosts: servers
       roles:
