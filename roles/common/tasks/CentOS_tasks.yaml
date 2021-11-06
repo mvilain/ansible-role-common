@@ -8,6 +8,13 @@
   with_items:
     - "{{ CentOS_packages }}"
 
+#- name: non-CentOS8 moreutils
+package:
+  name: moreutils
+  state: present
+register: moreutils
+when: ansible_distribution_major_version|int <= 7
+
 # CentOS 8 uses ntpd
 - name: CentOS set
   set_fact: 
