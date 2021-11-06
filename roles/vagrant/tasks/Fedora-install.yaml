@@ -13,19 +13,10 @@
     state: present
   when: ansible_distribution_major_version|int <= 29
 
-
-# as of 9/23/18, Hasicorp has restricted access of the rpm file
-# you can only get it from the web site
-# so provide them here in the role's files directory
-- name: providing vagrant rpm
-  copy:
-    src: "../files/{{ vagrant_rpm_file }}"
-    dest: "./{{ vagrant_rpm_file }}"
-
 # vagrant's rpm is signed and requires dnf to install
 - name: dnf installing rpm file (this may take a minute)
   dnf:
-    name: "./{{ vagrant_rpm_file }}"
+    name: "{{ vagrant_url }}/{{ vagrant_rpm_file }}"
     state: present
     disable_gpg_check: yes
   register: vagrant_yum_rpm
