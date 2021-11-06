@@ -1,13 +1,16 @@
 # ansible-role-common
 
-This is a basic layout for an ansible project that can be expanded to support a site with a common set of utilities to be run on all hosts.  It can be tested using Vagrant.
+This is a basic layout for an ansible project that can be expanded to support 
+a site with a common set of utilities to be run on all hosts.  It can be tested 
+using Vagrant.
 
 
 ## How to use
 
 To use this role inside of ansible, 
 
-* add the **common/** directory tree to your roles/ directory inside your ansible repository
+* add the **common/** directory tree to your roles/ directory inside your 
+ansible repository
 * edit the inventory file to use the common role for every host (or specific hosts)
 * to add packages, services, files, etc. to the common role:
   - modify variable *base_packages* in **roles/common/defaults/main.yaml**
@@ -30,11 +33,15 @@ Both `vagrant up` and `vagrant up --no-provision; ansible-playbook site.yaml` wo
 - fedora 30
 - fedora 31
 - fedora 32
+- fedora 33
+- fedora 34
+- fedora 35
 - ubuntu 12.04
 - ubuntu 14.04
 - ubuntu 16.04
 - ubuntu 18.04
 - ubuntu 20.04
+- ubuntu 21.11
 
 Only `vagrant up` works for
 - fedora 21 (requires vagrant to provision correctly with 2nd NIC and install python)
@@ -58,7 +65,7 @@ The following OS and versions have been tested:
 - CentOS 6, 7, 8
 - Debian 9 (stretch 64-bit) and Debian 10 (buster 64-bit)
 - Fedora 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32
-- Ubuntu 12.04 (precise) 14.04 (trusty), 16.04 (xenial), 18.04 (bionic), 20.04 (focal)
+- Ubuntu 14.04 (trusty), 16.04 (xenial), 18.04 (bionic), 20.04 (focal), 21.11 (impish64)
 
 Note: 10/22/21, 
 - virtualbox 6.1.28 does ##not## work with Vagrant 2.18
