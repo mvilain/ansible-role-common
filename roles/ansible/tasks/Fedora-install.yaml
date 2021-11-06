@@ -5,7 +5,7 @@
 # https://github.com/ansible/ansible/issues/54855
 # https://www.reddit.com/r/Fedora/comments/b5fm39/fedora_30_ansibleplaybook/
 
-- name: install fedora ansible
+- name: install fedora ansible (this will take a while)
   package: 
     name: ansible 
     state: present
