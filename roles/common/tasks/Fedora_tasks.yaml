@@ -49,16 +49,6 @@
   with_items:
     - '{{ Fedora_packages }}'
 
-# mirror mirror.genesisadaptive.com and mirror.ette.biz for moreutils on Fedora32 return 404
-# regardless of the network connection, trying to add it sometimes times-out.
-# So code a hard copy add for all other versions
-#- name: non-Fedora32 moreutils
-#  package:
-#    name: moreutils
-#    state: present
-#  register: moreutils
-#  when: ansible_distribution_major_version|int != 32
-
 # Fedora uses ntpd
 - name: Fedora set
   set_fact:
