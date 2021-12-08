@@ -17,6 +17,9 @@ time_host: 0.north-america.pool.ntp.org
 time_service: ntpd
 timezone: America/Los_Angeles
 
+Amazon_packages:
+  - amazon-cloudwatch-agent
+  - libselinux-python
 
 # CentOS time_service is defined in group_vars/{centos,centos8}_group
 # https://bugzilla.redhat.com/show_bug.cgi?id=1820925

@@ -12,9 +12,7 @@ Vagrant.configure("2") do |config|
     #vb.gui = true
     vb.memory = '1024'
   end
-  #
   # provision on all machines to allow ssh w/o checking
-  #
   config.vm.provision "shell", inline: <<-SHELLALL
     echo "...disabling CheckHostIP..."
     sed -i.orig -e "s/#   CheckHostIP yes/CheckHostIP no/" /etc/ssh/ssh_config
@@ -23,6 +21,27 @@ Vagrant.configure("2") do |config|
 #       if [ -e ${i} ]; then echo "...displaying ${i}..."; cat ${i}; fi
 #     done
   SHELLALL
+
+  config.vm.define "a2" do |a2|
+    a2.vm.box = "bento/amazonlinux-2"
+    a2.ssh.insert_key = false
+    a2.vm.network 'private_network', ip: '192.168.10.102'
+    a2.vm.hostname = 'a2'
+    a2.vm.provision "shell", inline: <<-SHELL
+      amazon-linux-extras install epel #ansible2=2.8 kernel-ng python3.8
+      yum-config-manager --enable epel
+      # alternatives --set python /usr/bin/python3.8
+      # python3.8 -m pip install --upgrade pip setuptools
+    SHELL
+    a2.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yaml"
+      ansible.inventory_path = "./inventory"
+      # ansible.verbose = "v"
+      # ansible.raw_arguments = [""]
+    end
+  end
+
 
   config.vm.define "a8" do |a8|
     a8.vm.box = "almalinux/8"
