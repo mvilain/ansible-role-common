@@ -22,5 +22,5 @@
 - name: install debian ansible
   apt:
     name: ansible
-    update_cache: yes 
+    update_cache: yes
     state: present

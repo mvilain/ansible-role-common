@@ -6,6 +6,6 @@
 # https://www.reddit.com/r/Fedora/comments/b5fm39/fedora_30_ansibleplaybook/
 
 - name: install fedora ansible (this will take a while)
-  package: 
-    name: ansible 
+  package:
+    name: ansible
     state: present
