@@ -2,7 +2,7 @@
 # AlmaLinux
 #
 - name: EPEL repo is already configured
-  stat: 
+  stat:
     path: "{{ epel_repofile_path }}"
   register: epel_repofile_result
 
@@ -20,8 +20,8 @@
   when: not epel_repofile_result.stat.exists
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: install RHEL ansible
-  package: 
+- name: install on AlmaLinux
+  package:
     name: ansible
-    state: present 
+    state: present
     enablerepo: epel

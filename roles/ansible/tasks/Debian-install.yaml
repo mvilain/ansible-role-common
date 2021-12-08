@@ -19,7 +19,7 @@
     id: 93C4A3FD7BB9C367
 
 # needs apt-transport-https package to open http URLs when no https server responds
-- name: install debian ansible
+- name: install on debian
   apt:
     name: ansible
     update_cache: yes

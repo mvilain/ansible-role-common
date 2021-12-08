@@ -8,7 +8,7 @@
   when: ansible_distribution_major_version|int < 20
 # - debug: var=ans_ubuntu_repo
 
-- name: install ubuntu ansible
+- name: install on ubuntu
   apt:
     name: ansible
     update_cache: yes
