@@ -64,7 +64,8 @@ Vagrant.configure("2") do |config|
     end
   end
 
-
+  # this will fail in ansible 2.13 as centos6 python=2.6.6 is to old
+  # and epel-release version of python3.4 is also to old
   config.vm.define "c6" do |c6|
     c6.vm.box = "bento/centos-6"
     c6.ssh.insert_key = false
