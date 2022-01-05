@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "a2" do |a2|
     a2.vm.box = "bento/amazonlinux-2"
     a2.ssh.insert_key = false
-    a2.vm.network 'private_network', ip: '192.168.10.102'
+    a2.vm.network 'private_network', ip: '192.168.10.190'
     a2.vm.hostname = 'a2.test'
     a2.vm.provision "shell", inline: <<-SHELL
       amazon-linux-extras install epel #ansible2=2.8 kernel-ng python3.8

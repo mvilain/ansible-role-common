@@ -1,7 +1,7 @@
 # test inventory
 
 [centos_group]
-a2 ansible_host=192.168.10.102
+a2 ansible_host=192.168.10.190
 c6 ansible_host=192.168.10.106
 c7 ansible_host=192.168.10.107
 

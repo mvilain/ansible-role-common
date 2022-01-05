@@ -65,6 +65,7 @@
 
 # note: the following included tasks might configure and enable stuff in common_packages
 # requires
+#   Amazon_{tasks,services}.yaml run for Amazon Linux 2
 #   Debian_{tasks,services}.yaml run for Debian distro, NOT Ubuntu
 #   RedHat_{tasks,services}.yaml run for RedHat Enterprise, NOT CentOS
 #   CentOS_{tasks,services}.yaml
@@ -90,6 +91,30 @@
     state: disabled
   when: ansible_os_family == 'RedHat' and not is_aws_environment
 
+- name: disable SSH password auth
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    backup: yes
+    regexp: "^#PasswordAuthentication yes"
+    line: "PasswordAuthentication no"
+  register: sshd_config
+# - debug: var=sshd_config
+
+- name: restart sshd
+  service:
+    name: sshd
+    state: restarted
+  when: sshd_config.changed
+
+# - name: enable passwordless sudo for "{{ username }}"
+#   lineinfile:
+#     dest: /etc/sudoers
+#     backup: yes
+#     regexp: "^%wheel"
+#     line: "{{ username }} ALL=(ALL) NOPASSWD: ALL"
+#     validate: "/usr/sbin/visudo -cf %s"
+#   register: sudoers_file
+# # - debug: var=sudoers_file
 
 - include_tasks: ntp.yaml
   when: time_service == "ntpd" or time_service == "ntp"

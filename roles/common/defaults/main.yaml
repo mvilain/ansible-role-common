@@ -1,5 +1,5 @@
 ---
-# defaults file for common
+# defaults file for common module
 
 common_packages:
   - git
