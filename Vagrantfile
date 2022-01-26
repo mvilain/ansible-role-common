@@ -526,9 +526,8 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "u21" do |u21|
-#       u21.vm.box = "ubuntu/impish64" # 10/22/21 not all repos work yet
       u21.vm.box = "ubuntu/impish64"
-#       u21.vm.box = "bento/ubuntu-21.04"
+#       u21.vm.box = "bento/ubuntu-21.11"
       u21.vm.network 'private_network', ip: '192.168.10.121'
       u21.vm.hostname = 'u21.test'  # won't set domain
       u21.vm.provision "shell", inline: <<-SHELL
