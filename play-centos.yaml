@@ -1,7 +1,0 @@
-# playbook for CentOS hosts
----
-- hosts: centos_group,centos8_group
-  become: true
-  roles:
-    - common
-    - vagrant

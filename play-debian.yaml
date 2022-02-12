@@ -1,7 +1,0 @@
-# playbook for Debian hosts
----
-- hosts: debian_group
-  become: true
-  roles:
-    - common
-    - vagrant

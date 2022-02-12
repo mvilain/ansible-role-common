@@ -1,7 +1,0 @@
-# playbook for Fedora hosts
----
-- hosts: fedora_group,fedora_py3_group
-  become: true
-  roles:
-    - common
-    - vagrant

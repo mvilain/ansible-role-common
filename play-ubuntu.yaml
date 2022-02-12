@@ -1,7 +1,0 @@
-# playbook for Ubuntu hosts
----
-- hosts: ubuntu_group,ubuntu_py3_group
-  become: true
-  roles:
-    - common
-    - vagrant
