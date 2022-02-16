@@ -1,0 +1,41 @@
+# install vagrant on RedHat systems
+---
+
+- name: selinux required on RedHat
+  package: 
+    name: libselinux-python 
+    state: present
+
+# as of 9/23/18, Hasicorp has restricted access of the rpm file
+# you can only get it from the web site
+# so provide them here in the role's files directory
+#- name: providing vagrant rpm
+#  copy:
+#    src: "../files/{{ vagrant_rpm_file }}"
+#    dest: "./{{ vagrant_rpm_file }}"
+
+# 6/12/21 https://www.hashicorp.com/security
+- rpm_key:
+    state: present
+    key: files/hashicorp_pgp_public_key
+  register: pgp_key
+- debug: var=pgp_key
+
+# installs into /opt/vagrant and /usr/bin/vagrant
+- name: installing RedHat 7 rpm file (this may take a minute)
+  yum:
+    name: "{{ vagrant_url }}/{{ vagrant_rpm_file }}"
+    state: present
+    disable_gpg_check: yes
+  register: vagrant_yum_rpm
+  when: ansible_distribution_major_version|int < 8
+# - debug: var=vagrant_yum_rpm.results
+
+- name: installing RedHat 8 rpm file (this may take a minute)
+  dnf:
+    name: "{{ vagrant_url }}/{{ vagrant_rpm_file }}"
+    state: present
+    disable_gpg_check: yes
+  register: vagrant_yum_rpm
+  when: ansible_distribution_major_version|int >= 8
+# - debug: var=vagrant_yum_rpm.results

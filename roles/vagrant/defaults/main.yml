@@ -1,0 +1,11 @@
+---
+# place any variables specific to the vagrant install 
+# and configuration here for multiple platforms
+
+vagrant_version: "2.2.19"
+vagrant_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}"
+vagrant_deb_file: "vagrant_{{ vagrant_version }}_x86_64.deb"
+vagrant_rpm_file: "vagrant_{{ vagrant_version }}_x86_64.rpm"
+
+vagrant_mac_dest: "/opt/local/vagrant"
+vagrant_linux_dest: "/opt/vagrant"

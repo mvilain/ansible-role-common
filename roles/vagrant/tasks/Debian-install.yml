@@ -1,0 +1,11 @@
+# install for Debian vagrant
+---
+
+- name: installing deb file
+  apt:
+    deb: "{{ vagrant_url }}/{{ vagrant_deb_file }}"
+    state: present
+    allow_unauthenticated: True
+  # when: not vagrant_wget_result.failed
+  register: vagrant_apt_deb
+# - debug: var=vagrant_apt_deb

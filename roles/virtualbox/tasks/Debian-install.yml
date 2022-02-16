@@ -1,0 +1,28 @@
+# install for Debian virtualbox only supports >= 9
+---
+# comparing version with |int will cause a deprecated error in ansible 2.8+
+
+# vagrant doesn't support https behind proxy
+# none of this won't work behind a proxy server
+- name: adding oracle_vbox key
+  apt_key:
+    url: "{{ deb_vb_keyurl }}/{{ deb_vb_key }}"
+    state: present
+
+# this may fail for new versions of Virtualbox that don't have their distibutions set up yet.
+# needs apt-transport-https package
+- name: adding repo
+  lineinfile:
+    path: /etc/apt/sources.list
+    backup: yes
+    line: deb https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib
+
+# this may fail for new versions of Virtualbox that don't have their distibutions set up yet.
+- name: installing (this may take a few minutes)
+  apt:
+    name: virtualbox-6.1
+    state: present
+#    allow_unauthenticated: yes
+    update_cache: yes
+  register: vb_install
+# - debug: var=vb_install

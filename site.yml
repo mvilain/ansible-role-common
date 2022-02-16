@@ -1,0 +1,9 @@
+# main playbook: site.yaml
+---
+- hosts: all
+  become: true
+# check_mode: yes  # yes=dry-run
+  roles:
+    - common
+
+- import_playbook: play-virtualbox.yaml

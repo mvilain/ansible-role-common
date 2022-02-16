@@ -1,0 +1,13 @@
+# install for Ubuntu vagrant
+---
+# ubuntu 14.04's repo doesn't have a valid certificate, so don't install there
+# installs into /opt/vagrant and /usr/bin/vagrant
+- name: installing deb file
+  apt:
+    deb: "{{ vagrant_url }}/{{ vagrant_deb_file }}"
+    state: present
+    allow_unauthenticated: True
+  # when: not vagrant_wget_result.failed
+  register: vagrant_apt_deb
+  when: ansible_distribution_major_version|int != 14
+# - debug: var=vagrant_apt_deb
