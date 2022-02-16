@@ -1,4 +1,4 @@
-# main playbook: site.yaml
+# main playbook: site.yml
 ---
 - hosts: all
   become: true
@@ -6,4 +6,4 @@
   roles:
     - common
 
-- import_playbook: play-virtualbox.yaml
+- import_playbook: play-virtualbox.yml

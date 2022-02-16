@@ -6,7 +6,7 @@
 - name: AlmaLinux packages
   package: name={{ item }} state=present
   with_items:
-    - "{{ CentOS_packages }}"
+    - "{{ Amazon_packages }}"
 
 # AlmaLinux 8 uses chrony
 - name: AlmaLinux set time_service

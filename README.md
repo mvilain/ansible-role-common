@@ -13,7 +13,7 @@ To use this role inside of ansible,
 ansible repository
 * edit the inventory file to use the common role for every host (or specific hosts)
 * to add packages, services, files, etc. to the common role:
-  - modify variable *base_packages* in **roles/common/defaults/main.yaml**
+  - modify variable *base_packages* in **roles/common/defaults/main.yml**
   - modify type or distro files in **roles/common/vars** for OS-specific stuff
 
 
@@ -24,7 +24,7 @@ run one by one.  But that can be tedious.  I've changed the vagrant boxes from
 the standard ubuntu and fedora distros in which some don't have python already
 installed to ones that run ansible without any prior provisioning.
 
-Both `vagrant up` and `vagrant up --no-provision; ansible-playbook site.yaml` work for:
+Both `vagrant up` and `vagrant up --no-provision; ansible-playbook site.yml` work for:
 - Amazon Linux 2
 - CentOS 6 and 7 (c6, c7)
 - Debian 9 and 10 (d9, d10)

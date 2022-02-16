@@ -1,4 +1,4 @@
 # tasks file for vagrant
 ---
 
-- include_tasks: "{{ ansible_distribution }}-install.yaml"
+- include_tasks: "{{ ansible_distribution }}-install.yml"

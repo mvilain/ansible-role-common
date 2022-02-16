@@ -1,22 +1,4 @@
 # tasks file for virtualbox
 ---
-#ansible_os_family = dict(
-#  RedHat = 'RedHat', Fedora = 'RedHat', CentOS = 'RedHat', Scientific = 'RedHat',
-#  SLC = 'RedHat', Ascendos = 'RedHat', CloudLinux = 'RedHat', PSBM = 'RedHat',
-#  OracleLinux = 'RedHat', OVS = 'RedHat', OEL = 'RedHat', Amazon = 'RedHat',
-#  XenServer = 'RedHat', Ubuntu = 'Debian', Debian = 'Debian', SLES = 'Suse',
-#  SLED = 'Suse', OpenSuSE = 'Suse', SuSE = 'Suse', Gentoo = 'Gentoo',
-#  Archlinux = 'Archlinux', Mandriva = 'Mandrake', Mandrake = 'Mandrake',
-#  Solaris = 'Solaris', Nexenta = 'Solaris', OmniOS = 'Solaris', OpenIndiana = 'Solaris',
-#  SmartOS = 'Solaris', AIX = 'AIX', Alpine = 'Alpine', MacOSX = 'Darwin',
-#  FreeBSD = 'FreeBSD', HPUX = 'HP-UX'
-#)
 
-# - block:
-#   - debug: var=ansible_os_family
-#   - debug: var=ansible_distribution
-#   - debug: var=ansible_distribution_major_version 
-#   - debug: var=ansible_distribution_release
-#   - debug: var=ansible_distribution_version
-
-- include_tasks: "{{ ansible_distribution }}-install.yaml"
+- include_tasks: "{{ ansible_distribution }}-install.yml"
