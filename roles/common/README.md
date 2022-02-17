@@ -28,11 +28,11 @@ See [this link](https://github.com/hashicorp/vagrant/issues/8204).  Adding the k
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yaml, vars/main.yaml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
 Note that variables put in vars/ directory tree cannot be overridden by the command line prompt.  It's better to put varibables in defaults where the values can be overridden.
 
-Time services packages and names aren't uniform.  To install the correct package and start the service, tasks/<distro>\_tasks.yaml will check versions and install the appropriate package. This way ntp/chronyd aren't dependent on group_vars or vars/<distro>.
+Time services packages and names aren't uniform.  To install the correct package and start the service, tasks/<distro>\_tasks.yml will check versions and install the appropriate package. This way ntp/chronyd aren't dependent on group_vars or vars/<distro>.
 
 Dependencies
 ------------

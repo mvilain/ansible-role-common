@@ -66,12 +66,12 @@
 
 # note: the following included tasks might configure and enable stuff in common_packages
 # requires
-#   Amazon_{tasks,services}.yaml run for Amazon Linux 2
-#   Debian_{tasks,services}.yaml run for Debian distro, NOT Ubuntu
-#   RedHat_{tasks,services}.yaml run for RedHat Enterprise, NOT CentOS
-#   CentOS_{tasks,services}.yaml
-#   Fedora_{tasks,services}.yaml
-#   Ubuntu_{tasks,services}.yaml
+#   Amazon_{tasks,services}.yml run for Amazon Linux 2
+#   Debian_{tasks,services}.yml run for Debian distro, NOT Ubuntu
+#   RedHat_{tasks,services}.yml run for RedHat Enterprise, NOT CentOS
+#   CentOS_{tasks,services}.yml
+#   Fedora_{tasks,services}.yml
+#   Ubuntu_{tasks,services}.yml
 # note: these tasks should be done first before the common tasks so prerequisite packages
 # can be added first (e.g. epel for centos)
 
