@@ -169,7 +169,8 @@ Vagrant.configure("2") do |config|
   # 6/13/21 debian9 won't pass username/password to box, switch to bento which is updated
   # 6/14/21 https://github.com/hashicorp/vagrant/issues/8204 export SSH_AUTH_SOCK=""
   config.vm.define "d10" do |d10|
-    d10.vm.box = "bento/debian-10"
+    # d10.vm.box = "bento/debian-10"
+    d10.vm.box = "debian/buster64"
     d10.ssh.insert_key = false
     d10.vm.network 'private_network', ip: '192.168.10.210'
     d10.vm.hostname = 'd10.test'  # won't set domain
@@ -185,7 +186,8 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "d11" do |d11|
-    d11.vm.box = "bento/debian-11"
+    # d11.vm.box = "bento/debian-11"
+    d11.vm.box = "debian/bullseye64"
     d11.ssh.insert_key = false
     d11.vm.network 'private_network', ip: '192.168.10.211'
     d11.vm.hostname = 'd11.test'  # won't set domain
