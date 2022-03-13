@@ -101,8 +101,10 @@ Vagrant.configure("2") do |config|
   # so switch to bento's release
   # https://bugzilla.redhat.com/show_bug.cgi?id=1820925
   # 6/14/21 https://github.com/hashicorp/vagrant/issues/8204 export SSH_AUTH_SOCK=""
+  # 2/24/22 centos/8 and bento/centos-8.5 yum's repos don't work any more...use latest rockylinux
+  #      Error: Failed to download metadata for repo 'appstream': Cannot prepare internal mirrorlist: No URLs in mirrorlist
   config.vm.define "c8" do |c8|
-    c8.vm.box = "centos/8"
+    c8.vm.box = "bento/rockylinux-8"
     c8.ssh.insert_key = false
     c8.vm.network 'private_network', ip: '192.168.10.108'
     c8.vm.hostname = 'c8.test'
@@ -120,7 +122,7 @@ Vagrant.configure("2") do |config|
     end
   end
 
-
+  # 2/24/22 rockylinux 8.4
   config.vm.define "r8" do |r8|
     r8.vm.box = "rockylinux/8"
     r8.ssh.insert_key = false
