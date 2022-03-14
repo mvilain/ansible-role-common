@@ -123,26 +123,26 @@ Vagrant.configure("2") do |config|
   end
 
   # 2/24/22 rockylinux 8.4
-  config.vm.define "r8" do |r8|
-    r8.vm.box = "rockylinux/8"
-    r8.ssh.insert_key = false
-    r8.vm.network 'private_network', ip: '192.168.10.189'
-    r8.vm.hostname = 'r8.test'
-    r8.vm.provision "shell", inline: <<-SHELL
-      dnf install -y epel-release
-      dnf config-manager --set-enabled powertools
-      dnf makecache
-      dnf install -y ansible
-      alternatives --set python /usr/bin/python3
-    SHELL
-    r8.vm.provision "ansible" do |ansible|
-      ansible.compatibility_mode = "2.0"
-      ansible.playbook = "site.yml"
-      ansible.inventory_path = "./inventory"
-      # ansible.verbose = "v"
-      # ansible.raw_arguments = [""]
-    end
-  end
+  # config.vm.define "r8" do |r8|
+  #   r8.vm.box = "rockylinux/8"
+  #   r8.ssh.insert_key = false
+  #   r8.vm.network 'private_network', ip: '192.168.10.189'
+  #   r8.vm.hostname = 'r8.test'
+  #   r8.vm.provision "shell", inline: <<-SHELL
+  #     dnf install -y epel-release
+  #     dnf config-manager --set-enabled powertools
+  #     dnf makecache
+  #     dnf install -y ansible
+  #     alternatives --set python /usr/bin/python3
+  #   SHELL
+  #   r8.vm.provision "ansible" do |ansible|
+  #     ansible.compatibility_mode = "2.0"
+  #     ansible.playbook = "site.yml"
+  #     ansible.inventory_path = "./inventory"
+  #     # ansible.verbose = "v"
+  #     # ansible.raw_arguments = [""]
+  #   end
+  # end
 
 
   # https://stackoverflow.com/questions/56460494/apt-get-install-apt-transport-https-fails-in-docker
