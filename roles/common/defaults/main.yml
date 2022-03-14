@@ -17,6 +17,8 @@ time_host: 0.north-america.pool.ntp.org
 time_service: ntpd
 timezone: America/Los_Angeles
 
+ssh_service: sshd
+
 Amazon_packages:
   - amazon-cloudwatch-agent
   - libselinux-python
@@ -29,9 +31,10 @@ CentOS_packages:
   - epel-release
   - iproute
 
+# 3/13/22 debian site says to use sntp instead of ntp which is depricated
+# running vagrant box from debian only has chrony available
 Debian_packages:
   - apt-transport-https
-  - ntpdate
 
 # for some reason moreutils on Fedora32 is on bad repos
 # if you install packages manually, many mirrors show code 404 for packages

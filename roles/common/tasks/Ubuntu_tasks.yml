@@ -1,5 +1,9 @@
 # Ubuntu install tasks for common
 ---
+# apt won't see git or other packages without doing apt-get update first
+- name: update package manager
+  apt: update_cache=yes
+
 # comparing version with |int will cause a deprecated error in ansible 2.8+
 
 - name: Ubuntu packages
@@ -13,13 +17,24 @@
   package: name=iproute2 state=present
   when: ansible_distribution_major_version|int >= 18
 
-- name: Ubuntu set
+# 3/13/22 ntp is now openntp and chrony is available, so use that for Ubuntu 14+
+# service is named differently on newer releases
+# dispartity mostly due to using systemd for services on 18+
+- name: set time_service Ubuntu < 18
   set_fact:
-    time_service: ntp
+    time_service: chrony
   when: ansible_distribution_major_version|int < 18
 
-# Ubuntu18+ uses chrony
-- name: Ubuntu18+ set
+- name: set time_service Ubuntu 18+
   set_fact:
     time_service: chronyd
   when: ansible_distribution_major_version|int >= 18
+
+# dispartity mostly due to using systemd for services on 18+
+# defaults/main.yml defines 18+ value "sshd"
+# while early Ubuntu versions use /etc/init.d/ssh script
+- name: set ssh_service Ubuntu < 18
+  set_fact:
+    ssh_service: ssh
+  when: ansible_distribution_major_version|int < 18
+

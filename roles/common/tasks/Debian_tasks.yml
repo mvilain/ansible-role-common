@@ -1,15 +1,23 @@
 # Debian install tasks for common
 ---
+# apt won't see git or other packages without doing apt-get update first
+- name: update package manager
+  apt: update_cache=yes
+
 # ansible 2.8+: looping through apt items is deprecated...just pass list
 - name: Debian packages
   apt:
     name: "{{ Debian_packages }}"
     state: present
     install_recommends: no
-#  with_items:
-#    - "{{ Debian_packages }}"
 
-# Debian 9 and 10 use ntp for time_service
-- name: Debian set
+# Debian 9 uses ntp for time_service (default)
+- name: Debian10+ set time_service
+  set_fact:
+    time_service: chronyd
+  when: ansible_distribution_major_version|int >= 10
+
+- name: Debian9 set time_service
   set_fact:
     time_service: ntp
+  when: ansible_distribution_major_version|int < 10

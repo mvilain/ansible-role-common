@@ -101,11 +101,12 @@
   register: sshd_config
 # - debug: var=sshd_config
 
-- name: restart sshd
+# defaults/main.yml defines ssh_services as sshd
+# let a distro's tasks.yml file set it to something other
+- name: restart sshd service
   service:
-    name: sshd
+    name: "{{ ssh_service }}"
     state: restarted
-  when: sshd_config.changed
 
 # - name: enable passwordless sudo for "{{ username }}"
 #   lineinfile:
@@ -118,8 +119,8 @@
 # # - debug: var=sudoers_file
 
 - include_tasks: ntp.yml
-  when: time_service == "ntpd" or time_service == "ntp"
+  when: time_service == "ntp" or time_service == "ntpd"
 
 # CentOS 8 and Ubuntu 18+ use chrony instead of ntp (set in distro-specific task file)
 - include_tasks: chrony.yml
-  when: time_service == "chronyd"
+  when: time_service == "chrony" or time_service == "chronyd"

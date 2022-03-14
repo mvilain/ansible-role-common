@@ -25,10 +25,21 @@
         path: /etc/ntp.conf
         line: "pool {{ time_host }} iburst"
       notify: "restart time services"
-    - service: 
-        name: "{{ time_service }}"
-        state: started
-        enabled: true
     - shell: grep -E "^pool|^#pool|^server|^#server" /etc/ntp.conf
       register: ntp
 #    - debug: var=ntp.stdout_lines
+
+  - name: start, enable ntp time service, flush handlers
+    block:
+      - service: 
+          name: ntpd
+          state: started
+          enabled: true
+        when: ansible_distribution != "Debian"
+      - service: 
+          name: ntp
+          state: started
+          enabled: true
+        when: ansible_distribution == "Debian"
+      - meta: flush_handlers
+
