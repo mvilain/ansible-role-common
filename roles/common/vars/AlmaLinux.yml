@@ -1,0 +1,4 @@
+# vars for AlmaLinux version of CentOS 8
+---
+
+time_host: 0.redhat.pool.ntp.org
