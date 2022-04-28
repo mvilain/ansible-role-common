@@ -529,21 +529,20 @@ Vagrant.configure("2") do |config|
       end
   end
 
-  config.vm.define "u21" do |u21|
-      u21.vm.box = "ubuntu/impish64"
-#       u21.vm.box = "bento/ubuntu-21.11"
-      u21.vm.network 'private_network', ip: '192.168.10.121'
-      u21.vm.hostname = 'u21.test'  # won't set domain
-      u21.vm.provision "shell", inline: <<-SHELL
-		  apt-get -y update
-        apt-get -y install python3
-      SHELL
-      u21.vm.provision "ansible" do |ansible|
-        ansible.compatibility_mode = "2.0"
-        ansible.playbook = "site.yml"
-        ansible.inventory_path = "./inventory"
-      end
-  end
+  # config.vm.define "u21" do |u21|
+  #     u21.vm.box = "ubuntu/impish64"
+  #     u21.vm.network 'private_network', ip: '192.168.10.121'
+  #     u21.vm.hostname = 'u21.test'  # won't set domain
+  #     u21.vm.provision "shell", inline: <<-SHELL
+		#   apt-get -y update
+  #       apt-get -y install python3
+  #     SHELL
+  #     u21.vm.provision "ansible" do |ansible|
+  #       ansible.compatibility_mode = "2.0"
+  #       ansible.playbook = "site.yml"
+  #       ansible.inventory_path = "./inventory"
+  #     end
+  # end
 
   config.vm.define "u22" do |u22|
       u22.vm.box = "ubuntu/jammy64"
