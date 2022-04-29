@@ -3,6 +3,6 @@
 - hosts: centos_group,centos8_group,fedora_group,fedora_py3_group,debian_group,ubuntu_group,ubuntu_py3_group
   become: true
   roles:
+    - virtualbox
     - ansible
     - vagrant
-    - virtualbox
