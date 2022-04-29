@@ -2,11 +2,14 @@
 # place any variables specific to the virtualbox install 
 # and configuration here for multiple platforms
 
-#vb_version: "6.1.28"     # released 202110.21
 vb_version: "6.1.34"     # released 202304.20
 deb_vb_keyurl: https://www.virtualbox.org/download
+deb_rel_url: https://download.virtualbox.org/virtualbox/debian
 deb_vb_key: oracle_vbox_2016.asc
 deb_vb_old_key: oracle_vbox.asc
 
 rhel_vb_keyurl: https://www.virtualbox.org/download
 rhel_vb_key: oracle_vbox.asc
+rhel_rel_url: https://download.virtualbox.org/virtualbox/rpm/rhel
+cen_rel_url: https://download.virtualbox.org/virtualbox/rpm/el   # same as rhel
+fed_rel_url: https://download.virtualbox.org/virtualbox/rpm/fedora

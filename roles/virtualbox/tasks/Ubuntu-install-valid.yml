@@ -1,0 +1,54 @@
+# install valid distro for Ubuntu virtualbox (Release exists)
+---
+# vagrant doesn't support https behind proxy
+# none of this won't work behind a proxy server
+- name: adding oracle_vbox key
+  apt_key:
+    url: "{{ deb_vb_keyurl }}/{{ deb_vb_key }}"
+    state: present
+  when: ansible_distribution_major_version|int >= 18
+
+- name: adding oracle_vbox_2016 key
+  apt_key:
+    url: "{{ deb_vb_keyurl }}/{{ deb_vb_old_key }}"
+    state: present
+  when: ansible_distribution_major_version|int < 18 
+
+# this may fail for new versions of Virtualbox that don't have their distibutions set up yet.
+- name: adding repo
+  copy:
+    dest: /etc/apt/sources.list.d/virtualbox.list
+    backup: yes
+    content: "deb https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib"
+  when: ansible_distribution_major_version|int <= 20
+
+# this is only valid for Ubuntu 21.10 which uses 21.04's Release file
+# 11/6/21 VB 6.1.9 doesn't have an Ubuntu 21.10 Release file and so use 21.04's (hirsute)
+- name: adding hirsute repo
+  copy:
+    dest: /etc/apt/sources.list.d/vitualbox.list
+    backup: yes
+    content: "deb http://download.virtualbox.org/virtualbox/debian hirsute contrib"
+  when: ansible_distribution_major_version|int > 20
+
+# this may fail for new versions of Virtualbox that don't have their distibutions set up yet.
+- name: installing (this may take a few minutes)
+  apt:
+    name: virtualbox-6.1
+    state: present
+    allow_unauthenticated: yes
+    update_cache: yes
+  # when: ansible_distribution_major_version|int <= 20
+  register: vb_install
+# - debug: var=vb_install.stdout_lines
+
+## don't bother with such an old version as ubuntu 12.04 isn't really supported any more
+# - name: installing old release (this may take a few minutes)
+#   apt:
+#     name: virtualbox-5.1
+#     state: latest
+#     allow_unauthenticated: yes
+#     update_cache: yes
+#   when: ansible_distribution_major_version|int == 12
+#   register: vbold_install
+#- debug: var=vbold_install.stdout_lines
