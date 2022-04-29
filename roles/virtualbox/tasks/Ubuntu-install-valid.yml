@@ -22,8 +22,8 @@
     content: "deb https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib"
   when: ansible_distribution_major_version|int <= 20
 
-# this is only valid for Ubuntu 21.10 which uses 21.04's Release file
 # 11/6/21 VB 6.1.9 doesn't have an Ubuntu 21.10 Release file and so use 21.04's (hirsute)
+# this will be deprecated after 21.04 is archived
 - name: adding hirsute repo
   copy:
     dest: /etc/apt/sources.list.d/vitualbox.list
