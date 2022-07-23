@@ -64,6 +64,18 @@
   ignore_errors: yes
 - debug: var=group_vars
 
+# get-url uses remote_tmp module internally 2207.22
+- name: check for remote_tmp directory used by get-url
+  file:
+    path: /root/.ansible/tmp
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+    mode: '1777'
+  register: remote_tmp
+# - debug: var=remote_tmp
+
 # note: the following included tasks might configure and enable stuff in common_packages
 # requires
 #   Amazon_{tasks,services}.yml run for Amazon Linux 2
