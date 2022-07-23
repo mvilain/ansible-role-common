@@ -19,9 +19,11 @@
     gpgkey: https://www.virtualbox.org/download/oracle_vbox.asc
     enabled: yes
 
+# 7/23/22 virtualbox doesn't install on RockyLinux 9
 - name: installing current version (this may take few minutes)
   package:
     name: VirtualBox-6.1
     state: present
   register: vb_install
+  when: ansible_distribution_major_version|int <= 8
 # - debug: var=vb_install

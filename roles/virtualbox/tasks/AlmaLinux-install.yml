@@ -19,9 +19,11 @@
     gpgkey: https://www.virtualbox.org/download/oracle_vbox.asc
     enabled: yes
 
+# 7/23/22 virtualbox doesn't install on Almalinux 9
 - name: installing current version (this may take few minutes)
   package:
     name: VirtualBox-6.1
     state: present
+  when: ansible_distribution_major_version|int <= 8
   register: vb_install
 # - debug: var=vb_install
