@@ -2,7 +2,8 @@ virtualbox
 =========
 
 This role installs virtualbox on either a local or remote machine. 
-It will install on a CentOS [678], Debian [9|10|11], or Fedora 21-35.
+It will install on a CentOS [67], Alma/Rocky Linux 8, Debian [9|10|11], 
+or Fedora 21-35.
 
 Requirements
 ------------
@@ -32,7 +33,7 @@ all the URLs change
 Dependencies
 ------------
 
-As of 7/22/22, there are no dependancies
+As of 7/23/22, neither AlmaLinux/9 or RockyLinux/9 support VirtualBox 6.1
 
 Example Playbook
 ----------------

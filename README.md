@@ -26,7 +26,9 @@ installed to ones that run ansible without any prior provisioning.
 
 Both `vagrant up` and `vagrant up --no-provision; ansible-playbook site.yml` work for:
 - Amazon Linux 2
+- AlmaLinux 8 and 9 (a8, a9)
 - CentOS 6 and 7 (c6, c7)
+- RockyLinux 8 and 9 (r8, r9)
 - Debian 9 and 10 (d9, d10)
 - fedora 22
 - fedora 23
@@ -64,11 +66,16 @@ And this git repo is good for creating packer templates:
 The following OS and versions have been tested:
 
 - Amazon Linux 2
-- CentOS 6, 7, 8
-- Debian 9 (stretch 64-bit) and Debian 10 (buster 64-bit)
-- Fedora 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32
-- Ubuntu 14.04 (trusty), 16.04 (xenial), 18.04 (bionic), 20.04 (focal), 21.11 (impish64)
+- AlmaLinux 8 and 9
+- CentOS 6, 7
+- RockyLinux 8 and 9
+- Debian 9 (stretch 64-bit), Debian 10 (buster 64-bit), Debian 11 (trusy 64-bit)
+- Fedora 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
+- Ubuntu 14.04 (trusty), 16.04 (xenial), 18.04 (bionic), 20.04 (focal), 22.04 (jammy)
 
 Note: 12/7/21
 - virtualbox 6.1.28+ does ##not## work with Vagrant 2.18+
-- ubuntu 21.11 does not have a working install of ansible, virtualbox, 
+- ubuntu 21.11 does not have a working install of ansible, virtualbox
+
+Note: 7/23/22
+- virtualbox 6.1.36 does not install on either Almalinux 9 or RockyLinux 9
