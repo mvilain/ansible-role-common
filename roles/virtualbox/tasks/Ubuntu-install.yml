@@ -1,6 +1,5 @@
 # install for Ubuntu virtualbox
 ---
-# comparing version with |int will cause a deprecated error in ansible 2.8+
 # check to see if release file exists for this version of Ubuntu
 - name: verify Virtualbox Release file for this Ubuntu version.
   get_url:
@@ -10,6 +9,7 @@
   register: ubuntu_release
 # - debug: var=ubuntu_release.status_code   # returns "404" if not found
 
+# comparing version with |int will cause a deprecated error in ansible 2.8+
 - name: install Virtualbox if Release file exists.
   include_tasks: "{{ ansible_distribution }}-install-valid.yml"
   when: ubuntu_release.status_code|int != 404

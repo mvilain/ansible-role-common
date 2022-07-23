@@ -1,4 +1,15 @@
 # tasks file for virtualbox
 ---
+# get-url uses remote_tmp module internally 2207.22
+- name: check for /root/.ansible/tmp used by get-url remote_tmp
+  file:
+    path: /root/.ansible/tmp
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+    mode: '1777'
+  register: remote_tmp
+- debug: var=remote_tmp
 
 - include_tasks: "{{ ansible_distribution }}-install.yml"
