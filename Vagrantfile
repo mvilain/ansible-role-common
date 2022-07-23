@@ -2,6 +2,7 @@
 # vi: set ft=ruby :
 #
 # Vagrantfile for ansible-common-role
+# 2207.23 added alma9 and rocky9
 
 Vagrant.configure("2") do |config|
   # config.vm.network 'forwarded_port', guest: 80, host: 8080
@@ -56,6 +57,26 @@ Vagrant.configure("2") do |config|
       alternatives --set python /usr/bin/python3
     SHELL
     a8.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yml"
+      ansible.inventory_path = "./inventory"
+      # ansible.verbose = "v"
+      # ansible.raw_arguments = [""]
+    end
+  end
+  config.vm.define "a9" do |a9|
+    a9.vm.box = "almalinux/9"
+    a9.ssh.insert_key = false
+    a9.vm.network 'private_network', ip: '192.168.10.189'
+    a9.vm.hostname = 'a9.test'
+    a9.vm.provision "shell", inline: <<-SHELL
+      dnf install -y epel-release
+      dnf config-manager --set-enabled powertools
+      dnf makecache
+      dnf install -y ansible
+      alternatives --set python /usr/bin/python3
+    SHELL
+    a9.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yml"
       ansible.inventory_path = "./inventory"
@@ -122,11 +143,11 @@ Vagrant.configure("2") do |config|
 #     end
 #   end
 
-  # 2/24/22 rockylinux 8.4
+  # 7/24/22 rockylinux 8.5
   config.vm.define "r8" do |r8|
     r8.vm.box = "rockylinux/8"
     r8.ssh.insert_key = false
-    r8.vm.network 'private_network', ip: '192.168.10.189'
+    r8.vm.network 'private_network', ip: '192.168.10.198'
     r8.vm.hostname = 'r8.test'
     r8.vm.provision "shell", inline: <<-SHELL
       dnf install -y epel-release
@@ -136,6 +157,28 @@ Vagrant.configure("2") do |config|
       alternatives --set python /usr/bin/python3
     SHELL
     r8.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yml"
+      ansible.inventory_path = "./inventory"
+      # ansible.verbose = "v"
+      # ansible.raw_arguments = [""]
+    end
+  end
+
+  # 7/23/22 no official rockylinux/9 box yet
+  config.vm.define "r9" do |r9|
+    r9.vm.box = "bento/rockylinux-9"
+    r9.ssh.insert_key = false
+    r9.vm.network 'private_network', ip: '192.168.10.199'
+    r9.vm.hostname = 'r9.test'
+    r9.vm.provision "shell", inline: <<-SHELL
+      dnf install -y epel-release
+      dnf config-manager --set-enabled powertools
+      dnf makecache
+      dnf install -y ansible
+      alternatives --set python /usr/bin/python3
+    SHELL
+    r9.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yml"
       ansible.inventory_path = "./inventory"
@@ -166,7 +209,6 @@ Vagrant.configure("2") do |config|
 
   # don't use apt: update_cache=yes here because it won't work to trap
   # repo change errors like with Debian 10 because of apt-secure server
-  # 6/13/21 debian9 won't pass username/password to box, switch to bento which is updated
   # 6/14/21 https://github.com/hashicorp/vagrant/issues/8204 export SSH_AUTH_SOCK=""
   config.vm.define "d10" do |d10|
     # d10.vm.box = "bento/debian-10"

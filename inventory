@@ -1,14 +1,16 @@
 # test inventory
 
 [centos_group]
-a2 ansible_host=192.168.10.190
+a2 ansible_host=192.168.10.102
 c6 ansible_host=192.168.10.106
 c7 ansible_host=192.168.10.107
 
 [centos8_group]
 c8 ansible_host=192.168.10.108
 a8 ansible_host=192.168.10.188
-r8 ansible_host=192.168.10.189
+a9 ansible_host=192.168.10.189
+r8 ansible_host=192.168.10.198
+r9 ansible_host=192.168.10.199
 
 [debian_group]
 d9 ansible_host=192.168.10.209
@@ -46,7 +48,6 @@ u14 ansible_host=192.168.10.114
 u16 ansible_host=192.168.10.116
 u18 ansible_host=192.168.10.118
 u20 ansible_host=192.168.10.120
-u21 ansible_host=192.168.10.121
 u22 ansible_host=192.168.10.122
 
 [all:children]
