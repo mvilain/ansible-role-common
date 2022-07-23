@@ -1,7 +1,9 @@
 ansible
 =========
 
-This role installs ansible on either a local or remote machine. It will install on a CentOS [67], Debian [89], or MacOS system. A lot of this code comes from Guy Geeringling's Ansible and EPEL roles.
+This role installs ansible on either a local or remote machine. It will install on a 
+CentOS [678], Debian [9|10|11], Ubuntu 14.04 to 22.04 or MacOS system. 
+A lot of this code comes from Guy Geeringling's Ansible and EPEL roles.
 
 https://github.com/geerlingguy/ansible-role-ansible
 https://github.com/geerlingguy/ansible-role-repo-epel
@@ -11,7 +13,7 @@ Thanks Guy!
 Requirements
 ------------
 
-This role assumes that the python 2.7 and ansible application will be running on x86 64-bit systems.  This role most likely won't work behind a proxy as the modules can't connect via https.
+This role assumes that the python 2.8 and ansible application will be running on x86 64-bit systems.  This role most likely won't work behind a proxy as the modules can't connect via https.
 
 
 Role Variables
