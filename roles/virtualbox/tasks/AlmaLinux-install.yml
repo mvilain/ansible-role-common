@@ -9,6 +9,7 @@
   register: vb_rpm_key
 # - debug: var=vb_rpm_key
 
+# 7/23/22 virtualbox doesn't install on Almalinux 9
 - name: adding RHEL repo
   yum_repository:
     name: virtualbox
@@ -18,8 +19,8 @@
     gpgcheck: yes
     gpgkey: https://www.virtualbox.org/download/oracle_vbox.asc
     enabled: yes
+  when: ansible_distribution_major_version|int <= 8
 
-# 7/23/22 virtualbox doesn't install on Almalinux 9
 - name: installing current version (this may take few minutes)
   package:
     name: VirtualBox-6.1
