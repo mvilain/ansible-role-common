@@ -509,6 +509,8 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  # 8/10/22 fedora36 doesn't use legacy /etc/sysconfig/network-scripts/ifcfg-eth1 scripts
+  # https://github.com/hashicorp/vagrant/issues/12762
   config.vm.define "f36" do |f36|
     f36.vm.box = "fedora/36-cloud-base"
     f36.ssh.insert_key = false
@@ -516,9 +518,10 @@ Vagrant.configure("2") do |config|
     f36.vm.hostname = 'f36.test'
       f36.vm.provision "shell", inline: <<-SHELL
         dnf config-manager --setopt=fastestmirror=True --save
-        # dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/35/Everything/x86_64/os/
-        # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/35/Everything/x86_64/os/
+        dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/36/Everything/x86_64/os/
+        dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/36/Everything/x86_64/os/
         dnf install -y python3
+        dnf install -y NetworkManager-initscripts-ifcfg-rh
       SHELL
     f36.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
