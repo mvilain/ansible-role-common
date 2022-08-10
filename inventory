@@ -33,10 +33,11 @@ d11 ansible_host=192.168.10.211
 #f29 ansible_host=192.168.10.229
 #f30 ansible_host=192.168.10.230
 #f31 ansible_host=192.168.10.231
-f32 ansible_host=192.168.10.232
+#f32 ansible_host=192.168.10.232
 f33 ansible_host=192.168.10.233
 f34 ansible_host=192.168.10.234
 f35 ansible_host=192.168.10.235
+f36 ansible_host=192.168.10.236
 
 [ubuntu_group]
 u14 ansible_host=192.168.10.114

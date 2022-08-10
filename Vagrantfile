@@ -442,21 +442,21 @@ Vagrant.configure("2") do |config|
 
   # 2021.06.13 mirrors seem to be OK now, removing alternate repos
   # 2021.06.17 mirrors are slow with Torguard VPN
-  config.vm.define "f32" do |f32|
-    f32.vm.box = "fedora/32-cloud-base"
-    f32.ssh.insert_key = false
-    f32.vm.network 'private_network', ip: '192.168.10.232'
-    f32.vm.hostname = 'f32.test'
-    f32.vm.provision "shell", inline: <<-SHELL
-        dnf config-manager --setopt=fastestmirror=True --save
-        dnf install -y python3
-    SHELL
-    f32.vm.provision "ansible" do |ansible|
-     ansible.compatibility_mode = "2.0"
-     ansible.playbook = "site.yml"
-     ansible.inventory_path = "./inventory"
-    end
-  end
+  # config.vm.define "f32" do |f32|
+  #   f32.vm.box = "fedora/32-cloud-base"
+  #   f32.ssh.insert_key = false
+  #   f32.vm.network 'private_network', ip: '192.168.10.232'
+  #   f32.vm.hostname = 'f32.test'
+  #   f32.vm.provision "shell", inline: <<-SHELL
+  #       dnf config-manager --setopt=fastestmirror=True --save
+  #       dnf install -y python3
+  #   SHELL
+  #   f32.vm.provision "ansible" do |ansible|
+  #    ansible.compatibility_mode = "2.0"
+  #    ansible.playbook = "site.yml"
+  #    ansible.inventory_path = "./inventory"
+  #   end
+  # end
 
   config.vm.define "f33" do |f33|
     f33.vm.box = "fedora/33-cloud-base"
@@ -498,11 +498,29 @@ Vagrant.configure("2") do |config|
     f35.vm.hostname = 'f35.test'
       f35.vm.provision "shell", inline: <<-SHELL
         dnf config-manager --setopt=fastestmirror=True --save
-        dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/35/Everything/x86_64/os/
-        dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/35/Everything/x86_64/os/
+        # dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/35/Everything/x86_64/os/
+        # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/35/Everything/x86_64/os/
         dnf install -y python3
       SHELL
     f35.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yml"
+      ansible.inventory_path = "./inventory"
+    end
+  end
+
+  config.vm.define "f36" do |f36|
+    f36.vm.box = "fedora/36-cloud-base"
+    f36.ssh.insert_key = false
+    f36.vm.network 'private_network', ip: '192.168.10.236'
+    f36.vm.hostname = 'f36.test'
+      f36.vm.provision "shell", inline: <<-SHELL
+        dnf config-manager --setopt=fastestmirror=True --save
+        # dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/35/Everything/x86_64/os/
+        # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/35/Everything/x86_64/os/
+        dnf install -y python3
+      SHELL
+    f36.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yml"
       ansible.inventory_path = "./inventory"
