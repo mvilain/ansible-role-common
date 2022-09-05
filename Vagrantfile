@@ -71,10 +71,7 @@ Vagrant.configure("2") do |config|
     a9.vm.hostname = 'a9.test'
     a9.vm.provision "shell", inline: <<-SHELL
       dnf install -y epel-release python3
-      dnf config-manager --set-enabled powertools
       dnf makecache
-      # dnf install -y ansible
-      alternatives --set python /usr/bin/python3
     SHELL
     a9.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
@@ -173,10 +170,7 @@ Vagrant.configure("2") do |config|
     r9.vm.hostname = 'r9.test'
     r9.vm.provision "shell", inline: <<-SHELL
       dnf install -y epel-release python3
-      dnf config-manager --set-enabled powertools
       dnf makecache
-      # dnf install -y ansible
-      alternatives --set python /usr/bin/python3
     SHELL
     r9.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
