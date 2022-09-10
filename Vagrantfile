@@ -505,25 +505,27 @@ Vagrant.configure("2") do |config|
 
   # 8/10/22 fedora36 doesn't use legacy /etc/sysconfig/network-scripts/ifcfg-eth1 scripts
   # https://github.com/hashicorp/vagrant/issues/12762
-  # can't really create private networks until this is fixed
-  # config.vm.define "f36" do |f36|
-  #   f36.vm.box = "fedora/36-cloud-base"
-  #   f36.ssh.insert_key = false
-  #   f36.vm.network 'private_network', ip: '192.168.10.236'
-  #   f36.vm.hostname = 'f36.test'
-  #     f36.vm.provision "shell", inline: <<-SHELL
-  #       dnf config-manager --setopt=fastestmirror=True --save
-  #       # dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/36/Everything/x86_64/os/
-  #       # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/36/Everything/x86_64/os/
-  #       dnf install -y python3
-  #       dnf install -y NetworkManager-initscripts-ifcfg-rh
-  #     SHELL
-  #   f36.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
+  # 9/9/22 have to use nmcli manually for eth1 until vagrant fixes this
+  config.vm.define "f36" do |f36|
+    f36.vm.box = "fedora/36-cloud-base"
+    f36.ssh.insert_key = false
+    f36.vm.network 'private_network', ip: '192.168.10.236'
+    f36.vm.hostname = 'f36.test'
+      f36.vm.provision "shell", inline: <<-SHELL
+        dnf config-manager --setopt=fastestmirror=True --save
+        # dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/36/Everything/x86_64/os/
+        # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/36/Everything/x86_64/os/
+        # dnf install -y python3
+        # dnf install -y NetworkManager-initscripts-ifcfg-rh
+        nmcli device modify eth1 ipv4.method manual ipv4.addr 192.168.10.236/24
+        ip addr
+      SHELL
+    f36.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yml"
+      ansible.inventory_path = "./inventory"
+    end
+  end
 
 
   config.vm.define "u14" do |u14|
