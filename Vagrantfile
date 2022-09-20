@@ -528,33 +528,33 @@ Vagrant.configure("2") do |config|
   end
 
 
-  config.vm.define "u14" do |u14|
-      u14.vm.box = "ubuntu/trusty64"
-      u14.vm.network 'private_network', ip: '192.168.10.114'
-      u14.vm.hostname = 'u14.test'  # won't set domain
-      u14.vm.provision "shell", inline: <<-SHELL
-        apt-get -y install python
-      SHELL
-      u14.vm.provision "ansible" do |ansible|
-        ansible.compatibility_mode = "2.0"
-        ansible.playbook = "site.yml"
-        ansible.inventory_path = "./inventory"
-      end
-  end
+  # config.vm.define "u14" do |u14|
+  #     u14.vm.box = "ubuntu/trusty64"
+  #     u14.vm.network 'private_network', ip: '192.168.10.114'
+  #     u14.vm.hostname = 'u14.test'  # won't set domain
+  #     u14.vm.provision "shell", inline: <<-SHELL
+  #       apt-get -y install python
+  #     SHELL
+  #     u14.vm.provision "ansible" do |ansible|
+  #       ansible.compatibility_mode = "2.0"
+  #       ansible.playbook = "site.yml"
+  #       ansible.inventory_path = "./inventory"
+  #     end
+  # end
 
-  config.vm.define "u16" do |u16|
-      u16.vm.box = "ubuntu/xenial64"
-      u16.vm.network 'private_network', ip: '192.168.10.116'
-      u16.vm.hostname = 'u16.test'  # won't set domain
-      u16.vm.provision "shell", inline: <<-SHELL
-        apt-get -y install python3
-      SHELL
-      u16.vm.provision "ansible" do |ansible|
-        ansible.compatibility_mode = "2.0"
-        ansible.playbook = "site.yml"
-        ansible.inventory_path = "./inventory"
-      end
-    end
+  # config.vm.define "u16" do |u16|
+  #     u16.vm.box = "ubuntu/xenial64"
+  #     u16.vm.network 'private_network', ip: '192.168.10.116'
+  #     u16.vm.hostname = 'u16.test'  # won't set domain
+  #     u16.vm.provision "shell", inline: <<-SHELL
+  #       apt-get -y install python3
+  #     SHELL
+  #     u16.vm.provision "ansible" do |ansible|
+  #       ansible.compatibility_mode = "2.0"
+  #       ansible.playbook = "site.yml"
+  #       ansible.inventory_path = "./inventory"
+  #     end
+  #   end
 
   # ansible uses python3 1/7/21
   config.vm.define "u18" do |u18|
