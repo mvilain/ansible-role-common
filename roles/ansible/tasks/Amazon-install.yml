@@ -4,7 +4,7 @@
 - name: install EPEL repo
   command: amazon-linux-extras install epel -y
   args:
-    warn: no
+    # warn: false #invalid for ansible 7 120122
   register: epel_install
 
 - name: install on Amazon (this may take a while)

@@ -49,7 +49,7 @@
 - name: setting hostname with hostnamectl
   command: hostnamectl set-hostname "{{ inventory_hostname }}"
   args:
-    warn: no
+    # warn: false #invalid for ansible 7 120122
   register: hostname
   when: is_aws_environment
 

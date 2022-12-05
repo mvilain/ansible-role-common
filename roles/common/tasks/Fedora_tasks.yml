@@ -7,7 +7,7 @@
 - name: fix Fedora[22-26] vim-minimal
   command: dnf update -y --allowerasing vim-minimal
   args:
-    warn: no
+    # warn: false #invalid for ansible 7 120122
   register: vim_min
   when:
   - ansible_distribution_major_version|int >= 22
@@ -23,7 +23,7 @@
 - name: fix Fedora[22-23] python2 dnf not allowing signatures
   command: dnf install -y python-yumdaemon python-pip
   args:
-    warn: no
+    # warn: false #invalid for ansible 7 120122
   register: yumdaemon
   when:
   - ansible_distribution_major_version|int >= 22

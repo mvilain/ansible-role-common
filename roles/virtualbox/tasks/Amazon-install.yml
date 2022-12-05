@@ -5,7 +5,7 @@
 - name: adding repo key
   shell: "rpm --import https://www.virtualbox.org/download/oracle_vbox.asc"
   args:
-    warn: false
+    # warn: false #invalid for ansible 7 120122
   register: vb_rpm_key
 # - debug: var=vb_rpm_key
 
