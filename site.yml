@@ -1,6 +1,8 @@
 # main playbook: site.yml
+# module_defaults keyword added to ansible 2.6
 ---
 - hosts: all
+  gather_timeout: 60
   become: true
 # check_mode: yes  # yes=dry-run
   roles:

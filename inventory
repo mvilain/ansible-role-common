@@ -38,6 +38,7 @@ f33 ansible_host=192.168.10.233
 f34 ansible_host=192.168.10.234
 f35 ansible_host=192.168.10.235
 f36 ansible_host=192.168.10.236
+f37 ansible_host=192.168.10.237
 
 [ubuntu_group]
 u14 ansible_host=192.168.10.114
