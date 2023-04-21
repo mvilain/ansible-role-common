@@ -34,19 +34,18 @@ d11 ansible_host=192.168.10.211
 #f30 ansible_host=192.168.10.230
 #f31 ansible_host=192.168.10.231
 #f32 ansible_host=192.168.10.232
-f33 ansible_host=192.168.10.233
-f34 ansible_host=192.168.10.234
-f35 ansible_host=192.168.10.235
+#f33 ansible_host=192.168.10.233
+#f34 ansible_host=192.168.10.234
+#f35 ansible_host=192.168.10.235
 f36 ansible_host=192.168.10.236
 f37 ansible_host=192.168.10.237
+f38 ansible_host=192.168.10.238
 
 [ubuntu_group]
-u14 ansible_host=192.168.10.114
 
 # requires python3 installed prior to running ansible
 # and setting ansible_python_interpreter=/usr/bin/python3 below
 [ubuntu_py3_group]
-u16 ansible_host=192.168.10.116
 u18 ansible_host=192.168.10.118
 u20 ansible_host=192.168.10.120
 u22 ansible_host=192.168.10.122

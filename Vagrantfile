@@ -4,6 +4,7 @@
 # Vagrantfile for ansible-common-role
 # 2207.23 added alma9 and rocky9
 # 2303.04 added fedora37
+# 2304.21 added fedora38, removed fedora33-35
 
 Vagrant.configure("2") do |config|
   # config.vm.network 'forwarded_port', guest: 80, host: 8080
@@ -453,56 +454,56 @@ Vagrant.configure("2") do |config|
   #   end
   # end
 
-  config.vm.define "f33" do |f33|
-    f33.vm.box = "fedora/33-cloud-base"
-    f33.ssh.insert_key = false
-    f33.vm.network 'private_network', ip: '192.168.10.233'
-    f33.vm.hostname = 'f33.test'
-    f33.vm.provision "shell", inline: <<-SHELL
-      dnf install -y python3
-    SHELL
-    f33.vm.provision "ansible" do |ansible|
-      ansible.compatibility_mode = "2.0"
-      ansible.playbook = "site.yml"
-      ansible.inventory_path = "./inventory"
-    end
-  end
+  # config.vm.define "f33" do |f33|
+  #   f33.vm.box = "fedora/33-cloud-base"
+  #   f33.ssh.insert_key = false
+  #   f33.vm.network 'private_network', ip: '192.168.10.233'
+  #   f33.vm.hostname = 'f33.test'
+  #   f33.vm.provision "shell", inline: <<-SHELL
+  #     dnf install -y python3
+  #   SHELL
+  #   f33.vm.provision "ansible" do |ansible|
+  #     ansible.compatibility_mode = "2.0"
+  #     ansible.playbook = "site.yml"
+  #     ansible.inventory_path = "./inventory"
+  #   end
+  # end
 
   # 2021.11.06 mirrors b/c regular is slow
-  config.vm.define "f34" do |f34|
-    f34.vm.box = "fedora/34-cloud-base"
-    f34.ssh.insert_key = false
-    f34.vm.network 'private_network', ip: '192.168.10.234'
-    f34.vm.hostname = 'f34.test'
-      f34.vm.provision "shell", inline: <<-SHELL
-        dnf config-manager --setopt=fastestmirror=True --save
-        dnf install -y python3
-      SHELL
-    f34.vm.provision "ansible" do |ansible|
-      ansible.compatibility_mode = "2.0"
-      ansible.playbook = "site.yml"
-      ansible.inventory_path = "./inventory"
-    end
-  end
+  # config.vm.define "f34" do |f34|
+  #   f34.vm.box = "fedora/34-cloud-base"
+  #   f34.ssh.insert_key = false
+  #   f34.vm.network 'private_network', ip: '192.168.10.234'
+  #   f34.vm.hostname = 'f34.test'
+  #     f34.vm.provision "shell", inline: <<-SHELL
+  #       dnf config-manager --setopt=fastestmirror=True --save
+  #       dnf install -y python3
+  #     SHELL
+  #   f34.vm.provision "ansible" do |ansible|
+  #     ansible.compatibility_mode = "2.0"
+  #     ansible.playbook = "site.yml"
+  #     ansible.inventory_path = "./inventory"
+  #   end
+  # end
 
   # 2021.11.06 mirrors b/c regular is slow
-  config.vm.define "f35" do |f35|
-    f35.vm.box = "fedora/35-cloud-base"
-    f35.ssh.insert_key = false
-    f35.vm.network 'private_network', ip: '192.168.10.235'
-    f35.vm.hostname = 'f35.test'
-      f35.vm.provision "shell", inline: <<-SHELL
-        dnf config-manager --setopt=fastestmirror=True --save
-        # dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/35/Everything/x86_64/os/
-        # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/35/Everything/x86_64/os/
-        dnf install -y python3
-      SHELL
-    f35.vm.provision "ansible" do |ansible|
-      ansible.compatibility_mode = "2.0"
-      ansible.playbook = "site.yml"
-      ansible.inventory_path = "./inventory"
-    end
-  end
+  # config.vm.define "f35" do |f35|
+  #   f35.vm.box = "fedora/35-cloud-base"
+  #   f35.ssh.insert_key = false
+  #   f35.vm.network 'private_network', ip: '192.168.10.235'
+  #   f35.vm.hostname = 'f35.test'
+  #     f35.vm.provision "shell", inline: <<-SHELL
+  #       dnf config-manager --setopt=fastestmirror=True --save
+  #       # dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/35/Everything/x86_64/os/
+  #       # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/35/Everything/x86_64/os/
+  #       dnf install -y python3
+  #     SHELL
+  #   f35.vm.provision "ansible" do |ansible|
+  #     ansible.compatibility_mode = "2.0"
+  #     ansible.playbook = "site.yml"
+  #     ansible.inventory_path = "./inventory"
+  #   end
+  # end
 
   # 8/10/22 fedora36 doesn't use legacy /etc/sysconfig/network-scripts/ifcfg-eth1 scripts
   # https://github.com/hashicorp/vagrant/issues/12762
@@ -552,33 +553,30 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  # config.vm.define "u14" do |u14|
-  #     u14.vm.box = "ubuntu/trusty64"
-  #     u14.vm.network 'private_network', ip: '192.168.10.114'
-  #     u14.vm.hostname = 'u14.test'  # won't set domain
-  #     u14.vm.provision "shell", inline: <<-SHELL
-  #       apt-get -y install python
-  #     SHELL
-  #     u14.vm.provision "ansible" do |ansible|
-  #       ansible.compatibility_mode = "2.0"
-  #       ansible.playbook = "site.yml"
-  #       ansible.inventory_path = "./inventory"
-  #     end
-  # end
+# 8/10/22 fedora36 doesn't use legacy /etc/sysconfig/network-scripts/ifcfg-eth1 scripts
+  # https://github.com/hashicorp/vagrant/issues/12762
+  # 9/9/22 have to use nmcli manually for eth1 until vagrant fixes this
+  config.vm.define "f38" do |f38|
+    f38.vm.box = "fedora/f38-cloud-base"
+    f38.ssh.insert_key = false
+    f38.vm.network 'private_network', ip: '192.168.10.238'
+    f38.vm.hostname = 'f38.test'
+      f38.vm.provision "shell", inline: <<-SHELL
+        dnf config-manager --setopt=fastestmirror=True --save
+        # dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/36/Everything/x86_64/os/
+        # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/36/Everything/x86_64/os/
+        # dnf install -y python3
+        # dnf install -y NetworkManager-initscripts-ifcfg-rh
+        nmcli device modify eth1 ipv4.method manual ipv4.addr 192.168.10.238/24
+        ip addr
+      SHELL
+    f38.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yml"
+      ansible.inventory_path = "./inventory"
+    end
+  end
 
-  # config.vm.define "u16" do |u16|
-  #     u16.vm.box = "ubuntu/xenial64"
-  #     u16.vm.network 'private_network', ip: '192.168.10.116'
-  #     u16.vm.hostname = 'u16.test'  # won't set domain
-  #     u16.vm.provision "shell", inline: <<-SHELL
-  #       apt-get -y install python3
-  #     SHELL
-  #     u16.vm.provision "ansible" do |ansible|
-  #       ansible.compatibility_mode = "2.0"
-  #       ansible.playbook = "site.yml"
-  #       ansible.inventory_path = "./inventory"
-  #     end
-  #   end
 
   # ansible uses python3 1/7/21
   config.vm.define "u18" do |u18|
