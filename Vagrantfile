@@ -557,7 +557,7 @@ Vagrant.configure("2") do |config|
   # https://github.com/hashicorp/vagrant/issues/12762
   # 9/9/22 have to use nmcli manually for eth1 until vagrant fixes this
   config.vm.define "f38" do |f38|
-    f38.vm.box = "fedora/f38-cloud-base"
+    f38.vm.box = "fedora/38-cloud-base"
     f38.ssh.insert_key = false
     f38.vm.network 'private_network', ip: '192.168.10.238'
     f38.vm.hostname = 'f38.test'
