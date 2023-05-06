@@ -5,9 +5,11 @@
 # 2207.23 added alma9 and rocky9
 # 2303.04 added fedora37
 # 2304.21 added fedora38, removed fedora33-35
+# 2305.06 vagrantup.com SSL cert expired on 10.13; installing vagrant 2.3.0 gives warning because cert expired
 
 Vagrant.configure("2") do |config|
   # config.vm.network 'forwarded_port', guest: 80, host: 8080
+  config.vm.box_download_insecure = true
   config.vm.synced_folder '.', '/vagrant', disabled: true
   config.ssh.insert_key = false
   config.vm.boot_timeout = 120
@@ -529,7 +531,7 @@ Vagrant.configure("2") do |config|
     end
   end
 
-# 8/10/22 fedora36 doesn't use legacy /etc/sysconfig/network-scripts/ifcfg-eth1 scripts
+  # 8/10/22 fedora36 doesn't use legacy /etc/sysconfig/network-scripts/ifcfg-eth1 scripts
   # https://github.com/hashicorp/vagrant/issues/12762
   # 9/9/22 have to use nmcli manually for eth1 until vagrant fixes this
   config.vm.define "f37" do |f37|
@@ -553,7 +555,7 @@ Vagrant.configure("2") do |config|
     end
   end
 
-# 8/10/22 fedora36 doesn't use legacy /etc/sysconfig/network-scripts/ifcfg-eth1 scripts
+  # 8/10/22 fedora36 doesn't use legacy /etc/sysconfig/network-scripts/ifcfg-eth1 scripts
   # https://github.com/hashicorp/vagrant/issues/12762
   # 9/9/22 have to use nmcli manually for eth1 until vagrant fixes this
   config.vm.define "f38" do |f38|
