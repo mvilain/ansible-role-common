@@ -6,6 +6,7 @@
 # 2303.04 added fedora37
 # 2304.21 added fedora38, removed fedora33-35
 # 2305.06 vagrantup.com SSL cert expired on 10.13; installing vagrant 2.3.0 gives warning because cert expired
+# 2307.04 added debian 12; vagrant 2.3.4 works on catalina but stand-alone version more current
 
 Vagrant.configure("2") do |config|
   # config.vm.network 'forwarded_port', guest: 80, host: 8080
@@ -241,6 +242,25 @@ Vagrant.configure("2") do |config|
       ansible.inventory_path = "./inventory"
     end
   end
+
+  # 7/4/23 debian 12 package repository doesn't have a release file yet
+  # so adding and updating the repo will fail
+  # config.vm.define "d12" do |d12|
+  #   d12.vm.box = "debian/bookworm64"
+  #   d12.ssh.insert_key = false
+  #   d12.vm.network 'private_network', ip: '192.168.10.212'
+  #   d12.vm.hostname = 'd12.test'  # won't set domain
+  #   d12.vm.provision "shell", inline: <<-SHELL
+  #     apt-get update --allow-releaseinfo-change -y
+  #     apt-get install -y apt-transport-https
+  #   SHELL
+  #   d12.vm.provision "ansible" do |ansible|
+  #     ansible.compatibility_mode = "2.0"
+  #     ansible.playbook = "site.yml"
+  #     ansible.inventory_path = "./inventory"
+  #   end
+  # end
+
 
 
  config.vm.define "s15" do |s15|
