@@ -104,7 +104,6 @@ Vagrant.configure("2") do |config|
       ansible.inventory_path = "./inventory"
     end
   end
-
   config.vm.define "c7" do |c7|
       c7.vm.box = "centos/7"
       c7.ssh.insert_key = false
@@ -119,33 +118,14 @@ Vagrant.configure("2") do |config|
         ansible.inventory_path = "./inventory"
       end
   end
-
   # 6/12/21 centos/8 and almalinux/8 stopped being able to auth w/ insecure private key
   # so switch to bento's release
   # https://bugzilla.redhat.com/show_bug.cgi?id=1820925
   # 6/14/21 https://github.com/hashicorp/vagrant/issues/8204 export SSH_AUTH_SOCK=""
   # 2/24/22 centos/8 and bento/centos-8.5 yum's repos don't work any more...use latest rockylinux
   #      Error: Failed to download metadata for repo 'appstream': Cannot prepare internal mirrorlist: No URLs in mirrorlist
-  # config.vm.define "c8" do |c8|
-#     c8.vm.box = "bento/rockylinux-8"
-#     c8.ssh.insert_key = false
-#     c8.vm.network 'private_network', ip: '192.168.10.108'
-#     c8.vm.hostname = 'c8.test'
-#     c8.vm.provision "shell", inline: <<-SHELL
-#       dnf install -y epel-release
-#       dnf config-manager --set-enabled powertools
-#       dnf makecache
-#       dnf install -y ansible
-#       alternatives --set python /usr/bin/python3
-#     SHELL
-#     c8.vm.provision "ansible" do |ansible|
-#       ansible.compatibility_mode = "2.0"
-#       ansible.playbook = "site.yml"
-#       ansible.inventory_path = "./inventory"
-#     end
-#   end
 
-  # 7/24/22 rockylinux 8.5
+  # 7/29/23 rockylinux 8.8
   config.vm.define "r8" do |r8|
     r8.vm.box = "rockylinux/8"
     r8.ssh.insert_key = false
@@ -166,10 +146,10 @@ Vagrant.configure("2") do |config|
       # ansible.raw_arguments = [""]
     end
   end
-
-  # 7/23/22 no official rockylinux/9 box yet
+  # 7/29/23 rockylinux 9.2
   config.vm.define "r9" do |r9|
-    r9.vm.box = "bento/rockylinux-9"
+    # r9.vm.box = "bento/rockylinux-9"
+    r9.vm.box = "rockylinux/9"
     r9.ssh.insert_key = false
     r9.vm.network 'private_network', ip: '192.168.10.199'
     r9.vm.hostname = 'r9.test'
@@ -186,31 +166,27 @@ Vagrant.configure("2") do |config|
     end
   end
 
-
-  # https://stackoverflow.com/questions/56460494/apt-get-install-apt-transport-https-fails-in-docker
-  # 6/13/21 debian9 won't pass username/password to box, switch to bento which is updated
-  # 6/14/21 https://github.com/hashicorp/vagrant/issues/8204 export SSH_AUTH_SOCK=""
-  config.vm.define "d9" do |d9|
-      d9.vm.box = "bento/debian-9"
-      d9.ssh.insert_key = false
-      d9.vm.network 'private_network', ip: '192.168.10.209'
-      d9.vm.hostname = 'd9.test'  # won't set domain
-      d9.vm.provision "shell", inline: <<-SHELL
-        apt-get update
-        apt-get install -y apt-transport-https
-      SHELL
-      d9.vm.provision "ansible" do |ansible|
-        ansible.compatibility_mode = "2.0"
-        ansible.playbook = "site.yml"
-        ansible.inventory_path = "./inventory"
-      end
-    end
+  # 7/30/23 no more security patches or releases file; removed
+  # config.vm.define "d9" do |d9|
+  #     d9.vm.box = "bento/debian-9"
+  #     d9.ssh.insert_key = false
+  #     d9.vm.network 'private_network', ip: '192.168.10.209'
+  #     d9.vm.hostname = 'd9.test'  # won't set domain
+  #     d9.vm.provision "shell", inline: <<-SHELL
+  #       apt-get update
+  #       apt-get install -y apt-transport-https
+  #     SHELL
+  #     d9.vm.provision "ansible" do |ansible|
+  #       ansible.compatibility_mode = "2.0"
+  #       ansible.playbook = "site.yml"
+  #       ansible.inventory_path = "./inventory"
+  #     end
+  #   end
 
   # don't use apt: update_cache=yes here because it won't work to trap
   # repo change errors like with Debian 10 because of apt-secure server
   # 6/14/21 https://github.com/hashicorp/vagrant/issues/8204 export SSH_AUTH_SOCK=""
   config.vm.define "d10" do |d10|
-    # d10.vm.box = "bento/debian-10"
     d10.vm.box = "debian/buster64"
     d10.ssh.insert_key = false
     d10.vm.network 'private_network', ip: '192.168.10.210'
@@ -225,9 +201,7 @@ Vagrant.configure("2") do |config|
       ansible.inventory_path = "./inventory"
     end
   end
-
   config.vm.define "d11" do |d11|
-    # d11.vm.box = "bento/debian-11"
     d11.vm.box = "debian/bullseye64"
     d11.ssh.insert_key = false
     d11.vm.network 'private_network', ip: '192.168.10.211'
@@ -242,24 +216,21 @@ Vagrant.configure("2") do |config|
       ansible.inventory_path = "./inventory"
     end
   end
-
-  # 7/4/23 debian 12 package repository doesn't have a release file yet
-  # so adding and updating the repo will fail
-  # config.vm.define "d12" do |d12|
-  #   d12.vm.box = "debian/bookworm64"
-  #   d12.ssh.insert_key = false
-  #   d12.vm.network 'private_network', ip: '192.168.10.212'
-  #   d12.vm.hostname = 'd12.test'  # won't set domain
-  #   d12.vm.provision "shell", inline: <<-SHELL
-  #     apt-get update --allow-releaseinfo-change -y
-  #     apt-get install -y apt-transport-https
-  #   SHELL
-  #   d12.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
+  config.vm.define "d12" do |d12|
+    d12.vm.box = "debian/bookworm64"
+    d12.ssh.insert_key = false
+    d12.vm.network 'private_network', ip: '192.168.10.212'
+    d12.vm.hostname = 'd12.test'  # won't set domain
+    d12.vm.provision "shell", inline: <<-SHELL
+      apt-get update --allow-releaseinfo-change -y
+      apt-get install -y apt-transport-https
+    SHELL
+    d12.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yml"
+      ansible.inventory_path = "./inventory"
+    end
+  end
 
 
 

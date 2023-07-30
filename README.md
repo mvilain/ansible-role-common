@@ -1,15 +1,15 @@
 # ansible-role-common
 
-This is a basic layout for an ansible project that can be expanded to support 
-a site with a common set of utilities to be run on all hosts.  It can be tested 
+This is a basic layout for an ansible project that can be expanded to support
+a site with a common set of utilities to be run on all hosts.  It can be tested
 using Vagrant.
 
 
 ## How to use
 
-To use this role inside of ansible, 
+To use this role inside of ansible,
 
-* add the **common/** directory tree to your roles/ directory inside your 
+* add the **common/** directory tree to your roles/ directory inside your
 ansible repository
 * edit the inventory file to use the common role for every host (or specific hosts)
 * to add packages, services, files, etc. to the common role:
@@ -19,7 +19,7 @@ ansible repository
 
 ## Using Vagrant and Virtual Box for testing
 
-This repo works best by typing `vagrant up` and watching the various boxes 
+This repo works best by typing `vagrant up` and watching the various boxes
 run one by one.  But that can be tedious.  I've changed the vagrant boxes from
 the standard ubuntu and fedora distros in which some don't have python already
 installed to ones that run ansible without any prior provisioning.
@@ -29,7 +29,7 @@ Both `vagrant up` and `vagrant up --no-provision; ansible-playbook site.yml` wor
 - AlmaLinux 8 and 9 (a8, a9)
 - CentOS 6 and 7 (c6, c7)
 - RockyLinux 8 and 9 (r8, r9)
-- Debian 9 and 10 (d9, d10)
+- Debian 10, 11, 12 (d9, d10, d11, d12)
 - fedora 22
 - fedora 23
 - fedora 29
@@ -39,12 +39,12 @@ Both `vagrant up` and `vagrant up --no-provision; ansible-playbook site.yml` wor
 - fedora 33
 - fedora 34
 - fedora 35
-- ubuntu 12.04
-- ubuntu 14.04
-- ubuntu 16.04
+- fedora 36
+- fedora 37
+- fedora 38
 - ubuntu 18.04
 - ubuntu 20.04
-- ubuntu 21.11
+- ubuntu 22.04
 
 Only `vagrant up` works for
 - fedora 21 (requires vagrant to provision correctly with 2nd NIC and install python)
@@ -69,9 +69,9 @@ The following OS and versions have been tested:
 - AlmaLinux 8 and 9
 - CentOS 6, 7
 - RockyLinux 8 and 9
-- Debian 9 (stretch 64-bit), Debian 10 (buster 64-bit), Debian 11 (trusy 64-bit)
-- Fedora 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
-- Ubuntu 14.04 (trusty), 16.04 (xenial), 18.04 (bionic), 20.04 (focal), 22.04 (jammy)
+- Debian 10 through 12 (64-bit buster, trusty, bookworm)
+- Fedora 21 through 38
+- Ubuntu 18.04 (bionic), 20.04 (focal), 22.04 (jammy)
 
 Note: 12/7/21
 - virtualbox 6.1.28+ does ##not## work with Vagrant 2.18+
@@ -79,3 +79,7 @@ Note: 12/7/21
 
 Note: 7/23/22
 - virtualbox 6.1.36 does not install on either Almalinux 9 or RockyLinux 9
+
+Note: 7/30/23
+- Debian 9 no longer offers patches; no longer any release file; removed from Vagrantfile
+- RockyLinux 9.2 and Debian 12 work
