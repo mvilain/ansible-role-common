@@ -2,8 +2,8 @@
 # handlers file for common
 
 - name: restart ntp time service
-  service: 
-    name: "{{ time_service }}" 
+  service:
+    name: "{{ time_service }}"
     state: restarted
   listen: "restart time services"
   register: ts
@@ -19,8 +19,9 @@
 #  listen: "restart time services"
 #  when: time_service == "ntpd" or time_service == "ntp"
 
+# 2/27/24 ignore return code (ARM ubuntu20 returns 1)
 - name: chrony sources
-  shell: sleep 5 && chronyc sources
+  shell: sleep 5 && chronyc sources && true
   register: chronyc
   listen: "restart time services"
   when: time_service == "chronyd" or time_service == "chrony"

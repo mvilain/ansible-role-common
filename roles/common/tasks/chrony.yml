@@ -21,6 +21,6 @@
       name: "{{ time_service }}"
       state: started
       enabled: yes
-  - timezone: 
+  - timezone:
       name: "{{ timezone }}"
   - meta: flush_handlers
