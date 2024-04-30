@@ -41,6 +41,7 @@ d12 ansible_host=192.168.10.212
 f36 ansible_host=192.168.10.236
 f37 ansible_host=192.168.10.237
 f38 ansible_host=192.168.10.238
+f39 ansible_host=192.168.10.239
 
 [ubuntu_group]
 
@@ -50,6 +51,7 @@ f38 ansible_host=192.168.10.238
 u18 ansible_host=192.168.10.118
 u20 ansible_host=192.168.10.120
 u22 ansible_host=192.168.10.122
+u24 ansible_host=192.168.10.124
 
 [all:children]
 centos_group
