@@ -8,6 +8,7 @@
 # 2305.06 vagrantup.com SSL cert expired on 10.13; installing vagrant 2.3.0 gives warning because cert expired
 # 2307.04 added debian 12; vagrant 2.3.4 works on catalina but stand-alone version more current
 # 2402.28 support arm on studio
+# 2404.30 added ubuntu 24.04
 
 Vagrant.configure("2") do |config|
   config.vm.provider :vmware_desktop do |vmware|
@@ -94,8 +95,8 @@ Vagrant.configure("2") do |config|
   end
 
 
-  # 8/10/22 fedora36 doesn't use legacy /etc/sysconfig/network-scripts/ifcfg-eth1 scripts
   # https://github.com/hashicorp/vagrant/issues/12762
+  # 8/10/22 fedora36 doesn't use legacy /etc/sysconfig/network-scripts/ifcfg-eth1 scripts
   # 9/9/22 have to use nmcli manually for eth1 until vagrant fixes this
 ################### fedora 38 2/26/24
   config.vm.define "f38" do |f38|
@@ -137,7 +138,6 @@ Vagrant.configure("2") do |config|
   end
 
 
-
   # requires setting ansible_python_interpreter=/usr/bin/python3
 ################### ubuntu 20.04 2/8/24
 # 2/27/24 chronyc sources returns non-zero; can't install virtualbox or vagrant on ARM
@@ -166,6 +166,22 @@ Vagrant.configure("2") do |config|
         apt-get -y install python3
       SHELL
       u22.vm.provision "ansible" do |ansible|
+        ansible.compatibility_mode = "2.0"
+        ansible.playbook = "site.yml"
+        ansible.inventory_path = "./inventory"
+      end
+  end
+
+################### ubuntu 24.04 4/30/24
+  config.vm.define "u24" do |u24|
+      u24.vm.box = "gyptazy/ubuntu24.04-server-arm64"
+      u24.vm.network 'private_network', ip: '192.168.10.124'
+      u24.vm.hostname = 'u24.test'  # won't set domain
+      u24.vm.provision "shell", inline: <<-SHELL
+		  apt-get -y update
+        apt-get -y install python3
+      SHELL
+      u24.vm.provision "ansible" do |ansible|
         ansible.compatibility_mode = "2.0"
         ansible.playbook = "site.yml"
         ansible.inventory_path = "./inventory"

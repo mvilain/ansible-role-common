@@ -7,6 +7,7 @@
 # 2304.21 added fedora38, removed fedora33-35
 # 2305.06 vagrantup.com SSL cert expired on 10.13; installing vagrant 2.3.0 gives warning because cert expired
 # 2307.04 added debian 12; vagrant 2.3.4 works on catalina but stand-alone version more current
+# 2404.30 removed older suse & fedora boxes; added fedora-39,40
 
 Vagrant.configure("2") do |config|
   # config.vm.network 'forwarded_port', guest: 80, host: 8080
@@ -90,7 +91,7 @@ Vagrant.configure("2") do |config|
   # this will fail in ansible 2.13 as centos6 python=2.6.6 is to old
   # and epel-release version of python3.4 is also to old
   config.vm.define "c6" do |c6|
-    c6.vm.box = "bento/centos-6"
+    c6.vm.box = "bento/centos-6.8"
     c6.ssh.insert_key = false
     c6.vm.network 'private_network', ip: '192.168.10.106'
     c6.vm.hostname = 'c6.test'
@@ -168,20 +169,6 @@ Vagrant.configure("2") do |config|
 
   # 7/30/23 no more security patches or releases file; removed
   # config.vm.define "d9" do |d9|
-  #     d9.vm.box = "bento/debian-9"
-  #     d9.ssh.insert_key = false
-  #     d9.vm.network 'private_network', ip: '192.168.10.209'
-  #     d9.vm.hostname = 'd9.test'  # won't set domain
-  #     d9.vm.provision "shell", inline: <<-SHELL
-  #       apt-get update
-  #       apt-get install -y apt-transport-https
-  #     SHELL
-  #     d9.vm.provision "ansible" do |ansible|
-  #       ansible.compatibility_mode = "2.0"
-  #       ansible.playbook = "site.yml"
-  #       ansible.inventory_path = "./inventory"
-  #     end
-  #   end
 
   # don't use apt: update_cache=yes here because it won't work to trap
   # repo change errors like with Debian 10 because of apt-secure server
@@ -232,23 +219,6 @@ Vagrant.configure("2") do |config|
     end
   end
 
-
-
- config.vm.define "s15" do |s15|
-    s15.vm.box = "suse-15.3"
-    s15.ssh.insert_key = false
-    s15.vm.network 'private_network', ip: '192.168.10.215'
-    s15.vm.hostname = 's15.test'
-    # s15.vm.provision "shell", inline: <<-SHELL
-    # SHELL
-    s15.vm.provision "ansible" do |ansible|
-      ansible.compatibility_mode = "2.0"
-      ansible.playbook = "site.yml"
-      ansible.inventory_path = "./inventory"
-    end
-  end
-
-
   # fedora-21 vagrant box doesn't set 2nd network config correctly
   # fedora 21 doesn't install sudo
   config.vm.define "f21" do |f21|
@@ -268,254 +238,6 @@ Vagrant.configure("2") do |config|
       ip addr
     SHELL
     f21.vm.provision "ansible" do |ansible|
-      ansible.compatibility_mode = "2.0"
-      ansible.playbook = "site.yml"
-      ansible.inventory_path = "./inventory"
-    end
-  end
-
-  # these two versions are tested because 21 still used yum while 22 used dnf
-  # https://github.com/rpm-software-management/dnf/commit/176a81e357b8e169008c831963c3b487b3bac40a
-  # https://bugzilla.redhat.com/show_bug.cgi?id=1338564
-  config.vm.define "f22" do |f22|
-    f22.vm.box = "bento/fedora-22"
-    f22.ssh.insert_key = false
-    f22.vm.network 'private_network', ip: '192.168.10.222'
-    f22.vm.hostname = 'f22.test'
-    f22.vm.provision "shell", inline: <<-SHELL
-      dnf install -y python libselinux-python python3
-    SHELL
-    f22.vm.provision "ansible" do |ansible|
-      ansible.compatibility_mode = "2.0"
-      ansible.playbook = "site.yml"
-      ansible.inventory_path = "./inventory"
-    end
-  end
-
-  # virtualbox runs the older 5.0 on Fedora 23 and below so test that it works
-  # python3 is 3.4 which won't run ansible, so use python2.7 with broken dnf module
-  # config.vm.define "f23" do |f23|
-  #   f23.vm.box = "bento/fedora-23"
-  #   f23.ssh.insert_key = false
-  #   f23.vm.network 'private_network', ip: '192.168.10.223'
-  #   f23.vm.hostname = 'f23.test'
-  #   f23.vm.provision "shell", inline: <<-SHELL
-  #     dnf install -y python libselinux-python python3
-  #   SHELL
-  #   f23.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
-
-  # config.vm.define "f24" do |f24|
-  #   f24.vm.box = "bento/fedora-24"
-  #   f24.ssh.insert_key = false
-  #   f24.vm.network 'private_network', ip: '192.168.10.224'
-  #   f24.vm.hostname = 'f24.test
-  #   f24.vm.provision "shell", inline: <<-SHELL
-  #     dnf install -y python3
-  #   SHELL
-  #   f24.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
-
-  # config.vm.define "f25" do |f25|
-  #   f25.vm.box = "bento/fedora-25"
-  #   f25.ssh.insert_key = false
-  #   f25.vm.network 'private_network', ip: '192.168.10.225'
-  #   f25.vm.hostname = 'f25.test'
-  #   f25.vm.provision "shell", inline: <<-SHELL
-  #     dnf install -y python3
-  #   SHELL
-  #   f25.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
-
-  # config.vm.define "f26" do |f26|
-  #   f26.vm.box = "bento/fedora-26"
-  #   f26.ssh.insert_key = false
-  #   f26.vm.network 'private_network', ip: '192.168.10.226'
-  #   f26.vm.hostname = 'f26.test'
-  #   f26.vm.provision "shell", inline: <<-SHELL
-  #     dnf install -y python3
-  #   SHELL
-  #   f26.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
-
-  # config.vm.define "f27" do |f27|
-  #   f27.vm.box = "bento/fedora-27"
-  #   f27.ssh.insert_key = false
-  #   f27.vm.network 'private_network', ip: '192.168.10.227'
-  #   f27.vm.hostname = 'f27.test'
-  #   f27.vm.provision "shell", inline: <<-SHELL
-  #     dnf install -y python3
-  #   SHELL
-  #   f27.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
-
-  # config.vm.define "f28" do |f28|
-  #   f28.vm.box = "bento/fedora-28"
-  #   f28.ssh.insert_key = false
-  #   f28.vm.network 'private_network', ip: '192.168.10.228'
-  #   f28.vm.hostname = 'f28.test'
-  #   f28.vm.provision "shell", inline: <<-SHELL
-  #     dnf install -y python3
-  #   SHELL
-  #   f28.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
-
-  # config.vm.define "f29" do |f29|
-  #   f29.vm.box = "bento/fedora-29"
-  #   f29.ssh.insert_key = false
-  #   f29.vm.network 'private_network', ip: '192.168.10.229'
-  #   f29.vm.hostname = 'f29.test'
-  #   f29.vm.provision "shell", inline: <<-SHELL
-  #     dnf install -y python3
-  #   SHELL
-  #   f29.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
-
-  # config.vm.define "f30" do |f30|
-  #   f30.vm.box = "bento/fedora-30"
-  #   f30.ssh.insert_key = false
-  #   f30.vm.network 'private_network', ip: '192.168.10.230'
-  #   f30.vm.hostname = 'f30.test'
-  #   f30.vm.provision "shell", inline: <<-SHELL
-  #     dnf install -y python3
-  #   SHELL
-  #   f30.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
-
-  # config.vm.define "f31" do |f31|
-  #   f31.vm.box = "bento/fedora-31"
-  #   f31.ssh.insert_key = false
-  #   f31.vm.network 'private_network', ip: '192.168.10.231'
-  #   f31.vm.hostname = 'f31.test'
-  #   f31.vm.provision "shell", inline: <<-SHELL
-  #     dnf install -y python3
-  #   SHELL
-  #   f31.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
-
-  # 2021.06.13 mirrors seem to be OK now, removing alternate repos
-  # 2021.06.17 mirrors are slow with Torguard VPN
-  # config.vm.define "f32" do |f32|
-  #   f32.vm.box = "fedora/32-cloud-base"
-  #   f32.ssh.insert_key = false
-  #   f32.vm.network 'private_network', ip: '192.168.10.232'
-  #   f32.vm.hostname = 'f32.test'
-  #   f32.vm.provision "shell", inline: <<-SHELL
-  #       dnf config-manager --setopt=fastestmirror=True --save
-  #       dnf install -y python3
-  #   SHELL
-  #   f32.vm.provision "ansible" do |ansible|
-  #    ansible.compatibility_mode = "2.0"
-  #    ansible.playbook = "site.yml"
-  #    ansible.inventory_path = "./inventory"
-  #   end
-  # end
-
-  # config.vm.define "f33" do |f33|
-  #   f33.vm.box = "fedora/33-cloud-base"
-  #   f33.ssh.insert_key = false
-  #   f33.vm.network 'private_network', ip: '192.168.10.233'
-  #   f33.vm.hostname = 'f33.test'
-  #   f33.vm.provision "shell", inline: <<-SHELL
-  #     dnf install -y python3
-  #   SHELL
-  #   f33.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
-
-  # 2021.11.06 mirrors b/c regular is slow
-  # config.vm.define "f34" do |f34|
-  #   f34.vm.box = "fedora/34-cloud-base"
-  #   f34.ssh.insert_key = false
-  #   f34.vm.network 'private_network', ip: '192.168.10.234'
-  #   f34.vm.hostname = 'f34.test'
-  #     f34.vm.provision "shell", inline: <<-SHELL
-  #       dnf config-manager --setopt=fastestmirror=True --save
-  #       dnf install -y python3
-  #     SHELL
-  #   f34.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
-
-  # 2021.11.06 mirrors b/c regular is slow
-  # config.vm.define "f35" do |f35|
-  #   f35.vm.box = "fedora/35-cloud-base"
-  #   f35.ssh.insert_key = false
-  #   f35.vm.network 'private_network', ip: '192.168.10.235'
-  #   f35.vm.hostname = 'f35.test'
-  #     f35.vm.provision "shell", inline: <<-SHELL
-  #       dnf config-manager --setopt=fastestmirror=True --save
-  #       # dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/35/Everything/x86_64/os/
-  #       # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/35/Everything/x86_64/os/
-  #       dnf install -y python3
-  #     SHELL
-  #   f35.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
-
-  # 8/10/22 fedora36 doesn't use legacy /etc/sysconfig/network-scripts/ifcfg-eth1 scripts
-  # https://github.com/hashicorp/vagrant/issues/12762
-  # 9/9/22 have to use nmcli manually for eth1 until vagrant fixes this
-  config.vm.define "f36" do |f36|
-    f36.vm.box = "fedora/36-cloud-base"
-    f36.ssh.insert_key = false
-    f36.vm.network 'private_network', ip: '192.168.10.236'
-    f36.vm.hostname = 'f36.test'
-      f36.vm.provision "shell", inline: <<-SHELL
-        dnf config-manager --setopt=fastestmirror=True --save
-        # dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/36/Everything/x86_64/os/
-        # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/36/Everything/x86_64/os/
-        # dnf install -y python3
-        # dnf install -y NetworkManager-initscripts-ifcfg-rh
-        nmcli device modify eth1 ipv4.method manual ipv4.addr 192.168.10.236/24
-        ip addr
-      SHELL
-    f36.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yml"
       ansible.inventory_path = "./inventory"
@@ -570,6 +292,27 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  config.vm.define "f39" do |f39|
+    f39.vm.box = "fedora/38-cloud-base"
+    f39.ssh.insert_key = false
+    f39.vm.network 'private_network', ip: '192.168.10.239'
+    f39.vm.hostname = 'f39.test'
+      f39.vm.provision "shell", inline: <<-SHELL
+        dnf config-manager --setopt=fastestmirror=True --save
+        # dnf config-manager --add-repo https://dl.fedoraproject.org/pub/fedora/linux/releases/36/Everything/x86_64/os/
+        # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/36/Everything/x86_64/os/
+        # dnf install -y python3
+        # dnf install -y NetworkManager-initscripts-ifcfg-rh
+        39 device modify eth1 ipv4.method manual ipv4.addr 192.168.10.239/24
+        ip addr
+      SHELL
+    f39.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yml"
+      ansible.inventory_path = "./inventory"
+    end
+  end
+
 
   # ansible uses python3 1/7/21
   config.vm.define "u18" do |u18|
@@ -604,21 +347,6 @@ Vagrant.configure("2") do |config|
       end
   end
 
-  # config.vm.define "u21" do |u21|
-  #     u21.vm.box = "ubuntu/impish64"
-  #     u21.vm.network 'private_network', ip: '192.168.10.121'
-  #     u21.vm.hostname = 'u21.test'  # won't set domain
-  #     u21.vm.provision "shell", inline: <<-SHELL
-		#   apt-get -y update
-  #       apt-get -y install python3
-  #     SHELL
-  #     u21.vm.provision "ansible" do |ansible|
-  #       ansible.compatibility_mode = "2.0"
-  #       ansible.playbook = "site.yml"
-  #       ansible.inventory_path = "./inventory"
-  #     end
-  # end
-
   config.vm.define "u22" do |u22|
       u22.vm.box = "ubuntu/jammy64"
       u22.vm.network 'private_network', ip: '192.168.10.122'
@@ -628,6 +356,21 @@ Vagrant.configure("2") do |config|
         apt-get -y install python3
       SHELL
       u22.vm.provision "ansible" do |ansible|
+        ansible.compatibility_mode = "2.0"
+        ansible.playbook = "site.yml"
+        ansible.inventory_path = "./inventory"
+      end
+  end
+
+  config.vm.define "u24" do |u24|
+      u24.vm.box = "alvistack/ubuntu-24.04"
+      u24.vm.network 'private_network', ip: '192.168.10.124'
+      u24.vm.hostname = 'u24.test'  # won't set domain
+      u24.vm.provision "shell", inline: <<-SHELL
+		  apt-get -y update
+        apt-get -y install python3
+      SHELL
+      u24.vm.provision "ansible" do |ansible|
         ansible.compatibility_mode = "2.0"
         ansible.playbook = "site.yml"
         ansible.inventory_path = "./inventory"
