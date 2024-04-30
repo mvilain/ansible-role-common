@@ -293,7 +293,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "f39" do |f39|
-    f39.vm.box = "fedora/38-cloud-base"
+    f39.vm.box = "fedora/39-cloud-base"
     f39.ssh.insert_key = false
     f39.vm.network 'private_network', ip: '192.168.10.239'
     f39.vm.hostname = 'f39.test'
