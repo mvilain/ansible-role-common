@@ -115,10 +115,13 @@
 
 # defaults/main.yml defines ssh_services as sshd
 # let a distro's tasks.yml file set it to something other
+# https://ubuntuhandbook.org/index.php/2024/04/install-ssh-ubuntu-2404/
+# move the restart of sshd to Ubuntu_services.yml
 - name: restart sshd service
   service:
-    name: "{{ ssh_service }}"
+    name: "{{ sshd_service }}"
     state: restarted
+  when: ansible_distribution != "Ubuntu"
 
 # - name: enable passwordless sudo for "{{ username }}"
 #   lineinfile:

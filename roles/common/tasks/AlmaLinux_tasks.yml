@@ -10,5 +10,5 @@
 
 # AlmaLinux 8 uses chrony
 - name: AlmaLinux set time_service
-  set_fact: 
+  set_fact:
     time_service: chronyd

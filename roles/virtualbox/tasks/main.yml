@@ -1,4 +1,4 @@
-# tasks file for virtualbox
+# tasks file for virtualbox on x86 systems only
 ---
 # get-url uses remote_tmp module internally 2207.22
 - name: check for remote_tmp directory used by get-url
@@ -18,3 +18,4 @@
     state: present
 
 - include_tasks: "{{ ansible_distribution }}-install.yml"
+  when: ansible_architecture == "x86_64"

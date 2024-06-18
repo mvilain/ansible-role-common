@@ -1,16 +1,18 @@
 virtualbox
 =========
 
-This role installs virtualbox on either a local or remote machine. 
-It will install on a CentOS [67], Alma/Rocky Linux 8, Debian [9|10|11], 
+This role installs virtualbox on either a local or remote machine.
+It will install on a CentOS [67], Alma/Rocky Linux 8, Debian [9|10|11],
 or Fedora 21-35.
 
 Requirements
 ------------
 
-This role assumes that the virtualbox application will be running on 
-x86 64-bit systems.  This role most likely won't work behind a proxy as 
+This role assumes that the virtualbox application will be running on
+x86 64-bit systems.  This role most likely won't work behind a proxy as
 the modules can't connect via https.
+
+This role will only work on X86 systems. It will skip over other architectures.
 
 
 Role Variables

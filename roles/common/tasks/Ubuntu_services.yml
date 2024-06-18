@@ -1,2 +1,13 @@
 # Ubuntu install tasks for common
 ---
+- name: restart Ubuntu sshd service
+  service:
+    name: ssh.socket
+    state: restarted
+  when: ansible_distribution_major_version|int <= 22
+
+- name: restart Ubuntu ssh.socket service
+  service:
+    name: ssh.socket
+    state: restarted
+  when: ansible_distribution_major_version|int >= 24
