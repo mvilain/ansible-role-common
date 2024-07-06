@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "a2" do |a2|
     a2.vm.box = "bento/amazonlinux-2"
     a2.ssh.insert_key = false
-    a2.vm.network 'private_network', ip: '10.1.10.190'
+    a2.vm.network 'private_network', ip: '10.1.100.190'
     a2.vm.hostname = 'a2.test'
     a2.vm.provision "shell", inline: <<-SHELL
       amazon-linux-extras install epel #ansible2=2.8 kernel-ng python3.8
@@ -56,7 +56,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "a8" do |a8|
     a8.vm.box = "almalinux/8"
     a8.ssh.insert_key = false
-    a8.vm.network 'private_network', ip: '10.1.10.188'
+    a8.vm.network 'private_network', ip: '10.1.100.188'
     a8.vm.hostname = 'a8.test'
     a8.vm.provision "shell", inline: <<-SHELL
       dnf install -y epel-release python3
@@ -76,7 +76,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "a9" do |a9|
     a9.vm.box = "almalinux/9"
     a9.ssh.insert_key = false
-    a9.vm.network 'private_network', ip: '10.1.10.189'
+    a9.vm.network 'private_network', ip: '10.1.100.189'
     a9.vm.hostname = 'a9.test'
     a9.vm.provision "shell", inline: <<-SHELL
       dnf install -y epel-release python3
@@ -96,7 +96,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "c7" do |c7|
       c7.vm.box = "centos/7"
       c7.ssh.insert_key = false
-      c7.vm.network 'private_network', ip: '10.1.10.107'
+      c7.vm.network 'private_network', ip: '10.1.100.107'
       c7.vm.hostname = 'c7.test'
       c7.vm.provision "shell", inline: <<-SHELL
         yum install -y python libselinux-python
@@ -119,7 +119,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "r8" do |r8|
     r8.vm.box = "generic/rocky8"
     r8.ssh.insert_key = false
-    r8.vm.network 'private_network', ip: '10.1.10.198'
+    r8.vm.network 'private_network', ip: '10.1.100.198'
     r8.vm.hostname = 'r8.test'
     r8.vm.provision "shell", inline: <<-SHELL
       dnf install -y epel-release python3
@@ -141,7 +141,7 @@ Vagrant.configure("2") do |config|
     # r9.vm.box = "bento/rockylinux-9"
     r9.vm.box = "rockylinux/9"
     r9.ssh.insert_key = false
-    r9.vm.network 'private_network', ip: '10.1.10.199'
+    r9.vm.network 'private_network', ip: '10.1.100.199'
     r9.vm.hostname = 'r9.test'
     r9.vm.provision "shell", inline: <<-SHELL
       dnf install -y epel-release python3
@@ -165,7 +165,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "d10" do |d10|
     d10.vm.box = "debian/buster64"
     d10.ssh.insert_key = false
-    d10.vm.network 'private_network', ip: '10.1.10.210'
+    d10.vm.network 'private_network', ip: '10.1.100.210'
     d10.vm.hostname = 'd10.test'  # won't set domain
     d10.vm.provision "shell", inline: <<-SHELL
       apt-get update --allow-releaseinfo-change -y
@@ -180,7 +180,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "d11" do |d11|
     d11.vm.box = "debian/bullseye64"
     d11.ssh.insert_key = false
-    d11.vm.network 'private_network', ip: '10.1.10.211'
+    d11.vm.network 'private_network', ip: '10.1.100.211'
     d11.vm.hostname = 'd11.test'  # won't set domain
     d11.vm.provision "shell", inline: <<-SHELL
       apt-get update --allow-releaseinfo-change -y
@@ -195,7 +195,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "d12" do |d12|
     d12.vm.box = "debian/bookworm64"
     d12.ssh.insert_key = false
-    d12.vm.network 'private_network', ip: '10.1.10.212'
+    d12.vm.network 'private_network', ip: '10.1.100.212'
     d12.vm.hostname = 'd12.test'  # won't set domain
     d12.vm.provision "shell", inline: <<-SHELL
       apt-get update --allow-releaseinfo-change -y
@@ -213,7 +213,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f21" do |f21|
     f21.vm.box = "bento/fedora-21"
     f21.ssh.insert_key = false
-    f21.vm.network 'private_network', ip: '10.1.10.221'
+    f21.vm.network 'private_network', ip: '10.1.100.221'
     f21.vm.hostname = 'f21.test'
     f21.vm.provision "shell", inline: <<-SHELL
       echo "...installing python (this may take a while)..."
@@ -239,7 +239,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f38" do |f38|
     f38.vm.box = "fedora/38-cloud-base"
     f38.ssh.insert_key = false
-    f38.vm.network 'private_network', ip: '10.1.10.238'
+    f38.vm.network 'private_network', ip: '10.1.100.238'
     f38.vm.hostname = 'f38.test'
       f38.vm.provision "shell", inline: <<-SHELL
         dnf config-manager --setopt=fastestmirror=True --save
@@ -247,7 +247,7 @@ Vagrant.configure("2") do |config|
         # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/38/Everything/x86_64/os/
         # dnf install -y python3
         # dnf install -y NetworkManager-initscripts-ifcfg-rh
-        nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.10.238/24
+        nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.100.238/24
         ip addr
       SHELL
     f38.vm.provision "ansible" do |ansible|
@@ -260,7 +260,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "f39" do |f39|
     f39.vm.box = "fedora/39-cloud-base"
     f39.ssh.insert_key = false
-    f39.vm.network 'private_network', ip: '10.1.10.239'
+    f39.vm.network 'private_network', ip: '10.1.100.239'
     f39.vm.hostname = 'f39.test'
       f39.vm.provision "shell", inline: <<-SHELL
         dnf config-manager --setopt=fastestmirror=True --save
@@ -268,7 +268,7 @@ Vagrant.configure("2") do |config|
          dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/39/Everything/x86_64/os/
         # dnf install -y python3
         # dnf install -y NetworkManager-initscripts-ifcfg-rh
-        nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.10.239/24
+        nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.100.239/24
         ip addr
       SHELL
     f39.vm.provision "ansible" do |ansible|
@@ -282,7 +282,7 @@ Vagrant.configure("2") do |config|
     f40.vm.box = "fedora/40-cloud-base"
     #f40.vm.box = "bento/fedora-40"
     f40.ssh.insert_key = false
-    f40.vm.network 'private_network', ip: '10.1.10.240'
+    f40.vm.network 'private_network', ip: '10.1.100.240'
     f40.vm.hostname = 'f40.test'
       f40.vm.provision "shell", inline: <<-SHELL
         dnf config-manager --setopt=fastestmirror=True --save
@@ -290,7 +290,7 @@ Vagrant.configure("2") do |config|
         # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/40/Everything/x86_64/os/
         # dnf install -y python3
         # dnf install -y NetworkManager-initscripts-ifcfg-rh
-        nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.10.240/24
+        nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.100.240/24
         ip addr
       SHELL
     f40.vm.provision "ansible" do |ansible|
@@ -304,7 +304,7 @@ Vagrant.configure("2") do |config|
   # ansible uses python3 1/7/21
   config.vm.define "u18" do |u18|
       u18.vm.box = "ubuntu/bionic64"
-      u18.vm.network 'private_network', ip: '10.1.10.118'
+      u18.vm.network 'private_network', ip: '10.1.100.118'
       u18.vm.hostname = 'u18.test'  # won't set domain
       u18.vm.provision "shell", inline: <<-SHELL
         apt-get -y install python3
@@ -322,7 +322,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "u20" do |u20|
       u20.vm.box = "ubuntu/focal64"
       #u20.vm.box = "bento/ubuntu-20.04"
-      u20.vm.network 'private_network', ip: '10.1.10.120'
+      u20.vm.network 'private_network', ip: '10.1.100.120'
       u20.vm.hostname = 'u20.test'  # won't set domain
       u20.vm.provision "shell", inline: <<-SHELL
         apt-get -y install python3
@@ -336,7 +336,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "u22" do |u22|
       u22.vm.box = "ubuntu/jammy64"
-      u22.vm.network 'private_network', ip: '10.1.10.122'
+      u22.vm.network 'private_network', ip: '10.1.100.122'
       u22.vm.hostname = 'u22.test'  # won't set domain
       u22.vm.provision "shell", inline: <<-SHELL
 		  apt-get -y update
@@ -351,7 +351,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "u24" do |u24|
       u24.vm.box = "alvistack/ubuntu-24.04"
-      u24.vm.network 'private_network', ip: '10.1.10.124'
+      u24.vm.network 'private_network', ip: '10.1.100.124'
       u24.vm.hostname = 'u24.test'  # won't set domain
       u24.vm.provision "shell", inline: <<-SHELL
 		  apt-get -y update

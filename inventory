@@ -1,56 +1,56 @@
 # test inventory
 
 [centos_group]
-a2 ansible_host=10.1.10.102
-c6 ansible_host=10.1.10.106
-c7 ansible_host=10.1.10.107
+a2 ansible_host=10.1.100.102
+c6 ansible_host=10.1.100.106
+c7 ansible_host=10.1.100.107
 
 [centos8_group]
-a8 ansible_host=10.1.10.188
-a9 ansible_host=10.1.10.189
-r8 ansible_host=10.1.10.198
-r9 ansible_host=10.1.10.199
+a8 ansible_host=10.1.100.188
+a9 ansible_host=10.1.100.189
+r8 ansible_host=10.1.100.198
+r9 ansible_host=10.1.100.199
 
 [debian_group]
-d9 ansible_host=10.1.10.209
-d10 ansible_host=10.1.10.210
-d11 ansible_host=10.1.10.211
-d12 ansible_host=10.1.10.212
+d9 ansible_host=10.1.100.209
+d10 ansible_host=10.1.100.210
+d11 ansible_host=10.1.100.211
+d12 ansible_host=10.1.100.212
 
 # requires python35 but repo has python34, so use python27 with broken dnf module
 [fedora_group]
-#f21 ansible_host=10.1.10.221
-#f22 ansible_host=10.1.10.222
-#f23 ansible_host=10.1.10.223
+#f21 ansible_host=10.1.100.221
+#f22 ansible_host=10.1.100.222
+#f23 ansible_host=10.1.100.223
 
 # requires python3.5 installed prior to running ansible
 # and setting ansible_python_interpreter=/usr/bin/python3 below
 [fedora_py3_group]
-#f24 ansible_host=10.1.10.224
-#f25 ansible_host=10.1.10.225
-#f26 ansible_host=10.1.10.226
-#f27 ansible_host=10.1.10.227
-#f28 ansible_host=10.1.10.228
-#f29 ansible_host=10.1.10.229
-#f30 ansible_host=10.1.10.230
-#f31 ansible_host=10.1.10.231
-#f32 ansible_host=10.1.10.232
-#f33 ansible_host=10.1.10.233
-#f34 ansible_host=10.1.10.234
-#f35 ansible_host=10.1.10.235
-f36 ansible_host=10.1.10.236
-f37 ansible_host=10.1.10.237
-f38 ansible_host=10.1.10.238
+#f24 ansible_host=10.1.100.224
+#f25 ansible_host=10.1.100.225
+#f26 ansible_host=10.1.100.226
+#f27 ansible_host=10.1.100.227
+#f28 ansible_host=10.1.100.228
+#f29 ansible_host=10.1.100.229
+#f30 ansible_host=10.1.100.230
+#f31 ansible_host=10.1.100.231
+#f32 ansible_host=10.1.100.232
+#f33 ansible_host=10.1.100.233
+#f34 ansible_host=10.1.100.234
+#f35 ansible_host=10.1.100.235
+f36 ansible_host=10.1.100.236
+f37 ansible_host=10.1.100.237
+f38 ansible_host=10.1.100.238
 
 [ubuntu_group]
 
 # requires python3 installed prior to running ansible
 # and setting ansible_python_interpreter=/usr/bin/python3 below
 [ubuntu_py3_group]
-u18 ansible_host=10.1.10.118
-u20 ansible_host=10.1.10.120
-u22 ansible_host=10.1.10.122
-u24 ansible_host=10.1.10.124
+u18 ansible_host=10.1.100.118
+u20 ansible_host=10.1.100.120
+u22 ansible_host=10.1.100.122
+u24 ansible_host=10.1.100.124
 
 [all:children]
 centos_group

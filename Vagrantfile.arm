@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "a9" do |a9|
     a9.vm.box = "almalinux/9"
     a9.ssh.insert_key = false
-    a9.vm.network 'private_network', ip: '10.1.10.189'
+    a9.vm.network 'private_network', ip: '10.1.100.189'
     a9.vm.hostname = 'a9.test'
     a9.vm.provision "shell", inline: <<-SHELL
       dnf install -y epel-release python3
@@ -63,7 +63,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "r9" do |r9|
     r9.vm.box = "bento/rockylinux-9"
     r9.ssh.insert_key = false
-    r9.vm.network 'private_network', ip: '10.1.10.199'
+    r9.vm.network 'private_network', ip: '10.1.100.199'
     r9.vm.hostname = 'r9.test'
     r9.vm.provision "shell", inline: <<-SHELL
       dnf install -y epel-release python3
@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "d12" do |d12|
     d12.vm.box = "bento/debian-12"
     d12.ssh.insert_key = false
-    d12.vm.network 'private_network', ip: '10.1.10.212'
+    d12.vm.network 'private_network', ip: '10.1.100.212'
     d12.vm.hostname = 'd12.test'  # won't set domain
     d12.vm.provision "shell", inline: <<-SHELL
       apt-get update --allow-releaseinfo-change -y
@@ -105,13 +105,13 @@ Vagrant.configure("2") do |config|
   config.vm.define "f38" do |f38|
     f38.vm.box = "bento/fedora-38"
     f38.ssh.insert_key = false
-    f38.vm.network 'private_network', ip: '10.1.10.238'
+    f38.vm.network 'private_network', ip: '10.1.100.238'
     f38.vm.hostname = 'f38.test'
       f38.vm.provision "shell", inline: <<-SHELL
         dnf config-manager --setopt=fastestmirror=True --save
         # dnf install -y python3
         dnf install -y NetworkManager-initscripts-ifcfg-rh
-        nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.10.238/24
+        nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.100.238/24
         ip addr
       SHELL
     f38.vm.provision "ansible" do |ansible|
@@ -127,7 +127,7 @@ Vagrant.configure("2") do |config|
 # 2/27/24 chronyc sources returns non-zero; can't install virtualbox or vagrant on ARM
   config.vm.define "u20" do |u20|
       u20.vm.box = "bento/ubuntu-20.04"
-      u20.vm.network 'private_network', ip: '10.1.10.120'
+      u20.vm.network 'private_network', ip: '10.1.100.120'
       u20.vm.hostname = 'u20.test'  # won't set domain
       u20.vm.provision "shell", inline: <<-SHELL
         apt-get -y install python3
@@ -143,7 +143,7 @@ Vagrant.configure("2") do |config|
 # 2/27/24 can't install virtualbox or vagrant on ARM
   config.vm.define "u22" do |u22|
       u22.vm.box = "bento/ubuntu-22.04"
-      u22.vm.network 'private_network', ip: '10.1.10.122'
+      u22.vm.network 'private_network', ip: '10.1.100.122'
       u22.vm.hostname = 'u22.test'  # won't set domain
       u22.vm.provision "shell", inline: <<-SHELL
 		  apt-get -y update
@@ -159,7 +159,7 @@ Vagrant.configure("2") do |config|
 ################### ubuntu 24.04 4/30/24
   config.vm.define "u24" do |u24|
       u24.vm.box = "bento/ubuntu-24.04"
-      u24.vm.network 'private_network', ip: '10.1.10.124'
+      u24.vm.network 'private_network', ip: '10.1.100.124'
       u24.vm.hostname = 'u24.test'  # won't set domain
       u24.vm.provision "shell", inline: <<-SHELL
 		  apt-get -y update
