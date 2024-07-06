@@ -10,7 +10,8 @@
 # 2402.28 support arm on studio
 # 2404.30 added ubuntu 24.04
 # 2405.27 removed fedora 39; there's no box for it yet
-# 2406.18 changed ubuntu 24.04 
+# 2406.18 changed ubuntu 24.04 to use bento box
+# 2407.05 remove fedora-39 as it doesn't work in vmware_desktop (same for fedora-40)
 
 Vagrant.configure("2") do |config|
   config.vm.provider :vmware_desktop do |vmware|
@@ -119,25 +120,6 @@ Vagrant.configure("2") do |config|
       ansible.inventory_path = "./inventory"
     end
   end
-################### fedora 39 2/8/24
-  # config.vm.define "f39" do |f39|
-  #   f39.vm.box = "bento/fedora-39"
-  #   f39.ssh.insert_key = false
-  #   f39.vm.network 'private_network', ip: '10.1.10.239'
-  #   #f39.vm.hostname = 'f39.test'
-  #     f39.vm.provision "shell", inline: <<-SHELL
-  #       dnf config-manager --setopt=fastestmirror=True --save
-  #       # dnf install -y python3
-  #       dnf install -y NetworkManager-initscripts-ifcfg-rh
-  #       #nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.10.239/24
-  #       ip addr
-  #     SHELL
-  #   f39.vm.provision "ansible" do |ansible|
-  #     ansible.compatibility_mode = "2.0"
-  #     ansible.playbook = "site.yml"
-  #     ansible.inventory_path = "./inventory"
-  #   end
-  # end
 
 
 # requires setting ansible_python_interpreter=/usr/bin/python3
@@ -176,7 +158,7 @@ Vagrant.configure("2") do |config|
 
 ################### ubuntu 24.04 4/30/24
   config.vm.define "u24" do |u24|
-      u24.vm.box = "gyptazy/ubuntu24.04-server-arm64"
+      u24.vm.box = "bento/ubuntu-24.04"
       u24.vm.network 'private_network', ip: '10.1.10.124'
       u24.vm.hostname = 'u24.test'  # won't set domain
       u24.vm.provision "shell", inline: <<-SHELL
