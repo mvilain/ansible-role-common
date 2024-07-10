@@ -41,6 +41,8 @@ d12 ansible_host=10.1.100.212
 f36 ansible_host=10.1.100.236
 f37 ansible_host=10.1.100.237
 f38 ansible_host=10.1.100.238
+f39 ansible_host=10.1.100.239
+f40 ansible_host=10.1.100.240
 
 [ubuntu_group]
 
