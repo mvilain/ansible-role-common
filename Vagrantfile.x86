@@ -137,25 +137,7 @@ Vagrant.configure("2") do |config|
       # ansible.raw_arguments = [""]
     end
   end
-  # 7/29/23 rockylinux 9.2
-  config.vm.define "r9" do |r9|
-    # r9.vm.box = "bento/rockylinux-9"
-    r9.vm.box = "rockylinux/9"
-    r9.ssh.insert_key = false
-    r9.vm.network 'private_network', ip: '10.1.100.199'
-    r9.vm.hostname = 'r9.test'
-    r9.vm.provision "shell", inline: <<-SHELL
-      dnf install -y epel-release python3
-      dnf makecache
-    SHELL
-    r9.vm.provision "ansible" do |ansible|
-      ansible.compatibility_mode = "2.0"
-      ansible.playbook = "site.yml"
-      ansible.inventory_path = "./inventory"
-      # ansible.verbose = "v"
-      # ansible.raw_arguments = [""]
-    end
-  end
+  # 11/2/24 removed rockylinux9.4 as it's the same release as almalinux9.4
 
   # 7/30/23 no more security patches or releases file; removed
   # config.vm.define "d9" do |d9|
