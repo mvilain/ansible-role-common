@@ -8,6 +8,7 @@ c7 ansible_host=10.1.100.107
 [centos8_group]
 a8 ansible_host=10.1.100.188
 a9 ansible_host=10.1.100.189
+a10 ansible_host=10.1.100.187
 r8 ansible_host=10.1.100.198
 r9 ansible_host=10.1.100.199
 
@@ -43,6 +44,7 @@ f37 ansible_host=10.1.100.237
 f38 ansible_host=10.1.100.238
 f39 ansible_host=10.1.100.239
 f40 ansible_host=10.1.100.240
+f41 ansible_host=10.1.100.241
 
 [ubuntu_group]
 
