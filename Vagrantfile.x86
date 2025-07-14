@@ -10,6 +10,7 @@
 # 2404.30 removed older suse & fedora boxes; added fedora-39,40
 # 2405.27 removed fedora 39; there's no box for it yet
 # 2407.05 added fedora 39+40;
+# 2507.13 update for virtualbox 7.1 on zorin
 
 
 Vagrant.configure("2") do |config|
@@ -34,15 +35,15 @@ Vagrant.configure("2") do |config|
   SHELLALL
 
   config.vm.define "a2" do |a2|
-    a2.vm.box = "bento/amazonlinux-2"
+    # a2.vm.box = "bento/amazonlinux-2"
+    a2.vm.box = "bento/amazonlinux-2023"
     a2.ssh.insert_key = false
     a2.vm.network 'private_network', ip: '10.1.100.190'
     a2.vm.hostname = 'a2.test'
     a2.vm.provision "shell", inline: <<-SHELL
-      amazon-linux-extras install epel #ansible2=2.8 kernel-ng python3.8
-      yum-config-manager --enable epel
-      # alternatives --set python /usr/bin/python3.8
-      # python3.8 -m pip install --upgrade pip setuptools
+      # dnf upgrade --releasever=2023.8.20250707
+      dnf install -y python3-pip
+      python3 -m pip install --upgrade pip setuptools pip
     SHELL
     a2.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
@@ -54,6 +55,7 @@ Vagrant.configure("2") do |config|
   end
 
 
+  ################## almalinux 8.10 7/13/25
   config.vm.define "a8" do |a8|
     a8.vm.box = "almalinux/8"
     a8.ssh.insert_key = false
@@ -74,6 +76,8 @@ Vagrant.configure("2") do |config|
       # ansible.raw_arguments = [""]
     end
   end
+
+  ################## almalinux 9.6 7/13/25
   config.vm.define "a9" do |a9|
     a9.vm.box = "almalinux/9"
     a9.ssh.insert_key = false
@@ -91,32 +95,28 @@ Vagrant.configure("2") do |config|
       # ansible.raw_arguments = [""]
     end
   end
+  ################### almalinux 10.0 7/13/25 [won't ssh]
 
-  # centos6 will fail in ansible 2.13 as python=2.6.6 is to old
-  # and epel-release version of python3.4 is also to old
+
+
+  ################### centos 7 7/13/25
   config.vm.define "c7" do |c7|
-      c7.vm.box = "centos/7"
-      c7.ssh.insert_key = false
-      c7.vm.network 'private_network', ip: '10.1.100.107'
-      c7.vm.hostname = 'c7.test'
-      c7.vm.provision "shell", inline: <<-SHELL
-        yum install -y python libselinux-python
-      SHELL
-      c7.vm.provision "ansible" do |ansible|
-        ansible.compatibility_mode = "2.0"
-        ansible.playbook = "site.yml"
-        ansible.inventory_path = "./inventory"
-      end
+    c7.vm.box = "centos/7"
+    c7.ssh.insert_key = false
+    c7.vm.network 'private_network', ip: '10.1.100.107'
+    c7.vm.hostname = 'c7.test'
+    c7.vm.provision "shell", inline: <<-SHELL
+      yum install -y python libselinux-python
+    SHELL
+    c7.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yml"
+      ansible.inventory_path = "./inventory"
+    end
   end
 
-  # 6/12/21 centos/8 and almalinux/8 stopped being able to auth w/ insecure private key
-  # so switch to bento's release
-  # https://bugzilla.redhat.com/show_bug.cgi?id=1820925
-  # 6/14/21 https://github.com/hashicorp/vagrant/issues/8204 export SSH_AUTH_SOCK=""
-  # 2/24/22 centos/8 and bento/centos-8.5 yum's repos don't work any more...use latest rockylinux
-  #      Error: Failed to download metadata for repo 'appstream': Cannot prepare internal mirrorlist: No URLs in mirrorlist
 
-  # 6/16/24 rockylinux 8.9
+  ################## rockylinux 8.9 7/13/25
   config.vm.define "r8" do |r8|
     r8.vm.box = "generic/rocky8"
     r8.ssh.insert_key = false
@@ -137,29 +137,32 @@ Vagrant.configure("2") do |config|
       # ansible.raw_arguments = [""]
     end
   end
-  # 11/2/24 removed rockylinux9.4 as it's the same release as almalinux9.4
 
-  # 7/30/23 no more security patches or releases file; removed
-  # config.vm.define "d9" do |d9|
-
-  # don't use apt: update_cache=yes here because it won't work to trap
-  # repo change errors like with Debian 10 because of apt-secure server
-  # 6/14/21 https://github.com/hashicorp/vagrant/issues/8204 export SSH_AUTH_SOCK=""
-  config.vm.define "d10" do |d10|
-    d10.vm.box = "debian/buster64"
-    d10.ssh.insert_key = false
-    d10.vm.network 'private_network', ip: '10.1.100.210'
-    d10.vm.hostname = 'd10.test'  # won't set domain
-    d10.vm.provision "shell", inline: <<-SHELL
-      apt-get update --allow-releaseinfo-change -y
-      apt-get install -y apt-transport-https
+  ################# rockylinux 9.4 7/13/25
+  config.vm.define "r9" do |r9|
+    # r9.vm.box = "bento/rockylinux-9.5"
+    r9.vm.box = "rockylinux/9"
+    r9.ssh.insert_key = false
+    r9.vm.network 'private_network', ip: '10.1.100.199', auto_config: false
+    r9.vm.hostname = 'r9.test'
+    r9.vm.provision "shell", inline: <<-SHELL
+      # nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.100.199/24
+      dnf install -y epel-release python3
+      dnf makecache
     SHELL
-    d10.vm.provision "ansible" do |ansible|
+    r9.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yml"
       ansible.inventory_path = "./inventory"
+      # ansible.verbose = "v"
+      # ansible.raw_arguments = [""]
     end
   end
+
+
+  # Debian 9 7/30/23 no more security patches or releases file; removed
+  # Debian 10 7/13/25 no update servers and out of date virtualbox guest
+  ################# Debian 11 7/13/25
   config.vm.define "d11" do |d11|
     d11.vm.box = "debian/bullseye64"
     d11.ssh.insert_key = false
@@ -167,7 +170,9 @@ Vagrant.configure("2") do |config|
     d11.vm.hostname = 'd11.test'  # won't set domain
     d11.vm.provision "shell", inline: <<-SHELL
       apt-get update --allow-releaseinfo-change -y
-      apt-get install -y apt-transport-https
+      apt-get install -y apt-transport-https locales
+      locale-gen en_US.UTF-8
+      # dpkg-reconfigure locales
     SHELL
     d11.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
@@ -175,6 +180,7 @@ Vagrant.configure("2") do |config|
       ansible.inventory_path = "./inventory"
     end
   end
+
   config.vm.define "d12" do |d12|
     d12.vm.box = "debian/bookworm64"
     d12.ssh.insert_key = false
@@ -182,7 +188,9 @@ Vagrant.configure("2") do |config|
     d12.vm.hostname = 'd12.test'  # won't set domain
     d12.vm.provision "shell", inline: <<-SHELL
       apt-get update --allow-releaseinfo-change -y
-      apt-get install -y apt-transport-https
+      apt-get install -y apt-transport-https locales
+      locale-gen en_US.UTF-8
+      # dpkg-reconfigure locales
     SHELL
     d12.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
@@ -191,23 +199,23 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  # fedora-21 vagrant box doesn't set 2nd network config correctly
-  # fedora 21 doesn't install sudo
+  ## fedora-21 vagrant box doesn't set 2nd network config correctly
+  ## fedora 21 doesn't install sudo
+  ## removed network-scripts/ifcfg-enp0s8 and network restart works now 2507.13MeV
   config.vm.define "f21" do |f21|
     f21.vm.box = "bento/fedora-21"
     f21.ssh.insert_key = false
     f21.vm.network 'private_network', ip: '10.1.100.221'
     f21.vm.hostname = 'f21.test'
     f21.vm.provision "shell", inline: <<-SHELL
-      echo "...installing python (this may take a while)..."
       yum install -y sudo python libselinux-python python3
-      echo "...fixing enp0s8..."
-      sed -i -e "s/BOOTPROTO=none/BOOTPROTO=static/" /etc/sysconfig/network-scripts/ifcfg-enp0s8
-      echo "...restarting network..."
-      systemctl restart network
-      sleep 10
-      systemctl restart network
-      ip addr
+      # echo "...fixing enp0s8..."
+      # sed -i -e "s/BOOTPROTO=none/BOOTPROTO=static/" /etc/sysconfig/network-scripts/ifcfg-enp0s8
+      # echo "...restarting network..."
+      # systemctl restart network
+      # sleep 10
+      # systemctl restart network
+      # ip addr
     SHELL
     f21.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
@@ -216,9 +224,9 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  # 8/10/22 fedora36 doesn't use legacy /etc/sysconfig/network-scripts/ifcfg-eth1 scripts
-  # https://github.com/hashicorp/vagrant/issues/12762
-  # 9/9/22 have to use nmcli manually for eth1 until vagrant fixes this
+  ## 8/10/22 fedora36 doesn't use legacy /etc/sysconfig/network-scripts/ifcfg-eth1 scripts
+  ## https://github.com/hashicorp/vagrant/issues/12762
+  ## 9/9/22 have to use nmcli manually for eth1 until vagrant fixes this
   config.vm.define "f38" do |f38|
     f38.vm.box = "fedora/38-cloud-base"
     f38.ssh.insert_key = false
@@ -230,7 +238,8 @@ Vagrant.configure("2") do |config|
         # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/38/Everything/x86_64/os/
         # dnf install -y python3
         # dnf install -y NetworkManager-initscripts-ifcfg-rh
-        nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.100.238/24
+        #nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.100.238/24
+        nmcli connection modify "Wired connection 2" ipv4.method manual ipv4.addresses "10.1.100.238/24"
         ip addr
       SHELL
     f38.vm.provision "ansible" do |ansible|
@@ -250,7 +259,8 @@ Vagrant.configure("2") do |config|
         dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/39/Everything/x86_64/os/
         dnf install -y python3 python3-libselinux
         # dnf install -y NetworkManager-initscripts-ifcfg-rh
-        nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.100.239/24
+        # nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.100.239/24
+        nmcli connection modify "Wired connection 2" ipv4.method manual ipv4.addresses "10.1.100.239/24"
         ip addr
       SHELL
     f39.vm.provision "ansible" do |ansible|
@@ -266,11 +276,12 @@ Vagrant.configure("2") do |config|
     f40.vm.network 'private_network', ip: '10.1.100.240'
     f40.vm.hostname = 'f40.test'
       f40.vm.provision "shell", inline: <<-SHELL
-        dnf config-manager --setopt=fastestmirror=True --save
-        dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/40/Everything/x86_64/os/
+        # dnf config-manager --setopt=fastestmirror=True --save
+        # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/40/Everything/x86_64/os/
         dnf install -y python3 python3-libselinux
         # dnf install -y NetworkManager-initscripts-ifcfg-rh
-        nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.100.240/24
+        # nmcli device modify eth1 ipv4.method manual ipv4.addr 10.1.100.240/24
+        nmcli connection modify "Wired connection 2" ipv4.method manual ipv4.addresses "10.1.100.240/24"
         ip addr
       SHELL
     f40.vm.provision "ansible" do |ansible|
@@ -280,8 +291,29 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  ## vagrant 2.4.7 and virtualbox 7.1 correctly create the 2nd interface
+  config.vm.define "f41" do |f41|
+    f41.vm.box = "bento/fedora-41"
+    f41.ssh.insert_key = false
+    f41.vm.network 'private_network', ip: '10.1.100.241'
+    f41.vm.hostname = 'f41.test'
+    f41.vm.provision "shell", inline: <<-SHELL
+      # dnf config-manager --setopt=fastestmirror=True --save
+      # dnf config-manager --add-repo http://mirrors.kernel.org/fedora/releases/41/Everything/x86_64/os/
+      dnf install -y python3 python3-libselinux
+    SHELL
+    f41.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yml"
+      ansible.inventory_path = "./inventory"
+    end
+  end
 
-  # ansible uses python3 1/7/21
+
+
+  ## ansible uses python3 1/7/21
+  ## Ubuntu 18 uses 5.x virtualbox guest additions
+  ################# ubuntu 18. 7/13/25
   config.vm.define "u18" do |u18|
       u18.vm.box = "ubuntu/bionic64"
       u18.vm.network 'private_network', ip: '10.1.100.118'
@@ -296,9 +328,8 @@ Vagrant.configure("2") do |config|
       end
   end
 
-  # https://www.reddit.com/r/Ubuntu/comments/ga187h/focal64_vagrant_box_issues/
-  # 1/7/21 earlier releases of focal64 didn't work with vagrant but that's now been fixed
-  # requires setting ansible_python_interpreter=/usr/bin/python3 
+  ## requires setting ansible_python_interpreter=/usr/bin/python3
+  ################# ubuntu 20. 7/13/25
   config.vm.define "u20" do |u20|
       u20.vm.box = "ubuntu/focal64"
       #u20.vm.box = "bento/ubuntu-20.04"
@@ -314,6 +345,7 @@ Vagrant.configure("2") do |config|
       end
   end
 
+  ################# ubuntu 22. 7/13/25
   config.vm.define "u22" do |u22|
       u22.vm.box = "ubuntu/jammy64"
       u22.vm.network 'private_network', ip: '10.1.100.122'
@@ -329,12 +361,14 @@ Vagrant.configure("2") do |config|
       end
   end
 
+  ################# ubuntu 24.04.2 7/13/25
   config.vm.define "u24" do |u24|
-      u24.vm.box = "alvistack/ubuntu-24.04"
+      # u24.vm.box = "alvistack/ubuntu-24.04"
+      u24.vm.box = "bento/ubuntu-24.04"
       u24.vm.network 'private_network', ip: '10.1.100.124'
       u24.vm.hostname = 'u24.test'  # won't set domain
       u24.vm.provision "shell", inline: <<-SHELL
-		  apt-get -y update
+		    apt-get -y update
         apt-get -y install python3
       SHELL
       u24.vm.provision "ansible" do |ansible|
